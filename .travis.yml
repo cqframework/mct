@@ -8,17 +8,17 @@ before_install:
   - cd ./frontend
   - docker build -t mct-frontend:$TRAVIS_COMMIT .
 
-# install:
-#   - cd $TRAVIS_BUILD_DIR
-#   - ./bin/install_ci_dependencies.sh
+install:
+  - cd $TRAVIS_BUILD_DIR
+  - ./bin/install_ci_dependencies.sh
 
 jobs:
   include:
     - stage: test
       script: docker run --entrypoint yarn mct-frontend:$TRAVIS_COMMIT test
       install: skip
-    # - stage: deploy
-    #   if: branch = main
-    #   script:
-    #     - cd $TRAVIS_BUILD_DIR
-    #     - ./bin/deploy.sh
+    - stage: deploy
+      if: branch = main
+      script:
+        - cd $TRAVIS_BUILD_DIR
+        - ./bin/deploy.sh
