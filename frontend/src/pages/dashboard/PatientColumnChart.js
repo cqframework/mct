@@ -15,7 +15,6 @@ const LOINC_MAP = {
 
 const PatientColumnChart = ({ stratifier }) => {
   const theme = useTheme();
-  console.log('stratifier', stratifier);
   const allEthnicities = Object.keys(stratifier.data);
   const descriptionA = stratifier.data[allEthnicities[0]].denominator.description;
   const descriptionB = stratifier.data[allEthnicities[0]].numerator.description;

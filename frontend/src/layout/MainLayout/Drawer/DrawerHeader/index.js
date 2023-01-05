@@ -11,7 +11,6 @@ const DrawerHeader = ({ open }) => {
   const theme = useTheme();
 
   return (
-    // only available in paid version
     <DrawerHeaderStyled theme={theme} open={open}>
       <Stack direction="row" spacing={1} alignItems="center">
         <Typography sx={{ mt: 3, ml: 3 }} variant="h2" align="center" gutterBottom>

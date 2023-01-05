@@ -18,7 +18,7 @@ kube_cluster=$(aws eks describe-cluster --name aphl-eks --region us-east-1 --out
 kubectl config use-context "$kube_cluster"
 
 helm version
-helm_chart_name="mct-frontend"
+helm_chart_name="mct-app"
 k8s_dir="${DIR}/../infrastructure/kubernetes"
 aws --version
 
