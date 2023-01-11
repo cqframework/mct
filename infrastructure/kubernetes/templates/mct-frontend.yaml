@@ -12,7 +12,7 @@ spec:
   ports:
   - name: http 
     port: 80
-    targetPort: 3000
+    targetPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,5 +37,17 @@ spec:
         name: mct-frontend
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 80
           protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mct-frontend-{{ .Values.tag }}
+  namespace: mct
+spec:
+  defaultBackend:
+    service:
+      name: mct-frontend-{{ .Values.tag }}
+      port: 
+        number: 80
