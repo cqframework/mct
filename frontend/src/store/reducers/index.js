@@ -1,11 +1,8 @@
-// third-party
 import { combineReducers } from 'redux';
 
-// project import
 import filter from './filter';
+import data from './data';
 
-// ==============================|| COMBINE REDUCERS ||============================== //
-
-const reducers = combineReducers({ filter });
+const reducers = combineReducers({ filter, data });
 
 export default reducers;

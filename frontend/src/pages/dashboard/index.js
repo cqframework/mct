@@ -9,33 +9,10 @@ import DemoGraph from './DemoGraph';
 import MeasureReportJson from 'fixtures/MeasureReport.json';
 import MeasureReportMCT from 'fixtures/MeasureReportMCT.json';
 import { useDispatch, useSelector } from 'react-redux';
-import { extractDescription } from 'utils/measureReportHelpers';
+import { extractDescription, populationGather } from 'utils/measureReportHelpers';
 import PopulationStatistics from './PopulationStatistics';
 import PatientColumnChart from './PatientColumnChart';
-import moment from 'moment';
-
-const createPeriodFromQuarter = (quarter) => {
-  let start, end;
-  switch (quarter) {
-    case 'q1':
-      start = moment('Janurary 1, 2023').startOf('quarter').startOf('day').format('MM-DD-YYYY');
-      end = moment('Janurary 1, 2023').endOf('quarter').startOf('day').format('MM-DD-YYYY');
-      break;
-    case 'q2':
-      start = moment('April 1, 2023').startOf('quarter').startOf('day').format('MM-DD-YYYY');
-      end = moment('April 1, 2023').endOf('quarter').startOf('day').format('MM-DD-YYYY');
-      break;
-    case 'q3':
-      start = moment('July 1, 2023').startOf('quarter').startOf('day').format('MM-DD-YYYY');
-      end = moment('July 1, 2023').endOf('quarter').startOf('day').format('MM-DD-YYYY');
-      break;
-    case 'q4':
-      start = moment('October 1, 2023').startOf('quarter').startOf('day').format('MM-DD-YYYY');
-      end = moment('October 1, 2023').endOf('quarter').startOf('day').format('MM-DD-YYYY');
-      break;
-  }
-  return { start, end };
-};
+import { createPeriodFromQuarter } from 'utils/queryHelper';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -48,23 +25,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`
   };
 }
-
-const populationGather = (measureReportGroup) => {
-  const population = {};
-  measureReportGroup?.population?.forEach((data) => {
-    const key = data.code.coding?.[0]?.code;
-
-    population[key] = {
-      ...data.code.coding?.[0],
-      id: data.id,
-      count: data.count,
-      reference: data.subjectResults?.reference,
-      description: data.extension?.[0]?.valueString
-    };
-  });
-
-  return population;
-};
 
 const buildMeasurePayload = (facility, measure, quarter) => {
   const period = createPeriodFromQuarter(quarter);
@@ -92,25 +52,11 @@ const buildMeasurePayload = (facility, measure, quarter) => {
   };
 };
 
-const parseMeasureReport = (measureReport) => {
-
-  const { type } = measureReport;
-  switch(type) {
-    case 'individual':
-      break;
-    case 'subject-list':
-      break;
-    case 'summary':
-      break;
-    default:
-      break;
-  };
-}
-
 const DashboardDefault = () => {
   const { facility, date, measure } = useSelector((state) => state.filter);
   const [value, setValue] = useState(0);
   const [measureReport, setMeasureReport] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const callGatherApi = async () => {
@@ -135,7 +81,7 @@ const DashboardDefault = () => {
     setValue(newValue);
   };
 
-  if ((date?.length == 0 || measure?.length == 0) && facility.length !== 0 || measureReport == null) {
+  if (((date?.length == 0 || measure?.length == 0) && facility.length !== 0) || measureReport == null) {
     return null;
   }
   const description = extractDescription(measureReport);
@@ -161,7 +107,7 @@ const DashboardDefault = () => {
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {facility.length === 0 ? (
         <Grid item xs={12} sx={{ mb: -2.25 }}>
-          <PromptChoiceCard message={"Select a facility to Begin"} />
+          <PromptChoiceCard message={'Select a facility to Begin'} />
         </Grid>
       ) : (
         <>
