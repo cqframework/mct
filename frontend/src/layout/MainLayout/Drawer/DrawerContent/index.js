@@ -6,7 +6,8 @@ import { inputSelection } from 'store/reducers/filter';
 
 import { InputLabel, Select, FormControl, MenuItem } from '@mui/material';
 
-const FacilitiesSelection = ({ facility, facilityList, handleChange }) => {
+const FacilitiesSelection = ({ facility, handleChange }) => {
+  const { facilities } = useSelector((state) => state.data);
   return (
     <>
       <InputLabel id="facilities-select-label">Facilities</InputLabel>
@@ -17,7 +18,11 @@ const FacilitiesSelection = ({ facility, facilityList, handleChange }) => {
         label="Facilities"
         onChange={(e) => handleChange(e.target.value)}
       >
-        <MenuItem value={'1234'}>Yale New Haven Hospital</MenuItem>
+        {facilities.map((facility) => (
+          <MenuItem key={facility.id} value={facility.id}>
+            {facility.name}
+          </MenuItem>
+        ))}
       </Select>
     </>
   );

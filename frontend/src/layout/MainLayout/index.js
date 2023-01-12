@@ -18,7 +18,7 @@ const MainLayout = () => {
   const matchDownLG = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
 
-  const { drawerOpen, facility, date, measure } = useSelector((state) => state.filter);
+  const { drawerOpen, facility } = useSelector((state) => state.filter);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -42,10 +42,10 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (status === 'idle') {
-      console.log('gathering facilities');
       dispatch(fetchFacilities());
     }
   }, [dispatch, status]);
+
   if (facilities.length === 0) {
     return <LoadingPage message={'Retrieving Facilities'} />;
   }
