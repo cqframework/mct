@@ -6,19 +6,18 @@ import { inputSelection } from 'store/reducers/filter';
 
 import { InputLabel, Select, FormControl, MenuItem } from '@mui/material';
 
-const FacilitiesSelection = ({ facility, handleChange }) => {
-  const { facilities } = useSelector((state) => state.data);
+const FacilitiesSelection = ({ currentFacility, handleChange, facilities }) => {
   return (
     <>
       <InputLabel id="facilities-select-label">Facilities</InputLabel>
       <Select
         labelId="facilities-select-label"
         id="facilities-select"
-        value={facility}
+        value={currentFacility}
         label="Facilities"
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange(e?.target?.value)}
       >
-        {facilities.map((facility) => (
+        {facilities?.map((facility) => (
           <MenuItem key={facility.id} value={facility.id}>
             {facility.name}
           </MenuItem>
@@ -29,7 +28,8 @@ const FacilitiesSelection = ({ facility, handleChange }) => {
 };
 
 const DrawerContent = () => {
-  const facility = useSelector((state) => state.filter.facility);
+  const { facility } = useSelector((state) => state.filter);
+  const { facilities } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   return (
@@ -43,7 +43,8 @@ const DrawerContent = () => {
     >
       <FormControl required variant="standard" sx={{ m: 3, mt: 10, minWidth: 180 }}>
         <FacilitiesSelection
-          facility={facility}
+          facilities={facilities}
+          currentFacility={facility}
           handleChange={(newFacility) => {
             dispatch(inputSelection({ type: 'facility', value: newFacility }));
           }}
