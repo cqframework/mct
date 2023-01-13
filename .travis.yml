@@ -4,10 +4,6 @@ python:
 services:
   - docker
 
-before_install:
-  - cd ./frontend
-  - docker build -t mct-frontend:$TRAVIS_COMMIT .
-
 install:
   - cd $TRAVIS_BUILD_DIR
   - ./bin/install_ci_dependencies.sh
@@ -15,10 +11,14 @@ install:
 jobs:
   include:
     - stage: test
-      script: docker run --entrypoint yarn mct-frontend:$TRAVIS_COMMIT test
+      script: 
+        - docker build --target builder -t mct-frontend:$TRAVIS_COMMIT_test .
+        - docker run --entrypoint yarn mct-frontend:$TRAVIS_COMMIT_test test
       install: skip
     - stage: deploy
       if: branch = main
       script:
+        - cd ./frontend
+        - docker build -t mct-frontend:$TRAVIS_COMMIT .
         - cd $TRAVIS_BUILD_DIR
         - ./bin/deploy.sh
