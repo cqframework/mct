@@ -48,6 +48,7 @@
         "lint": "eslint --ext js .",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "test-ci": "CI=true react-scripts test",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {

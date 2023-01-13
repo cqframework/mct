@@ -1,9 +1,8 @@
 import moment from 'moment';
 
-const currentYear = new Date().getFullYear();
-
 const createPeriodFromQuarter = (quarter) => {
   let start, end;
+  const currentYear = new Date().getFullYear();
   switch (quarter) {
     case 'q1':
       start = moment(`Janurary 1, ${currentYear}`).startOf('quarter').startOf('day').format('MM-DD-YYYY');
