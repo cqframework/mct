@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Toolbar, useMediaQuery } from '@mui/material';
-
-// project import
 import Drawer from './Drawer';
 import Header from './Header';
 import navigation from 'menu-items';
 import Breadcrumbs from 'components/@extended/Breadcrumbs';
-
-// types
 import { openDrawer } from 'store/reducers/filter';
+import { fetchFacilities } from 'store/reducers/data';
+import LoadingPage from 'components/LoadingPage';
 
 const MainLayout = () => {
   const theme = useTheme();
+  const { facilities, status } = useSelector((state) => state.data);
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
 
-  const { drawerOpen, facility, date, measure } = useSelector((state) => state.filter);
+  const { drawerOpen, facility } = useSelector((state) => state.filter);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -42,6 +39,16 @@ const MainLayout = () => {
     if (open !== drawerOpen) setOpen(drawerOpen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawerOpen]);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchFacilities());
+    }
+  }, [dispatch, status]);
+
+  if (facilities.length === 0) {
+    return <LoadingPage message={'Retrieving Facilities'} />;
+  }
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
