@@ -17,7 +17,7 @@ jobs:
         - docker run --entrypoint yarn mct-frontendtest:$TRAVIS_COMMIT test-ci
       install: skip
     - stage: deploy
-      # if: branch = YALEMCT-59-obtain-facilities
+      if: branch = main
       script:
         - cd ./frontend
         - docker build -t mct-frontend:$TRAVIS_COMMIT .
