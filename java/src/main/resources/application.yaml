@@ -1,0 +1,17 @@
+server:
+  port: 8088
+hapi:
+  fhir:
+    fhir_version: R4
+    package_server_url: https://packages.simplifier.net/
+    install_transitive_ig_dependencies: false
+    require_profile_for_validation: true
+    implementationguides:
+      qicore_4_1_1:
+        url: http://hl7.org/fhir/us/qicore/4.1.1/package.tgz
+        name: hl7.fhir.us.qicore
+        version: 4.1.1
+      uscore_3_1_1:
+        url: http://hl7.org/fhir/us/core/STU3.1.1/package.tgz
+        name: hl7.fhir.us.core
+        version: 3.1.1

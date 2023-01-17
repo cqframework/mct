@@ -45,9 +45,10 @@ public class MctApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public RestfulServer restfulServer() {
-		RestfulServer fhirServer = new RestfulServer(FhirContext.forR4Cached());
-		fhirServer.registerProvider(new GatherAPI(fhirServer.getFhirContext()));
+	public RestfulServer restfulServer(MctConfig config) {
+		FhirContext fhirContext = config.fhirContext();
+		RestfulServer fhirServer = new RestfulServer(fhirContext);
+		fhirServer.registerProvider(new GatherAPI(fhirContext));
 		return fhirServer;
 	}
 
