@@ -1,7 +1,18 @@
 package org.opencds.cqf.mct;
 
+import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.validation.FhirValidator;
+import org.hl7.fhir.common.hapi.validation.support.CachingValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.CommonCodeSystemsTerminologyService;
+import org.hl7.fhir.common.hapi.validation.support.InMemoryTerminologyServerValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.RemoteTerminologyServiceValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.SnapshotGeneratingValidationSupport;
+import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
+import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
+import org.hl7.fhir.utilities.npm.NpmPackage;
 import org.opencds.cqf.cql.engine.fhir.model.R4FhirModelResolver;
 import org.opencds.cqf.cql.engine.fhir.retrieve.RestFhirRetrieveProvider;
 import org.opencds.cqf.cql.engine.fhir.searchparam.SearchParameterResolver;
@@ -16,7 +27,6 @@ import org.opencds.cqf.cql.evaluator.builder.FhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.dal.FhirRestFhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.dal.TypedFhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.data.FhirModelResolverFactory;
-import org.opencds.cqf.cql.evaluator.builder.data.FhirRestRetrieveProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.data.TypedRetrieveProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.library.FhirRestLibrarySourceProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.library.TypedLibrarySourceProviderFactory;
@@ -25,18 +35,27 @@ import org.opencds.cqf.cql.evaluator.builder.terminology.TypedTerminologyProvide
 import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
+import org.opencds.cqf.mct.service.ValidationService;
+import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Configuration
+@Import({ MctProperties.class })
 public class MctConfig {
+   @Autowired
+   private MctProperties properties;
    @Bean
    public FhirContext fhirContext() {
-      return FhirContext.forR4Cached();
+      return FhirContext.forCached(properties.getFhirVersion());
    }
 
    @Bean
@@ -82,7 +101,6 @@ public class MctConfig {
             return new RestFhirRetrieveProvider(new SearchParameterResolver(fhirContext), modelResolver, fhirClient);
          }
       });
-//      return Collections.singleton(new FhirRestRetrieveProviderFactory(fhirContext, clientFactory));
    }
 
    @Bean
@@ -133,5 +151,67 @@ public class MctConfig {
    @Bean
    public EndpointConverter endpointConverter(AdapterFactory adapterFactory) {
       return new EndpointConverter(adapterFactory);
+   }
+
+   @Bean
+   public MctNpmPackageValidationSupport mctNpmPackageValidationSupport(
+           FhirContext fhirContext, MctProperties properties) throws IOException {
+      MctNpmPackageValidationSupport validationSupport = new MctNpmPackageValidationSupport(fhirContext);
+      NpmPackage basePackage;
+      for (Map.Entry<String, MctProperties.ImplementationGuide> igs : properties.getImplementationGuides().entrySet()) {
+         if (igs.getValue().getUrl() != null) {
+            basePackage = NpmPackage.fromUrl(igs.getValue().getUrl());
+         }
+         else if (properties.getPackageServerUrl() == null) {
+            throw new ConfigurationException("The package_server_url property must be present if the implementationguides url property is absent");
+         }
+         else if (igs.getValue().getName() != null && igs.getValue().getVersion() != null) {
+            basePackage = NpmPackage.fromUrl(properties.getPackageServerUrl() + "/" + igs.getValue().getName() + "/" + igs.getValue().getVersion());
+         }
+         else if (igs.getValue().getName() != null) {
+            basePackage = NpmPackage.fromUrl(properties.getPackageServerUrl() + "/" + igs.getValue().getName());
+         }
+         else {
+            throw new ConfigurationException("The implementationguides property must include either a url or a name with an optional version");
+         }
+         validationSupport.loadPackage(basePackage);
+         if (properties.getInstallTransitiveIgDependencies()) {
+            for (String dependency : basePackage.dependencies()) {
+               if (properties.getPackageServerUrl() == null) {
+                  throw new ConfigurationException("The package_server_url property must be present to resolve implementationguides dependencies");
+               }
+
+               validationSupport.loadPackage(NpmPackage.fromUrl(properties.getPackageServerUrl() + "/" + dependency.replace("#", "/")));
+            }
+         }
+      }
+
+      return validationSupport;
+   }
+
+   @Bean
+   public ValidationSupportChain validationSupportChain(FhirContext fhirContext, MctNpmPackageValidationSupport mctNpmPackageValidationSupport) {
+      return new ValidationSupportChain(
+              mctNpmPackageValidationSupport,
+              new CommonCodeSystemsTerminologyService(fhirContext),
+              new DefaultProfileValidationSupport(fhirContext),
+              new RemoteTerminologyServiceValidationSupport(fhirContext, "http://tx.fhir.org/r4/"),
+              new InMemoryTerminologyServerValidationSupport(fhirContext),
+              new SnapshotGeneratingValidationSupport(fhirContext)
+      );
+   }
+
+   @Bean
+   public FhirValidator fhirValidator(FhirContext fhirContext, ValidationSupportChain validationSupportChain) {
+      CachingValidationSupport validationSupport = new CachingValidationSupport(validationSupportChain);
+      FhirValidator validator = fhirContext.newValidator();
+      FhirInstanceValidator instanceValidator = new FhirInstanceValidator(validationSupport);
+      validator.registerValidatorModule(instanceValidator);
+      return validator;
+   }
+
+   @Bean
+   public ValidationService validationService(FhirContext fhirContext, FhirValidator fhirValidator, MctProperties properties) {
+      return new ValidationService(fhirContext, fhirValidator, properties.getRequireProfileForValidation());
    }
 }
