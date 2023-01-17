@@ -26,7 +26,7 @@ const DEMO_BUNDLE = {
       fullUrl: 'http://localhost/something',
       resource: {
         resourceType: 'Organization',
-        id: '2',
+        id: '44',
         text: {
           status: 'generated',
           div: '<div xmlns="http://www.w3.org/1999/xhtml">\n      \n      <p>XYZ Insurance</p>\n    \n    </div>'

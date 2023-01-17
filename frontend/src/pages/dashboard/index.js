@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Stack, Box, Button, Grid, TextField, Tabs, Tab, Typography } from '@mui/material';
+import { Stack, Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
 import PromptChoiceCard from './PromptChoiceCard';
@@ -82,9 +82,17 @@ const DashboardDefault = () => {
     return (
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <PromptChoiceCard>
-          <Typography sx={{ mt: 10, fontSize: 30 }} variant="h1" gutterBottom>
-            <ArrowLeftOutlined /> Select a facility to Begin
-          </Typography>
+          <Box sx={{ display: 'flex', mt: 10, fontSize: 30 }}>
+            <Typography variant="h1" gutterBottom>
+              <ArrowLeftOutlined /> Select a
+            </Typography>
+            <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
+              facility
+            </Typography>
+            <Typography variant="h1" gutterBottom>
+              to Begin
+            </Typography>
+          </Box>
         </PromptChoiceCard>
       </Grid>
     );
@@ -94,9 +102,14 @@ const DashboardDefault = () => {
     return (
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <PromptChoiceCard>
-          <Typography sx={{ fontSize: 30 }} variant="h1" gutterBottom>
-            <ArrowUpOutlined /> Now select a measure
-          </Typography>
+          <Box sx={{ display: 'flex', ml: 1, fontSize: 30 }}>
+            <Typography variant="h1" gutterBottom>
+              <ArrowUpOutlined /> Select a{' '}
+            </Typography>
+            <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
+              measure
+            </Typography>
+          </Box>
         </PromptChoiceCard>
       </Grid>
     );
