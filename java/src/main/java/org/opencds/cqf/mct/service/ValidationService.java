@@ -25,10 +25,11 @@ public class ValidationService {
    public ValidationResult validate(IBaseResource resource) {
       ValidationOptions options = new ValidationOptions();
       if (requireProfile) {
-         if (resource.getMeta() == null || resource.getMeta().getProfile() == null) {
+         if (resource.getMeta() == null || resource.getMeta().getProfile() == null
+                 || resource.getMeta().getProfile().isEmpty()) {
             SingleValidationMessage message = new SingleValidationMessage();
             message.setSeverity(ResultSeverityEnum.ERROR);
-            message.setMessage(String.format("The resource %s does not have a specified profile", resource.getIdElement().getValue()));
+            message.setMessage("Missing profile declaration");
             return new ValidationResult(fhirContext, Collections.singletonList(message));
          }
          for (IPrimitiveType<String> profile : resource.getMeta().getProfile()) {

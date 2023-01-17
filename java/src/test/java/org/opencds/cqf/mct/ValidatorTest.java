@@ -58,6 +58,19 @@ class ValidatorTest {
    }
 
    @Test
+   void validatePatientMissingProfile() {
+      Patient patient = new Patient();
+      patient.setId("example");
+      patient.addIdentifier().setUse(Identifier.IdentifierUse.USUAL).setSystem("urn:oid:1.2.36.146.595.217.0.1").setValue("12345");
+      patient.addName().setFamily("Doe").addGiven("Jane");
+      patient.setGender(Enumerations.AdministrativeGender.FEMALE);
+      patient.setBirthDate(new Date(25200000L));
+
+      ValidationResult result = validationService.validate(patient);
+      assertFalse(result.isSuccessful());
+   }
+
+   @Test
    void validateConditionValid() {
       Condition condition = new Condition();
       condition.setId("example");
@@ -80,6 +93,22 @@ class ValidatorTest {
       condition.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition"));
       condition.setCode(new CodeableConcept().addCoding(
               new Coding().setCode("404684003").setSystem("http://snomed.info/sct")));
+      condition.setSubject(new Reference("Patient/example"));
+
+      ValidationResult result = validationService.validate(condition);
+      assertFalse(result.isSuccessful());
+   }
+
+   @Test
+   void validateConditionInvalidCode() {
+      Condition condition = new Condition();
+      condition.setId("example");
+      condition.setMeta(new Meta().addProfile("http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition"));
+      condition.addCategory(new CodeableConcept().addCoding(
+              new Coding().setCode("problem-list-item").
+                      setSystem("http://terminology.hl7.org/CodeSystem/condition-category")));
+      condition.setCode(new CodeableConcept().addCoding(
+              new Coding().setCode("12345").setSystem("http://snomed.info/sct")));
       condition.setSubject(new Reference("Patient/example"));
 
       ValidationResult result = validationService.validate(condition);

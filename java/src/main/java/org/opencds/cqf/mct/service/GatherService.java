@@ -1,7 +1,6 @@
 package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.util.DateUtils;
-import ca.uhn.fhir.validation.FhirValidator;
 import ca.uhn.fhir.validation.ValidationResult;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Endpoint;
@@ -34,7 +33,6 @@ public class GatherService {
    private final LibrarySourceProviderFactory librarySourceProviderFactory;
    private final FhirDalFactory fhirDalFactory;
    private final EndpointConverter endpointConverter;
-   private final FhirValidator fhirValidator;
 
    private final ValidationService validationService;
 
@@ -44,7 +42,6 @@ public class GatherService {
       librarySourceProviderFactory = SpringContext.getBean(LibrarySourceProviderFactory.class);
       fhirDalFactory = SpringContext.getBean(FhirDalFactory.class);
       endpointConverter = SpringContext.getBean(EndpointConverter.class);
-      fhirValidator = SpringContext.getBean(FhirValidator.class);
       validationService = SpringContext.getBean(ValidationService.class);
    }
 
