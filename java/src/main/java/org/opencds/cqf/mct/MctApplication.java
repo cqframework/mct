@@ -2,7 +2,9 @@ package org.opencds.cqf.mct;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.server.RestfulServer;
+import org.opencds.cqf.mct.api.FacilityRegistrationAPI;
 import org.opencds.cqf.mct.api.GatherAPI;
+import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.SpringApplication;
@@ -49,6 +51,7 @@ public class MctApplication extends SpringBootServletInitializer {
 		FhirContext fhirContext = config.fhirContext();
 		RestfulServer fhirServer = new RestfulServer(fhirContext);
 		fhirServer.registerProvider(new GatherAPI(fhirContext));
+		fhirServer.registerProvider(new FacilityRegistrationAPI(fhirContext));
 		return fhirServer;
 	}
 

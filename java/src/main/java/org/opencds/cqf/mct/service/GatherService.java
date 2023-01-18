@@ -33,8 +33,8 @@ public class GatherService {
    private final LibrarySourceProviderFactory librarySourceProviderFactory;
    private final FhirDalFactory fhirDalFactory;
    private final EndpointConverter endpointConverter;
-
    private final ValidationService validationService;
+   private final FacilityRegistrationService facilityRegistrationService;
 
    public GatherService() {
       terminologyProviderFactory = SpringContext.getBean(TerminologyProviderFactory.class);
@@ -43,6 +43,7 @@ public class GatherService {
       fhirDalFactory = SpringContext.getBean(FhirDalFactory.class);
       endpointConverter = SpringContext.getBean(EndpointConverter.class);
       validationService = SpringContext.getBean(ValidationService.class);
+      facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
    }
 
    public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
@@ -79,8 +80,7 @@ public class GatherService {
    }
 
    public String getFacilityUrl(String facilityId) {
-      // TODO: update once facility registration is fleshed out
-      return "http://localhost:8080/fhir";
+      return facilityRegistrationService.getFhirUrl(facilityId);
    }
 
    public List<String> getPatientIds(Group patients) {
