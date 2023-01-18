@@ -35,6 +35,7 @@ import org.opencds.cqf.cql.evaluator.builder.terminology.TypedTerminologyProvide
 import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
+import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,5 +214,10 @@ public class MctConfig {
    @Bean
    public ValidationService validationService(FhirContext fhirContext, FhirValidator fhirValidator, MctProperties properties) {
       return new ValidationService(fhirContext, fhirValidator, properties.getRequireProfileForValidation());
+   }
+
+   @Bean
+   public FacilityRegistrationService facilityRegistrationService() {
+      return new FacilityRegistrationService();
    }
 }
