@@ -25,7 +25,7 @@ const AccordionSummary = styled((props) => (
   backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-    transform: 'rotate(-90deg)'
+    transform: isOperationOutcome ? 'rotate(-90deg)' : 'rotate(0deg)'
   },
   '& .MuiAccordionSummary-content': {
     marginLeft: theme.spacing(1)
@@ -63,6 +63,9 @@ export default function ValidationDataTable({ resources }) {
           <Accordion key={i.id} defaultExpanded={isOperationOutcome} onChange={handleChange(i.id)}>
             <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={isOperationOutcome}>
               <Typography>{i.resourceType}</Typography>
+              {isOperationOutcome && (
+                <Typography>{`(${i?.issue?.length}) issues`}</Typography>
+              )}
             </AccordionSummary>
             {isOperationOutcome &&
               i.issue.map((issue, index) => (
