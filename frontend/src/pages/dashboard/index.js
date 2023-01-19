@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Stack, Box, Grid, Tabs, Tab, Typography } from '@mui/material';
+import { Stack, Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
 import PromptChoiceCard from './PromptChoiceCard';
@@ -10,9 +10,11 @@ import DemoGraph from './DemoGraph';
 import MeasureReportJson from 'fixtures/MeasureReport.json';
 import MeasureReportMCT from 'fixtures/MeasureReportMCT.json';
 import { useDispatch, useSelector } from 'react-redux';
-import { extractDescription, populationGather } from 'utils/measureReportHelpers';
+import { extractDescription, gatherIndividualList, populationGather, parseStratifier } from 'utils/measureReportHelpers';
+import { gatherPatientDisplayData } from 'utils/patientHelper';
 import PopulationStatistics from './PopulationStatistics';
 import PatientColumnChart from './PatientColumnChart';
+import ValidationDataTable from './ValidationDataTable';
 import { createPeriodFromQuarter } from 'utils/queryHelper';
 
 const TabPanel = (props) => {
@@ -26,6 +28,23 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`
   };
 }
+
+const PatientInfoCard = ({ name, birthDate, gender, mrn }) => (
+  <Card sx={{ minWidth: 275 }}>
+    <CardContent>
+      <Typography sx={{ fontSize: 20 }} color="primary.main" gutterBottom>
+        {name}
+      </Typography>
+      <Typography variant="h5" component="div">
+        {birthDate}
+      </Typography>
+      <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        {gender}
+      </Typography>
+      <Typography variant="body2">MRN: {mrn}</Typography>
+    </CardContent>
+  </Card>
+);
 
 const buildMeasurePayload = (facility, measure, quarter) => {
   const period = createPeriodFromQuarter(quarter);
@@ -117,35 +136,32 @@ const DashboardDefault = () => {
 
   const description = extractDescription(measureReport);
   const population = populationGather(measureReport.group[0]);
+  const stratifier = parseStratifier(measureReport);
 
-  const stratifier = {};
-  measureReport.group[0].stratifier.forEach((data) => {
-    const stratKey = data.code[0].coding?.[0]?.code;
-    const stratumData = {};
-    data?.stratum?.forEach((stratum) => {
-      const key = stratum.value.text;
-      stratumData[key] = populationGather(stratum);
-    });
-
-    stratifier[stratKey] = {
-      ...data.code[0].coding?.[0],
-      data: stratumData,
-      title: data.extension?.[0]?.valueString
-    };
-  });
+  const individualListInfo = gatherIndividualList(MeasureReportMCT);
+  const patientInfo = gatherPatientDisplayData(individualListInfo.patient);
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="MeasureReport Data" {...a11yProps(0)} />
-            <Tab label="Demo" {...a11yProps(1)} />
+            <Tab label="Individual Data" {...a11yProps(0)} />
+            <Tab label="Population Data" {...a11yProps(1)} />
+            <Tab label="Demo" {...a11yProps(2)} />
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
+          <Grid item xs={4} sx={{ mb: -2.25 }}>
+            <PatientInfoCard {...patientInfo} />
+          </Grid>
+          <Grid item xs={8} sx={{ mb: -2.25 }}>
+            <ValidationDataTable resources={individualListInfo.resources} />
+          </Grid>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
           <Grid item xs={12} sx={{ mb: -2.25 }}>
-            <Typography variant="h1">Diabetes Report Data Demographics</Typography>
+            <Typography variant="h1">Diabetes Report Population Data Demographics</Typography>
             <Typography variant="p" color="textSecondary">
               {description}
             </Typography>
@@ -170,7 +186,7 @@ const DashboardDefault = () => {
             </MainCard>
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={2}>
           <DemoGraph />
         </TabPanel>
       </>

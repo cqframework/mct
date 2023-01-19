@@ -106,6 +106,65 @@
         {
           "fullUrl": "c247b95f-44a0-4ba4-af88-29419f6454af",
           "resource": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "processing",
+                "details": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                      "code": "Validation_VAL_Profile_Minimum"
+                    }
+                  ]
+                },
+                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                "location": [
+                  "Condition",
+                  "Line 1, Col 2"
+                ]
+              },
+              {
+                "severity": "warning",
+                "code": "processing",
+                "details": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                      "code": "Validation_VAL_Profile_Minimum"
+                    }
+                  ]
+                },
+                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                "location": [
+                  "Condition",
+                  "Line 1, Col 2"
+                ]
+              },
+              {
+                "severity": "information",
+                "code": "processing",
+                "details": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                      "code": "Validation_VAL_Profile_Minimum"
+                    }
+                  ]
+                },
+                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                "location": [
+                  "Condition",
+                  "Line 1, Col 2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "fullUrl": "c247b95f-44a0-4ba4-af88-29419f6454af",
+          "resource": {
             "resourceType": "List",
             "id": "c247b95f-44a0-4ba4-af88-29419f6454af",
             "title": "initial-population",
