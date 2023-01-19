@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { LeftOutlined, WarningOutlined, ExclamationCircleOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { IconButton, Tooltip, Typography } from '@mui/material';
+
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 
 const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
@@ -57,6 +58,15 @@ export default function ValidationDataTable({ resources }) {
 
   return (
     <div>
+      <Typography variant={'h4'}>
+        Validation Messages
+      <Tooltip title={'Issues discovered from measure calculation'}>
+        <IconButton>
+          <InfoCircleOutlined />
+        </IconButton>
+      </Tooltip>    
+      </Typography>
+      
       {resources.map((i) => {
         const isOperationOutcome = i.resourceType === 'OperationOutcome';
         return (
