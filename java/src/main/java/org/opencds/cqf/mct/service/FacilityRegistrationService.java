@@ -6,6 +6,7 @@ import org.hl7.fhir.r4.model.Endpoint;
 import org.hl7.fhir.r4.model.Location;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Resource;
+import org.opencds.cqf.mct.config.MctConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +27,13 @@ public class FacilityRegistrationService {
    public void registerFacility(List<Location> locations) {
       for (Location location : locations) {
          resolveFhirEndpoint(location);
-         locationMap.put(location.getIdElement().getIdPart(), location);
+         locationMap.put(location.getIdElement().getValue(), location);
       }
    }
 
    public void registerFacility(Organization organization) {
       resolveFhirEndpoint(organization);
-      organizationMap.put(organization.getIdElement().getIdPart(), organization);
+      organizationMap.put(organization.getIdElement().getValue(), organization);
    }
 
    public void unregisterFacility(String facilityId) {
@@ -40,7 +41,7 @@ public class FacilityRegistrationService {
       Object removedOrg = organizationMap.remove(facilityId);
       fhirEndpointMap.remove(facilityId);
       if (removedLocation == null && removedOrg == null) {
-         throw new FHIRException(facilityId + " not found");
+         throw new FHIRException("Facility: " + facilityId + " not found");
       }
    }
 
@@ -49,13 +50,13 @@ public class FacilityRegistrationService {
          if (containedResource instanceof Endpoint) {
             Endpoint endpoint = (Endpoint) containedResource;
             if (endpoint.hasConnectionType() && endpoint.getConnectionType().hasCode()
-                    && endpoint.getConnectionType().getCode().equals("hl7-fhir-rest")) {
-               fhirEndpointMap.put(parent.getIdElement().getIdPart(), endpoint);
+                    && endpoint.getConnectionType().getCode().equals(MctConstants.FHIR_REST_CONNECTION_TYPE)) {
+               fhirEndpointMap.put(parent.getIdElement().getValue(), endpoint);
                return;
             }
          }
       }
-      throw new FHIRException("No contained REST FHIR endpoint was present");
+      throw new FHIRException(MctConstants.MISSING_FHIR_REST_ENDPOINT);
    }
 
    public String getFhirUrl(String facilityId) {

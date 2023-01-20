@@ -9,6 +9,7 @@ import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.Reference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.opencds.cqf.mct.config.MctConstants;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
@@ -30,21 +31,22 @@ class GatherOperationTest {
 
    private IGenericClient client;
 
-   private final Parameters.ParametersParameterComponent patients = part("patients",
+   private final Parameters.ParametersParameterComponent patients = part(
+           MctConstants.GATHER_PARAM_PATIENTS,
            new Group().setMember(Collections.singletonList(new Group.GroupMemberComponent()
                    .setEntity(new Reference("Patient/patient-example")))));
-   private final Parameters.ParametersParameterComponent noPatientEntity = part("patients",
-           new Group().setId("missing-patients"));
-   private final Parameters.ParametersParameterComponent facilities = part("facilities",
-           "Location/facility-example");
-   private final Parameters.ParametersParameterComponent measure = part("measure",
-           "Measure/measure-example");
-   private final Parameters.ParametersParameterComponent period = part("period",
-           new Period().setStart(new Date()).setEnd(new Date()));
-   private final Parameters.ParametersParameterComponent noPeriodStart = part("period",
-           new Period().setEnd(new Date()));
-   private final Parameters.ParametersParameterComponent noPeriodEnd = part("period",
-           new Period().setStart(new Date()));
+   private final Parameters.ParametersParameterComponent noPatientEntity = part(
+           MctConstants.GATHER_PARAM_PATIENTS, new Group().setId("missing-patients"));
+   private final Parameters.ParametersParameterComponent facilities = part(
+           MctConstants.GATHER_PARAM_FACILITIES, "Location/facility-example");
+   private final Parameters.ParametersParameterComponent measure = part(
+           MctConstants.GATHER_PARAM_MEASURE, "Measure/measure-example");
+   private final Parameters.ParametersParameterComponent period = part(
+           MctConstants.GATHER_PARAM_PERIOD, new Period().setStart(new Date()).setEnd(new Date()));
+   private final Parameters.ParametersParameterComponent noPeriodStart = part(
+           MctConstants.GATHER_PARAM_PERIOD, new Period().setEnd(new Date()));
+   private final Parameters.ParametersParameterComponent noPeriodEnd = part(
+           MctConstants.GATHER_PARAM_PERIOD, new Period().setStart(new Date()));
 
    @BeforeEach
    public void setup() {
@@ -55,60 +57,60 @@ class GatherOperationTest {
    @Test
    void missingPatients() {
       Parameters allButPatients = parameters(facilities, measure, period);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButPatients).execute();
-      validateResponse(response, "Missing required Group FHIR resource \"patients\" parameter that identifies the patients for the $gather operation");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButPatients).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_PATIENTS);
    }
 
    @Test
    void missingPatientsInGroup() {
       Parameters noPatients = parameters(noPatientEntity, facilities, measure, period);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(noPatients).execute();
-      validateResponse(response, "Group FHIR resource \"patients\" parameter has no members");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(noPatients).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_MEMBERS);
    }
 
    @Test
    void missingFacilities() {
       Parameters allButFacilities = parameters(patients, measure, period);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButFacilities).execute();
-      validateResponse(response, "Missing required List<String> \"facilities\" parameter that identifies the facilities for the $gather operation");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButFacilities).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_FACILITIES);
    }
 
    @Test
    void missingMeasure() {
       Parameters allButMeasure = parameters(patients, facilities, period);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButMeasure).execute();
-      validateResponse(response, "Missing required Measure FHIR resource identifier \"measure\" parameter that identifies the measure for the $gather operation");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButMeasure).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_MEASURE);
    }
 
    @Test
    void missingPeriod() {
       Parameters allButPeriod = parameters(patients, facilities, measure);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButPeriod).execute();
-      validateResponse(response, "Missing required Period FHIR data type \"period\" parameter that identifies the measurement period for the $gather operation");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButPeriod).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_PERIOD);
    }
 
    @Test
    void missingPeriodStart() {
       Parameters allButPeriod = parameters(patients, facilities, measure, noPeriodStart);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButPeriod).execute();
-      validateResponse(response, "Period FHIR data type \"period\" parameter is missing a start date");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButPeriod).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_PERIOD_START);
    }
 
    @Test
    void missingPeriodEnd() {
       Parameters allButPeriod = parameters(patients, facilities, measure, noPeriodEnd);
-      Parameters response = client.operation().onServer().named("$gather").withParameters(allButPeriod).execute();
-      validateResponse(response, "Period FHIR data type \"period\" parameter is missing an end date");
+      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButPeriod).execute();
+      validateResponse(response, MctConstants.GATHER_PARAM_NULL_PERIOD_END);
    }
 
    private void validateResponse(Parameters response, String errorMessage) {
-      assertTrue(response.hasParameter("error"));
+      assertTrue(response.hasParameter(MctConstants.SEVERITY_ERROR));
       assertTrue(response.getParameterFirstRep().hasResource());
       assertTrue(response.getParameterFirstRep().getResource() instanceof OperationOutcome);
       OperationOutcome errorResponse = (OperationOutcome) response.getParameterFirstRep().getResource();
       assertTrue(errorResponse.hasIssue());
       OperationOutcome.OperationOutcomeIssueComponent errorIssue = errorResponse.getIssueFirstRep();
-      assertTrue(errorIssue.hasCode() && errorIssue.getCode() == OperationOutcome.IssueType.INVALID);
+      assertTrue(errorIssue.hasCode() && errorIssue.getCode() == OperationOutcome.IssueType.PROCESSING);
       assertTrue(errorIssue.hasSeverity() && errorIssue.getSeverity() == OperationOutcome.IssueSeverity.ERROR);
       assertTrue(errorIssue.hasDiagnostics());
       assertEquals(errorMessage, errorIssue.getDiagnostics());
