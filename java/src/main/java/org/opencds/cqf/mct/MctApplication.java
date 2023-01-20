@@ -4,7 +4,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.server.RestfulServer;
 import org.opencds.cqf.mct.api.FacilityRegistrationAPI;
 import org.opencds.cqf.mct.api.GatherAPI;
-import org.opencds.cqf.mct.service.FacilityRegistrationService;
+import org.opencds.cqf.mct.config.MctProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Import;
 
 @ServletComponentScan(basePackageClasses = { RestfulServer.class })
 @SpringBootApplication(exclude = { ElasticsearchRestClientAutoConfiguration.class })
-@Import({ MctConfig.class })
+@Import({ MctProperties.class })
 public class MctApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
@@ -47,12 +47,16 @@ public class MctApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public RestfulServer restfulServer(MctConfig config) {
-		FhirContext fhirContext = config.fhirContext();
+	public RestfulServer restfulServer(FhirContext fhirContext, SpringContext springContext) {
 		RestfulServer fhirServer = new RestfulServer(fhirContext);
-		fhirServer.registerProvider(new GatherAPI(fhirContext));
-		fhirServer.registerProvider(new FacilityRegistrationAPI(fhirContext));
+		fhirServer.registerProvider(new GatherAPI());
+		fhirServer.registerProvider(new FacilityRegistrationAPI());
 		return fhirServer;
+	}
+
+	@Bean
+	public FhirContext fhirContext(MctProperties properties) {
+		return FhirContext.forCached(properties.getFhirVersion());
 	}
 
 }

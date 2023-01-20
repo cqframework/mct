@@ -4,6 +4,7 @@ hapi:
   fhir:
     fhir_version: R4
     package_server_url: https://packages.simplifier.net/
+    terminology_server_url: http://tx.fhir.org/r4/
     install_transitive_ig_dependencies: false
     require_profile_for_validation: true
     implementationguides:

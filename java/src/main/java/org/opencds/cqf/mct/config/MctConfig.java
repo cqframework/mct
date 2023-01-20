@@ -1,4 +1,4 @@
-package org.opencds.cqf.mct;
+package org.opencds.cqf.mct.config;
 
 import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.context.FhirContext;
@@ -36,9 +36,9 @@ import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
+import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -52,12 +52,6 @@ import java.util.Set;
 @Configuration
 @Import({ MctProperties.class })
 public class MctConfig {
-   @Autowired
-   private MctProperties properties;
-   @Bean
-   public FhirContext fhirContext() {
-      return FhirContext.forCached(properties.getFhirVersion());
-   }
 
    @Bean
    public ClientFactory clientFactory(FhirContext fhirContext) {
@@ -191,12 +185,14 @@ public class MctConfig {
    }
 
    @Bean
-   public ValidationSupportChain validationSupportChain(FhirContext fhirContext, MctNpmPackageValidationSupport mctNpmPackageValidationSupport) {
+   public ValidationSupportChain validationSupportChain(
+           MctNpmPackageValidationSupport mctNpmPackageValidationSupport,
+           FhirContext fhirContext, MctProperties properties) {
       return new ValidationSupportChain(
               mctNpmPackageValidationSupport,
               new CommonCodeSystemsTerminologyService(fhirContext),
               new DefaultProfileValidationSupport(fhirContext),
-              new RemoteTerminologyServiceValidationSupport(fhirContext, "http://tx.fhir.org/r4/"),
+              new RemoteTerminologyServiceValidationSupport(fhirContext, properties.getTerminologyServerUrl()),
               new InMemoryTerminologyServerValidationSupport(fhirContext),
               new SnapshotGeneratingValidationSupport(fhirContext)
       );
@@ -219,5 +215,10 @@ public class MctConfig {
    @Bean
    public FacilityRegistrationService facilityRegistrationService() {
       return new FacilityRegistrationService();
+   }
+
+   @Bean
+   public GatherService gatherService() {
+      return new GatherService();
    }
 }

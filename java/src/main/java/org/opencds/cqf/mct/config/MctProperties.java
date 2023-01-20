@@ -1,4 +1,4 @@
-package org.opencds.cqf.mct;
+package org.opencds.cqf.mct.config;
 
 import ca.uhn.fhir.context.FhirVersionEnum;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,6 +13,8 @@ import java.util.Map;
 public class MctProperties {
    private FhirVersionEnum fhirVersion = null;
    private String packageServerUrl = null;
+
+   private String terminologyServerUrl = null;
    private boolean installTransitiveIgDependencies = true;
 
    private boolean requireProfileForValidation = true;
@@ -32,6 +34,14 @@ public class MctProperties {
 
    public void setPackageServerUrl(String packageServerUrl) {
       this.packageServerUrl = packageServerUrl;
+   }
+
+   public String getTerminologyServerUrl() {
+      return terminologyServerUrl;
+   }
+
+   public void setTerminologyServerUrl(String terminologyServerUrl) {
+      this.terminologyServerUrl = terminologyServerUrl;
    }
 
    public boolean getInstallTransitiveIgDependencies() {
