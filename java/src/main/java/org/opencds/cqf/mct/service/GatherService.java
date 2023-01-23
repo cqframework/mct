@@ -2,6 +2,7 @@ package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.util.DateUtils;
 import ca.uhn.fhir.validation.ValidationResult;
+import org.hl7.fhir.instance.model.api.IBaseOperationOutcome;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Endpoint;
 import org.hl7.fhir.r4.model.Extension;
@@ -24,6 +25,7 @@ import org.opencds.cqf.mct.SpringContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class GatherService {
@@ -62,7 +64,8 @@ public class GatherService {
          report.addExtension(getLocationExtension(facility));
          List<DomainResource> validationResults = validation(facilityUrl, report);
          for (DomainResource validationResult : validationResults) {
-            report.addContained(validationResult);
+            parameters.addParameter().setName("validation-result").setResource(validationResult);
+//            report.addContained(validationResult);
          }
          parameters.addParameter().setName("return").setResource(report);
       }
@@ -91,15 +94,22 @@ public class GatherService {
       return new Extension().setUrl("http://cms.gov/fhir/mct/StructureDefinition/measurereport-location").setValue(new Reference(locationReference));
    }
 
+   private Extension getValidationExtension(String reference) {
+      return new Extension().setUrl("http://cms.gov/fhir/mct/StructureDefinition/validation-result").setValue(new Reference(reference));
+   }
+
    private List<DomainResource> validation(String url, MeasureReport report) {
       List<DomainResource> resources = new ArrayList<>();
       FhirDal fhirDal = fhirDalFactory.create(new EndpointInfo().setAddress(url));
       for (Reference reference : report.getEvaluatedResource()) {
-         DomainResource resource = (DomainResource) fhirDal.read(new IdType(reference.getType(), reference.getId()));
-         reference.setReference("#" + reference.getId());
+         DomainResource resource = (DomainResource) fhirDal.read(new IdType(reference.getReference()));
          ValidationResult result = validationService.validate(resource);
          if (!result.isSuccessful()) {
-            resource.addContained((Resource) result.toOperationOutcome());
+            String id = UUID.randomUUID().toString();
+            IBaseOperationOutcome validationResult = result.toOperationOutcome();
+            validationResult.setId(id);
+            resource.addExtension(getValidationExtension("#" + id));
+            resource.addContained((Resource) validationResult);
          }
          resources.add(resource);
       }

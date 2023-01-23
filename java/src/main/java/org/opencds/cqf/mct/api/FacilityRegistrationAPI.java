@@ -47,7 +47,7 @@ public class FacilityRegistrationAPI {
       return result;
    }
 
-   @Operation(name = MctConstants.UNREGISTER_OPERATION_NAME)
+   @Operation(name = MctConstants.UNREGISTER_OPERATION_NAME, idempotent = true)
    public OperationOutcome unregisterFacility(
            @OperationParam(name = MctConstants.UNREGISTER_PARAM_FACILITY_ID) String facilityId) {
       OperationOutcome result = new OperationOutcome();
