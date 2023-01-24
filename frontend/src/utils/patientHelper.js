@@ -11,7 +11,7 @@ const gatherPatientDisplayData = (pt) => {
   };
 };
 
-export const getMRNFromPatient = (patient) =>
+const getMRNFromPatient = (patient) =>
   patient?.identifier?.find(
     (item) =>
       item?.type?.coding?.[0]?.system === 'http://terminology.hl7.org/CodeSystem/v2-0203' ||
@@ -20,7 +20,7 @@ export const getMRNFromPatient = (patient) =>
       item.system === 'urn:oid:1.2.840.114350.1.13.362.3.7.3.737384.0' // MRN from MGB Epic System
   )?.value;
 
-export const getDisplayName = (patient) => {
+const getDisplayName = (patient) => {
   const patientName = patient?.name;
   if (patientName && patientName?.length > 0) {
     const firstName = patientName[0]?.given?.[0];

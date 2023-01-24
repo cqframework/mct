@@ -106,92 +106,6 @@
         {
           "fullUrl": "c247b95f-44a0-4ba4-af88-29419f6454af",
           "resource": {
-            "resourceType": "OperationOutcome",
-            "issue": [
-              {
-                "severity": "error",
-                "code": "processing",
-                "details": {
-                  "coding": [
-                    {
-                      "system": "http://hl7.org/fhir/java-core-messageId",
-                      "code": "Validation_VAL_Profile_Minimum"
-                    }
-                  ]
-                },
-                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
-                "location": [
-                  "Condition",
-                  "Line 1, Col 2"
-                ]
-              },
-              {
-                "severity": "warning",
-                "code": "processing",
-                "details": {
-                  "coding": [
-                    {
-                      "system": "http://hl7.org/fhir/java-core-messageId",
-                      "code": "Validation_VAL_Profile_Minimum"
-                    }
-                  ]
-                },
-                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
-                "location": [
-                  "Condition",
-                  "Line 1, Col 2"
-                ]
-              },
-              {
-                "severity": "information",
-                "code": "processing",
-                "details": {
-                  "coding": [
-                    {
-                      "system": "http://hl7.org/fhir/java-core-messageId",
-                      "code": "Validation_VAL_Profile_Minimum"
-                    }
-                  ]
-                },
-                "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
-                "location": [
-                  "Condition",
-                  "Line 1, Col 2"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "fullUrl": "c247b95f-44a0-4ba4-af88-29419f6454af",
-          "resource": {
-            "resourceType": "OperationOutcome",
-            "id": "101",
-            "text": {
-              "status": "generated",
-              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>The code &quot;W&quot; is not known and not legal Patient.gender.</p>\n    </div>"
-            },
-            "issue": [
-              {
-                "severity": "error",
-                "code": "code-invalid",
-                "details": {
-                  "text": "The code \"W\" is not known and not legal in this context"
-                },
-                "diagnostics": "Acme.Interop.FHIRProcessors.Patient.processGender line 2453",
-                "location": [
-                  "/f:Patient/f:gender"
-                ],
-                "expression": [
-                  "Patient.gender"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "fullUrl": "c247b95f-44a0-4ba4-af88-29419f6454af",
-          "resource": {
             "resourceType": "List",
             "id": "c247b95f-44a0-4ba4-af88-29419f6454af",
             "title": "initial-population",
@@ -299,6 +213,64 @@
           "resource": {
             "resourceType": "Condition",
             "id": "denom-EXM104-1",
+            "contained": [
+              {
+                "resourceType": "OperationOutcome",
+                "issue": [
+                  {
+                    "severity": "error",
+                    "code": "processing",
+                    "details": {
+                      "coding": [
+                        {
+                          "system": "http://hl7.org/fhir/java-core-messageId",
+                          "code": "Validation_VAL_Profile_Minimum"
+                        }
+                      ]
+                    },
+                    "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                    "location": [
+                      "Condition",
+                      "Line 1, Col 2"
+                    ]
+                  },
+                  {
+                    "severity": "warning",
+                    "code": "processing",
+                    "details": {
+                      "coding": [
+                        {
+                          "system": "http://hl7.org/fhir/java-core-messageId",
+                          "code": "Validation_VAL_Profile_Minimum"
+                        }
+                      ]
+                    },
+                    "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                    "location": [
+                      "Condition",
+                      "Line 1, Col 2"
+                    ]
+                  },
+                  {
+                    "severity": "information",
+                    "code": "processing",
+                    "details": {
+                      "coding": [
+                        {
+                          "system": "http://hl7.org/fhir/java-core-messageId",
+                          "code": "Validation_VAL_Profile_Minimum"
+                        }
+                      ]
+                    },
+                    "diagnostics": "Condition.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition)",
+                    "location": [
+                      "Condition",
+                      "Line 1, Col 2"
+                    ]
+                  }
+                ]
+              }
+            ],
             "meta": {
               "versionId": "1",
               "lastUpdated": "2020-01-29T16:25:09.734-07:00",
@@ -407,7 +379,7 @@
         }
       ],
       "measureScore": {
-        "value": 0.0
+        "value": 0
       }
     }
   ],
