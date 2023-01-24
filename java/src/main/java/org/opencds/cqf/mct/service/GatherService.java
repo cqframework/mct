@@ -3,6 +3,7 @@ package org.opencds.cqf.mct.service;
 import ca.uhn.fhir.util.DateUtils;
 import ca.uhn.fhir.validation.ValidationResult;
 import org.hl7.fhir.instance.model.api.IBaseOperationOutcome;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Endpoint;
 import org.hl7.fhir.r4.model.Extension;
@@ -62,12 +63,11 @@ public class GatherService {
                  getPatientIds(patients), null, facilityEndpoint, facilityEndpoint,
                  facilityEndpoint, null);
          report.addExtension(getLocationExtension(facility));
+         Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
+         returnBundle.addEntry().setResource(report);
          List<DomainResource> validationResults = validation(facilityUrl, report);
-         for (DomainResource validationResult : validationResults) {
-            parameters.addParameter().setName("validation-result").setResource(validationResult);
-//            report.addContained(validationResult);
-         }
-         parameters.addParameter().setName("return").setResource(report);
+         validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
+         parameters.addParameter().setName("return-bundle").setResource(returnBundle);
       }
       return parameters;
    }
