@@ -68,17 +68,18 @@ export default function ValidationDataTable({ resources }) {
       </Typography>
       
       {resources.map((i) => {
-        const isOperationOutcome = i.resourceType === 'OperationOutcome';
+        const resourceOperationOutcomes = i?.contained?.filter(i => i.resourceType === 'OperationOutcome')?.[0]
+
         return (
-          <Accordion key={i.id} defaultExpanded={isOperationOutcome} onChange={handleChange(i.id)}>
-            <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={isOperationOutcome}>
-              <Typography>{i.resourceType}</Typography>
-              {isOperationOutcome && (
-                <Typography>{`(${i?.issue?.length}) issues`}</Typography>
+          <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes} onChange={handleChange(i.id)}>
+            <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={resourceOperationOutcomes != null}>
+              <Typography>{i.resourceType}/{i.id}</Typography>
+              {resourceOperationOutcomes && (
+                <Typography sx={{color: 'red', ml: 1.5, fontWeight: 'bold'}}>{`(${resourceOperationOutcomes?.issue?.length}) issues`}</Typography>
               )}
             </AccordionSummary>
-            {isOperationOutcome &&
-              i.issue.map((issue, index) => (
+            {resourceOperationOutcomes &&
+              resourceOperationOutcomes?.issue?.map((issue, index) => (
                 <AccordionDetails key={`${i.id}-${index}`}>
                   <Typography>
                     <SeverityIcon severity={issue.severity} />
