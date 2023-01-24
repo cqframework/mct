@@ -1,5 +1,5 @@
 # build phase
-FROM node:18.12.1-alpine as builder
+FROM --platform=linux/amd64 node:18.12.1-alpine as builder
 
 RUN mkdir /app
 
@@ -16,7 +16,7 @@ COPY . ./
 RUN yarn build
 
 # production environment
-FROM nginx:1.23.3-alpine
+FROM --platform=linux/amd64 nginx:1.23.3-alpine
 
 COPY --from=builder /app/build /usr/share/nginx/html
 
