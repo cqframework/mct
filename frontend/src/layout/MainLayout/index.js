@@ -2,23 +2,25 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Box, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, Toolbar, useMediaQuery, Typography } from '@mui/material';
 import Drawer from './Drawer';
 import Header from './Header';
 import navigation from 'menu-items';
 import Breadcrumbs from 'components/@extended/Breadcrumbs';
 import { openDrawer } from 'store/reducers/filter';
-import { fetchFacilities } from 'store/reducers/data';
+import { fetchOrganizations, fetchFacilities } from 'store/reducers/data';
 import LoadingPage from 'components/LoadingPage';
+import OrganizationSelection from './OrganizationSelection';
+import { inputSelection } from 'store/reducers/filter';
 
 const MainLayout = () => {
   const theme = useTheme();
-  const { facilities, status } = useSelector((state) => state.data);
+  const { organizations, facilities, status } = useSelector((state) => state.data);
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
 
-  const { drawerOpen, facility } = useSelector((state) => state.filter);
+  const { drawerOpen, facility, organization } = useSelector((state) => state.filter);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -31,23 +33,39 @@ const MainLayout = () => {
   useEffect(() => {
     setOpen(!matchDownLG);
     dispatch(openDrawer({ drawerOpen: !matchDownLG }));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchDownLG]);
 
   useEffect(() => {
     if (open !== drawerOpen) setOpen(drawerOpen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawerOpen]);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (organizations.length === 0 && status === 'idle') {
+      dispatch(fetchOrganizations());
+    } else if (organization.length !== 0 && status === 'succeeded') {
       dispatch(fetchFacilities());
     }
-  }, [dispatch, status]);
+  }, [dispatch, organization, organizations, status]);
 
-  if (facilities.length === 0) {
-    return <LoadingPage message={'Retrieving Facilities'} />;
+  if (organizations.length === 0) {
+    return <LoadingPage message={'Retrieving Organizations'} />;
+  } else if (organization.length === 0) {
+    return (
+      <OrganizationSelection
+        organizations={organizations}
+        handleChange={(newOrganization) => {
+          dispatch(inputSelection({ type: 'organization', value: newOrganization }));
+        }}
+      />
+    );
+  } else if (facilities.length === 0) {
+    const organizationName = organizations.find((org) => org.id === organization)?.name;
+    return (
+    <LoadingPage>
+      <Typography variant="h1">Retrieving Facilties from</Typography>
+      <Typography sx={{color: 'primary.main'}}variant="h1">{organizationName}</Typography>
+    </LoadingPage>
+    )
   }
 
   return (

@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-const LoadingPage = ({ message }) => {
+const LoadingPage = ({ message = null, children }) => {
   return (
     <Box
       sx={{
@@ -14,7 +14,7 @@ const LoadingPage = ({ message }) => {
       }}
     >
       <CircularProgress />
-      <Typography variant="h1">{message}</Typography>
+      {message == null ? children : <Typography variant="h1">{message}</Typography>}
     </Box>
   );
 };
