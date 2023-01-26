@@ -20,6 +20,6 @@ jobs:
       # if: branch = main
       script:
         - docker build -t mct-frontend:$TRAVIS_COMMIT ./frontend
-        - docker build -t mct-backend:$TRAVIS_COMMIT ./java
+        - DOCKER_BUILDKIT=1 docker build -t mct-backend:$TRAVIS_COMMIT ./java
         - cd $TRAVIS_BUILD_DIR
         - ./bin/deploy.sh
