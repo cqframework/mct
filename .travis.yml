@@ -19,7 +19,7 @@ jobs:
     - stage: deploy
       if: branch = main
       script:
-        - cd ./frontend
-        - docker build -t mct-frontend:$TRAVIS_COMMIT .
+        - docker build -t mct-frontend:$TRAVIS_COMMIT ./frontend
+        - DOCKER_BUILDKIT=1 docker build -t mct-backend:$TRAVIS_COMMIT ./java
         - cd $TRAVIS_BUILD_DIR
         - ./bin/deploy.sh

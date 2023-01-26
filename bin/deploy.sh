@@ -12,6 +12,9 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 docker tag mct-frontend:$TRAVIS_COMMIT ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/mct-frontend:${TRAVIS_COMMIT}
 docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/mct-frontend:${TRAVIS_COMMIT}
 
+docker tag mct-backend:$TRAVIS_COMMIT ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/mct-backend:${TRAVIS_COMMIT}
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/mct-backend:${TRAVIS_COMMIT}
+
 # Setup kubectl context
 aws eks update-kubeconfig --region us-east-1 --name aphl-eks
 kube_cluster=$(aws eks describe-cluster --name aphl-eks --region us-east-1 --output=json | jq ".cluster.arn" | tr -d '"')

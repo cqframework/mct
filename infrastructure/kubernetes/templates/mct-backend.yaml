@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mct-backend
+  namespace: mct
+  labels:
+    tag: {{ .Values.tag }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: mct-backend
+  ports:
+  - name: http 
+    port: 80
+    targetPort: 8088
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mct-backend
+  labels:
+    app: mct-backend
+    tag: {{ .Values.tag }}
+  namespace: mct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mct-backend
+  template:
+    metadata:
+      labels:
+        app: mct-backend
+    spec:
+      containers:
+      - image: {{ .Values.aws.account_id }}.dkr.ecr.us-east-1.amazonaws.com/mct-backend:{{ .Values.tag }}
+        name: mct-backend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8088
+          protocol: TCP
