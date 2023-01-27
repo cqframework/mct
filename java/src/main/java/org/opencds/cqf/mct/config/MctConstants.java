@@ -25,6 +25,9 @@ public class MctConstants {
    public static final String FHIR_REST_CONNECTION_TYPE = "hl7-fhir-rest";
    public static final String MISSING_FHIR_REST_ENDPOINT = "No contained REST FHIR endpoint was present";
 
+   // Measure Configuration Constants
+   public static final String LIST_MEASURE_OPERATION_NAME = "$list-measures";
+
    // OperationOutcome Constants
    public static final String SEVERITY_ERROR = "error";
    public static final String CODE_PROCESSING = "processing";
