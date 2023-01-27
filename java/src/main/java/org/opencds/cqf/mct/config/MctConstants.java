@@ -28,6 +28,9 @@ public class MctConstants {
    // Measure Configuration Constants
    public static final String LIST_MEASURE_OPERATION_NAME = "$list-measures";
 
+   // Receiving System Configuration Constants
+   public static final String LIST_REC_SYSTEM_OPERATION_NAME = "$list-receiving-systems";
+
    // OperationOutcome Constants
    public static final String SEVERITY_ERROR = "error";
    public static final String CODE_PROCESSING = "processing";

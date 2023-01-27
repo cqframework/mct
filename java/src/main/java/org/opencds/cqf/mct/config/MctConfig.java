@@ -42,6 +42,7 @@ import org.opencds.cqf.mct.MctApplication;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
+import org.opencds.cqf.mct.service.ReceivingSystemConfigurationService;
 import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
 import org.springframework.context.annotation.Bean;
@@ -230,6 +231,11 @@ public class MctConfig {
    @Bean
    public MeasureConfigurationService measureConfigurationService() {
       return new MeasureConfigurationService();
+   }
+
+   @Bean
+   public ReceivingSystemConfigurationService receivingSystemConfigurationService() {
+      return new ReceivingSystemConfigurationService();
    }
 
    @Bean
