@@ -4,6 +4,7 @@ import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.util.ClasspathUtil;
 import ca.uhn.fhir.validation.FhirValidator;
 import org.hl7.fhir.common.hapi.validation.support.CachingValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.CommonCodeSystemsTerminologyService;
@@ -12,6 +13,7 @@ import org.hl7.fhir.common.hapi.validation.support.RemoteTerminologyServiceValid
 import org.hl7.fhir.common.hapi.validation.support.SnapshotGeneratingValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
 import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.utilities.npm.NpmPackage;
 import org.opencds.cqf.cql.engine.fhir.model.R4FhirModelResolver;
 import org.opencds.cqf.cql.engine.fhir.retrieve.RestFhirRetrieveProvider;
@@ -33,8 +35,10 @@ import org.opencds.cqf.cql.evaluator.builder.library.TypedLibrarySourceProviderF
 import org.opencds.cqf.cql.evaluator.builder.terminology.FhirRestTerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.terminology.TypedTerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
+import org.opencds.cqf.cql.evaluator.engine.retrieve.BundleRetrieveProvider;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
+import org.opencds.cqf.mct.MctApplication;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.ValidationService;
@@ -220,5 +224,29 @@ public class MctConfig {
    @Bean
    public GatherService gatherService() {
       return new GatherService();
+   }
+
+   @Bean
+   public Bundle receivingSystemsBundle(FhirContext fhirContext) {
+      return fhirContext.newJsonParser().parseResource(Bundle.class,
+              ClasspathUtil.loadResourceAsStream("classpath:receiving-system/receiving-system-bundle.json"));
+   }
+
+   @Bean
+   public Bundle facilitiesBundle(FhirContext fhirContext) {
+      return fhirContext.newJsonParser().parseResource(Bundle.class,
+              ClasspathUtil.loadResourceAsStream("classpath:facilities/facilities-bundle.json"));
+   }
+
+   @Bean
+   public Bundle measuresBundle(FhirContext fhirContext) {
+      return fhirContext.newJsonParser().parseResource(Bundle.class,
+              ClasspathUtil.loadResourceAsStream("classpath:measures/measures-bundle.json"));
+   }
+
+   @Bean
+   public Bundle terminologyBundle(FhirContext fhirContext) {
+      return fhirContext.newJsonParser().parseResource(Bundle.class,
+              ClasspathUtil.loadResourceAsStream("classpath:terminology/terminology-bundle.json"));
    }
 }
