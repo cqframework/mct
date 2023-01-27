@@ -1,15 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import organizationBundle from 'fixtures/BundleOrganization.json';
 import facilityBundle from 'fixtures/BundleLocation.json';
+import measureBundle from 'fixtures/Measure.json';
 
+
+//TODO: Hookup apis here
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
-  await new Promise((r) => setTimeout(r, 2000));
+  await new Promise((r) => setTimeout(r, 1500));
   return organizationBundle.entry.map((i) => i.resource);
 });
 
-export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async () => {
+export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId) => {
   await new Promise((r) => setTimeout(r, 2000));
   return facilityBundle.entry.map((i) => i.resource);
+});
+
+
+export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facilityId) => {
+  await new Promise((r) => setTimeout(r, 1000));
+  return measureBundle.entry.map((i) => i.resource);
 });
 
 const initialState = {
@@ -48,6 +57,20 @@ const data = createSlice({
         state.organizations = state.organizations = action.payload;
       })
       .addCase(fetchOrganizations.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchMeasures.pending, (state, action) => {
+        state.measures = [];
+        state.status = 'loading';
+      })
+      .addCase(fetchMeasures.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.measures = state.measures = action.payload;
+      })
+      .addCase(fetchMeasures.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

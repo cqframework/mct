@@ -71,7 +71,7 @@ export default function ValidationDataTable({ resources }) {
         const resourceOperationOutcomes = i?.contained?.filter(i => i.resourceType === 'OperationOutcome')?.[0]
 
         return (
-          <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes} onChange={handleChange(i.id)}>
+          <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
             <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={resourceOperationOutcomes != null}>
               <Typography>{i.resourceType}/{i.id}</Typography>
               {resourceOperationOutcomes && (
