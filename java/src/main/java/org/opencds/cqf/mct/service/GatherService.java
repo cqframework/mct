@@ -83,7 +83,7 @@ public class GatherService {
    }
 
    public String getFacilityUrl(String facilityId) {
-      return facilityRegistrationService.getFhirUrl(facilityId);
+      return facilityRegistrationService.getFacilityUrl(facilityId);
    }
 
    public List<String> getPatientIds(Group patients) {

@@ -1,0 +1,163 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Organization",
+        "id": "acme",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-organization" ]
+        },
+        "identifier": [{
+          "system": "urn:oid:2.16.840.1.113883.4.336",
+          "use": "secondary",
+          "value": "ACME-CCN"
+        }, {
+          "system": "http://hl7.org/fhir/sid/us-npi",
+          "use": "secondary",
+          "value": "ACME-NPI"
+        }, {
+          "system": "urn:oid:2.16.840.1.113883.4.4",
+          "use": "secondary",
+          "value": "ACME-EIN"
+        }],
+        "active": true,
+        "name": "ACME Provider Organization",
+        "telecom": [{
+          "system": "url",
+          "value": "https://acme.org",
+          "use": "work"
+        }],
+        "address": [{
+          "use": "work",
+          "type": "both",
+          "line": [ "123 Erewhon" ],
+          "city": "Dayton",
+          "state": "OH",
+          "postalCode": "45410"
+        }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Location",
+        "id": "local-test",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-location" ]
+        },
+        "contained": [{
+          "id": "local-test-endpoint",
+          "resourceType": "Endpoint",
+          "status": "active",
+          "connectionType": {
+            "system": "http://terminology.hl7.org/CodeSystem/endpoint-connection-type",
+            "code": "hl7-fhir-rest"
+          },
+          "payloadType": [{
+            "coding": [{
+              "system": "http://terminology.hl7.org/CodeSystem/endpoint-payload-type",
+              "code": "any"
+            }]
+          }],
+          "payloadMimeType": [ "application/fhir+json" ],
+          "address": "http://localhost:8080/fhir"
+        }],
+        "identifier": [{
+          "use": "usual",
+          "system": "http://acme.org/location-identifiers",
+          "value": "LOCAL_TEST"
+        }],
+        "status": "active",
+        "name": "Local Test",
+        "mode": "instance",
+        "managingOrganization": {
+          "reference": "Organization/acme"
+        },
+        "endpoint": [{
+          "reference": "#local-test-endpoint"
+        }]
+      }
+    },
+    {
+      "resource": {
+        "id": "acme-north",
+        "resourceType": "Location",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-location" ]
+        },
+        "contained": [{
+          "id": "acme-north-endpoint",
+          "resourceType": "Endpoint",
+          "status": "active",
+          "connectionType": {
+            "system": "http://terminology.hl7.org/CodeSystem/endpoint-connection-type",
+            "code": "hl7-fhir-rest"
+          },
+          "payloadType": [{
+            "coding": [{
+              "system": "http://terminology.hl7.org/CodeSystem/endpoint-payload-type",
+              "code": "any"
+            }]
+          }],
+          "payloadMimeType": [ "application/fhir+json" ],
+          "address": "http://acme.org/north/fhir"
+        }],
+        "identifier": [{
+          "use": "usual",
+          "system": "http://acme.org/location-identifiers",
+          "value": "ACME-NORTH"
+        }],
+        "status": "active",
+        "name": "ACME North",
+        "mode": "instance",
+        "managingOrganization": {
+          "reference": "Organization/acme"
+        },
+        "endpoint": [{
+          "reference": "#acme-north-endpoint"
+        }]
+      }
+    },
+    {
+      "resource": {
+        "id": "acme-south",
+        "resourceType": "Location",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-location" ]
+        },
+        "contained": [{
+          "id": "acme-south-endpoint",
+          "resourceType": "Endpoint",
+          "status": "active",
+          "connectionType": {
+            "system": "http://terminology.hl7.org/CodeSystem/endpoint-connection-type",
+            "code": "hl7-fhir-rest"
+          },
+          "payloadType": [{
+            "coding": [{
+              "system": "http://terminology.hl7.org/CodeSystem/endpoint-payload-type",
+              "code": "any"
+            }]
+          }],
+          "payloadMimeType": [ "application/fhir+json" ],
+          "address": "http://acme.org/south/fhir"
+        }],
+        "identifier": [{
+          "use": "usual",
+          "system": "http://acme.org/location-identifiers",
+          "value": "ACME-SOUTH"
+        }],
+        "status": "active",
+        "name": "ACME South",
+        "mode": "instance",
+        "managingOrganization": {
+          "reference": "Organization/acme"
+        },
+        "endpoint": [{
+          "reference": "#acme-south-endpoint"
+        }]
+      }
+    }
+  ]
+}

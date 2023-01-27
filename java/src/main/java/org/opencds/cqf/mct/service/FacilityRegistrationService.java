@@ -1,68 +1,75 @@
 package org.opencds.cqf.mct.service;
 
+import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r4.model.DomainResource;
+import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Endpoint;
 import org.hl7.fhir.r4.model.Location;
-import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Resource;
+import org.opencds.cqf.cql.evaluator.engine.retrieve.BundleRetrieveProvider;
+import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FacilityRegistrationService {
 
-   private final Map<String, Location> locationMap;
-   private final Map<String, Organization> organizationMap;
-   private final Map<String, Endpoint> fhirEndpointMap;
+   private final BundleRetrieveProvider bundleRetrieveProvider;
 
    public FacilityRegistrationService() {
-      locationMap = new HashMap<>();
-      organizationMap = new HashMap<>();
-      fhirEndpointMap = new HashMap<>();
+      bundleRetrieveProvider = new BundleRetrieveProvider(
+              SpringContext.getBean(FhirContext.class),
+              SpringContext.getBean("facilitiesBundle", Bundle.class));
    }
 
-   public void registerFacility(List<Location> locations) {
-      for (Location location : locations) {
-         resolveFhirEndpoint(location);
-         locationMap.put(location.getIdElement().getValue(), location);
+   public Bundle listOrganizations() {
+      Bundle orgs = new Bundle().setType(Bundle.BundleType.COLLECTION);
+      bundleRetrieveProvider.retrieve(null, null, null, "Organization",
+              null, null, null, null, null, null,
+              null, null).forEach(x -> orgs.addEntry().setResource((Resource) x));
+      return orgs;
+   }
+
+   public Bundle listFacilities(String organizationId) {
+      Bundle facilities = new Bundle().setType(Bundle.BundleType.COLLECTION);
+      Iterable<Object> results;
+      if (organizationId == null) {
+         results = bundleRetrieveProvider.retrieve(null, null, null,
+                 "Location", null, null, null, null,
+                 null, null, null, null);
       }
-   }
-
-   public void registerFacility(Organization organization) {
-      resolveFhirEndpoint(organization);
-      organizationMap.put(organization.getIdElement().getValue(), organization);
-   }
-
-   public void unregisterFacility(String facilityId) {
-      Object removedLocation = locationMap.remove(facilityId);
-      Object removedOrg = organizationMap.remove(facilityId);
-      fhirEndpointMap.remove(facilityId);
-      if (removedLocation == null && removedOrg == null) {
-         throw new FHIRException("Facility: " + facilityId + " not found");
+      else {
+         if (organizationId.startsWith("Organization/")) {
+            organizationId = organizationId.replace("Organization/", "");
+         }
+         results = bundleRetrieveProvider.retrieve("Organization", "managingOrganization",
+                 organizationId, "Location", null, null, null, null,
+                 null, null, null, null);
       }
+      results.forEach(x -> facilities.addEntry().setResource((Resource) x));
+      return facilities;
    }
 
-   private void resolveFhirEndpoint(DomainResource parent) {
-      for (Resource containedResource : parent.getContained()) {
+   public Location getFacility(String locationId) {
+      if (locationId.startsWith("Location/")) {
+         locationId = locationId.replace("Location/", "");
+      }
+      Iterable<Object> results = bundleRetrieveProvider.retrieve("Location", "id",
+              locationId, "Location", null, null, null, null,
+              null, null, null, null);
+      Object result = results.iterator().hasNext() ? results.iterator().next() : null;
+      return (Location) result;
+   }
+
+   public String getFacilityUrl(String facilityId) {
+      Location facility = getFacility(facilityId);
+      for (Resource containedResource : facility.getContained()) {
          if (containedResource instanceof Endpoint) {
             Endpoint endpoint = (Endpoint) containedResource;
-            if (endpoint.hasConnectionType() && endpoint.getConnectionType().hasCode()
+            if (endpoint.hasConnectionType() && endpoint.getConnectionType().hasCode() && endpoint.hasAddress()
                     && endpoint.getConnectionType().getCode().equals(MctConstants.FHIR_REST_CONNECTION_TYPE)) {
-               fhirEndpointMap.put(parent.getIdElement().getValue(), endpoint);
-               return;
+               return endpoint.getAddress();
             }
          }
       }
       throw new FHIRException(MctConstants.MISSING_FHIR_REST_ENDPOINT);
-   }
-
-   public String getFhirUrl(String facilityId) {
-      if (fhirEndpointMap.containsKey(facilityId)) {
-         return fhirEndpointMap.get(facilityId).getAddress();
-      }
-      else return null;
    }
 }
