@@ -26,19 +26,19 @@ import org.opencds.cqf.cql.evaluator.builder.LibrarySourceProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.ModelResolverFactory;
 import org.opencds.cqf.cql.evaluator.builder.TerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.FhirDalFactory;
+import org.opencds.cqf.cql.evaluator.builder.dal.FhirFileFhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.dal.FhirRestFhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.dal.TypedFhirDalFactory;
 import org.opencds.cqf.cql.evaluator.builder.data.FhirModelResolverFactory;
 import org.opencds.cqf.cql.evaluator.builder.data.TypedRetrieveProviderFactory;
-import org.opencds.cqf.cql.evaluator.builder.library.FhirRestLibrarySourceProviderFactory;
+import org.opencds.cqf.cql.evaluator.builder.library.FhirFileLibrarySourceProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.library.TypedLibrarySourceProviderFactory;
-import org.opencds.cqf.cql.evaluator.builder.terminology.FhirRestTerminologyProviderFactory;
+import org.opencds.cqf.cql.evaluator.builder.terminology.FhirFileTerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.terminology.TypedTerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
-import org.opencds.cqf.cql.evaluator.engine.retrieve.BundleRetrieveProvider;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
+import org.opencds.cqf.cql.evaluator.fhir.DirectoryBundler;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
-import org.opencds.cqf.mct.MctApplication;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
@@ -53,6 +53,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 @Configuration
@@ -65,9 +66,14 @@ public class MctConfig {
    }
 
    @Bean
+   public DirectoryBundler directoryBundler(FhirContext fhirContext) {
+      return new DirectoryBundler(fhirContext);
+   }
+
+   @Bean
    public Set<TypedTerminologyProviderFactory> typedTerminologyProviderFactories(
-           FhirContext fhirContext, ClientFactory clientFactory) {
-      return Collections.singleton(new FhirRestTerminologyProviderFactory(fhirContext, clientFactory));
+           FhirContext fhirContext, DirectoryBundler directoryBundler) {
+      return Collections.singleton(new FhirFileTerminologyProviderFactory(fhirContext, directoryBundler));
    }
 
    @Bean
@@ -89,7 +95,7 @@ public class MctConfig {
 
    @Bean
    public Set<TypedRetrieveProviderFactory> typedRetrieveProviderFactories(
-           FhirContext fhirContext, ModelResolver modelResolver, ClientFactory clientFactory) {
+           FhirContext fhirContext, ClientFactory clientFactory, ModelResolver modelResolver) {
       return Collections.singleton(new TypedRetrieveProviderFactory() {
          @Override
          public String getType() {
@@ -124,10 +130,10 @@ public class MctConfig {
 
    @Bean
    public Set<TypedLibrarySourceProviderFactory> librarySourceProviderFactories(
-           ClientFactory clientFactory, AdapterFactory adapterFactory,
+           FhirContext fhirContext, DirectoryBundler directoryBundler, AdapterFactory adapterFactory,
            LibraryVersionSelector libraryVersionSelector) {
-      return Collections.singleton(new FhirRestLibrarySourceProviderFactory(
-              clientFactory, adapterFactory, libraryVersionSelector));
+      return Collections.singleton(new FhirFileLibrarySourceProviderFactory(
+              fhirContext, directoryBundler, adapterFactory, libraryVersionSelector));
    }
 
    @Bean
@@ -140,13 +146,23 @@ public class MctConfig {
    }
 
    @Bean
-   public Set<TypedFhirDalFactory> fhirDalFactories(ClientFactory clientFactory) {
+   public Set<TypedFhirDalFactory> fileFhirDalFactories(FhirContext fhirContext, DirectoryBundler directoryBundler) {
+      return Collections.singleton(new FhirFileFhirDalFactory(fhirContext, directoryBundler));
+   }
+
+   @Bean
+   public Set<TypedFhirDalFactory> restFhirDalFactories(ClientFactory clientFactory) {
       return Collections.singleton(new FhirRestFhirDalFactory(clientFactory));
    }
 
    @Bean
-   public FhirDalFactory fhirDalFactory(FhirContext fhirContext, Set<TypedFhirDalFactory> fhirDalFactories) {
-      return new org.opencds.cqf.cql.evaluator.builder.dal.FhirDalFactory(fhirContext, fhirDalFactories);
+   public FhirDalFactory fileFhirDalFactory(FhirContext fhirContext, Set<TypedFhirDalFactory> fileFhirDalFactories) {
+      return new org.opencds.cqf.cql.evaluator.builder.dal.FhirDalFactory(fhirContext, fileFhirDalFactories);
+   }
+
+   @Bean
+   public FhirDalFactory restFhirDalFactory(FhirContext fhirContext, Set<TypedFhirDalFactory> restFhirDalFactories) {
+      return new org.opencds.cqf.cql.evaluator.builder.dal.FhirDalFactory(fhirContext, restFhirDalFactories);
    }
 
    @Bean
@@ -239,26 +255,31 @@ public class MctConfig {
    }
 
    @Bean
+   public String pathToConfigurationResources() {
+      return Objects.requireNonNull(ClasspathUtil.class.getClassLoader().getResource("configuration")).getPath();
+   }
+
+   @Bean
    public Bundle receivingSystemsBundle(FhirContext fhirContext) {
       return fhirContext.newJsonParser().parseResource(Bundle.class,
-              ClasspathUtil.loadResourceAsStream("classpath:receiving-system/receiving-system-bundle.json"));
+              ClasspathUtil.loadResourceAsStream("classpath:configuration/receiving-system/receiving-system-bundle.json"));
    }
 
    @Bean
    public Bundle facilitiesBundle(FhirContext fhirContext) {
       return fhirContext.newJsonParser().parseResource(Bundle.class,
-              ClasspathUtil.loadResourceAsStream("classpath:facilities/facilities-bundle.json"));
+              ClasspathUtil.loadResourceAsStream("classpath:configuration/facilities/facilities-bundle.json"));
    }
 
    @Bean
    public Bundle measuresBundle(FhirContext fhirContext) {
       return fhirContext.newJsonParser().parseResource(Bundle.class,
-              ClasspathUtil.loadResourceAsStream("classpath:measures/measures-bundle.json"));
+              ClasspathUtil.loadResourceAsStream("classpath:configuration/measures/measures-bundle.json"));
    }
 
    @Bean
    public Bundle terminologyBundle(FhirContext fhirContext) {
       return fhirContext.newJsonParser().parseResource(Bundle.class,
-              ClasspathUtil.loadResourceAsStream("classpath:terminology/terminology-bundle.json"));
+              ClasspathUtil.loadResourceAsStream("classpath:configuration/terminology/terminology-bundle.json"));
    }
 }

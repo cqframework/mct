@@ -34,34 +34,39 @@ public class GatherService {
    private final TerminologyProviderFactory terminologyProviderFactory;
    private final DataProviderFactory dataProviderFactory;
    private final LibrarySourceProviderFactory librarySourceProviderFactory;
-   private final FhirDalFactory fhirDalFactory;
+   private final FhirDalFactory fileFhirDalFactory;
+   private final FhirDalFactory restFhirDalFactory;
    private final EndpointConverter endpointConverter;
    private final ValidationService validationService;
    private final FacilityRegistrationService facilityRegistrationService;
+   private final String pathToConfigurationResource;
 
    public GatherService() {
       terminologyProviderFactory = SpringContext.getBean(TerminologyProviderFactory.class);
       dataProviderFactory = SpringContext.getBean(DataProviderFactory.class);
       librarySourceProviderFactory = SpringContext.getBean(LibrarySourceProviderFactory.class);
-      fhirDalFactory = SpringContext.getBean(FhirDalFactory.class);
+      fileFhirDalFactory = SpringContext.getBean("fileFhirDalFactory", FhirDalFactory.class);
+      restFhirDalFactory = SpringContext.getBean("restFhirDalFactory", FhirDalFactory.class);
       endpointConverter = SpringContext.getBean(EndpointConverter.class);
       validationService = SpringContext.getBean(ValidationService.class);
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
+      pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
    }
 
    public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
       Parameters parameters = new Parameters();
       R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
               terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
-              fhirDalFactory, endpointConverter);
+              fileFhirDalFactory, endpointConverter);
       for (String facility: facilities) {
          String facilityUrl = getFacilityUrl(facility);
          Endpoint facilityEndpoint = new Endpoint().setAddress(facilityUrl);
+         Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
          MeasureReport report = measureProcessor.evaluateMeasure(getMeasureUrl(facility, measureIdentifier),
                  DateUtils.convertDateToIso8601String(period.getStart()),
                  DateUtils.convertDateToIso8601String(period.getEnd()), null,
-                 getPatientIds(patients), null, facilityEndpoint, facilityEndpoint,
-                 facilityEndpoint, null);
+                 getPatientIds(patients), null, configurationResourcesEndpoint,
+                 configurationResourcesEndpoint, facilityEndpoint, null);
          report.addExtension(getLocationExtension(facility));
          Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
          returnBundle.addEntry().setResource(report);
@@ -100,7 +105,7 @@ public class GatherService {
 
    private List<DomainResource> validation(String url, MeasureReport report) {
       List<DomainResource> resources = new ArrayList<>();
-      FhirDal fhirDal = fhirDalFactory.create(new EndpointInfo().setAddress(url));
+      FhirDal fhirDal = restFhirDalFactory.create(new EndpointInfo().setAddress(url));
       for (Reference reference : report.getEvaluatedResource()) {
          DomainResource resource = (DomainResource) fhirDal.read(new IdType(reference.getReference()));
          ValidationResult result = validationService.validate(resource);
