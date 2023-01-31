@@ -14,7 +14,7 @@ public class FacilityRegistrationAPI {
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
    }
 
-   @Operation(name = MctConstants.LIST_ORGANIZATIONS_OPERATION_NAME)
+   @Operation(name = MctConstants.LIST_ORGANIZATIONS_OPERATION_NAME, idempotent = true)
    public Bundle listOrganizations() {
       return facilityRegistrationService.listOrganizations();
    }

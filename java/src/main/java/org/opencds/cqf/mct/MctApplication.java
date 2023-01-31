@@ -2,6 +2,7 @@ package org.opencds.cqf.mct;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.server.RestfulServer;
+import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
 import org.opencds.cqf.mct.api.FacilityRegistrationAPI;
 import org.opencds.cqf.mct.api.GatherAPI;
 import org.opencds.cqf.mct.api.MeasureConfigurationAPI;
@@ -18,6 +19,9 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
 
 @ServletComponentScan(basePackageClasses = { RestfulServer.class })
 @SpringBootApplication(exclude = { ElasticsearchRestClientAutoConfiguration.class })
@@ -37,8 +41,8 @@ public class MctApplication extends SpringBootServletInitializer {
 	AutowireCapableBeanFactory beanFactory;
 
 	@Bean
-	public ServletRegistrationBean<RestfulServerWithCors> hapiServletRegistration(RestfulServerWithCors restfulServer) {
-		ServletRegistrationBean<RestfulServerWithCors> servletRegistrationBean = new ServletRegistrationBean<>();
+	public ServletRegistrationBean<RestfulServer> hapiServletRegistration(RestfulServer restfulServer) {
+		ServletRegistrationBean<RestfulServer> servletRegistrationBean = new ServletRegistrationBean<>();
 		beanFactory.autowireBean(restfulServer);
 		servletRegistrationBean.setName("MCT servlet");
 		servletRegistrationBean.setServlet(restfulServer);
@@ -49,8 +53,9 @@ public class MctApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public RestfulServerWithCors restfulServer(FhirContext fhirContext, SpringContext springContext) {
-		RestfulServerWithCors fhirServer = new RestfulServerWithCors(fhirContext);
+	public RestfulServer restfulServer(FhirContext fhirContext, SpringContext springContext, CorsConfiguration corsConfiguration) {
+		RestfulServer fhirServer = new RestfulServer(fhirContext);
+		fhirServer.registerInterceptor(new CorsInterceptor(corsConfiguration));
 		fhirServer.registerProvider(new GatherAPI());
 		fhirServer.registerProvider(new FacilityRegistrationAPI());
 		fhirServer.registerProvider(new MeasureConfigurationAPI());
@@ -61,6 +66,20 @@ public class MctApplication extends SpringBootServletInitializer {
 	@Bean
 	public FhirContext fhirContext(MctProperties properties) {
 		return FhirContext.forCached(properties.getFhirVersion());
+	}
+
+	@Bean
+	public CorsConfiguration corsConfiguration() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.addAllowedHeader("Origin");
+		config.addAllowedHeader("Accept");
+		config.addAllowedHeader("X-Requested-With");
+		config.addAllowedHeader("Content-Type");
+		config.addAllowedOrigin("*");
+		config.addExposedHeader("Location");
+		config.addExposedHeader("Content-Location");
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+		return config;
 	}
 }
 
