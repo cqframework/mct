@@ -8,7 +8,7 @@ import Header from './Header';
 import navigation from 'menu-items';
 import Breadcrumbs from 'components/@extended/Breadcrumbs';
 import { openDrawer } from 'store/reducers/filter';
-import { fetchOrganizations, fetchFacilities } from 'store/reducers/data';
+import { fetchOrganizations, fetchFacilities, fetchMeasures } from 'store/reducers/data';
 import LoadingPage from 'components/LoadingPage';
 import OrganizationSelection from './OrganizationSelection';
 import { inputSelection } from 'store/reducers/filter';
@@ -43,6 +43,7 @@ const MainLayout = () => {
     if (organizations.length === 0 && status === 'idle') {
       dispatch(fetchOrganizations());
     } else if (organization.length !== 0 && status === 'succeeded') {
+      dispatch(fetchMeasures())
       dispatch(fetchFacilities());
     }
   }, [dispatch, organization, organizations, status]);

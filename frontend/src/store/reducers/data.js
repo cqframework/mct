@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import organizationBundle from 'fixtures/BundleOrganization.json';
 import facilityBundle from 'fixtures/BundleLocation.json';
-import measureBundle from 'fixtures/Measure.json';
+// import measureBundle from 'fixtures/Measure.json';
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:8088'
 
 //TODO: Hookup apis here
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
@@ -17,7 +18,7 @@ export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (o
 
 
 export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facilityId) => {
-  await new Promise((r) => setTimeout(r, 1000));
+  const measureBundle = await fetch(`${BASE_URL}/mct/$list-measures`).then((res) => res.json());
   return measureBundle.entry.map((i) => i.resource);
 });
 

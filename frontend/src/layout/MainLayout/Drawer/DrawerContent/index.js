@@ -3,29 +3,8 @@ import Navigation from './Navigation';
 import SimpleBar from 'components/third-party/SimpleBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
-
-import { InputLabel, Select, FormControl, MenuItem } from '@mui/material';
-
-const FacilitiesSelection = ({ currentFacility, handleChange, facilities }) => {
-  return (
-    <>
-      <InputLabel id="facilities-select-label">Facilities</InputLabel>
-      <Select
-        labelId="facilities-select-label"
-        id="facilities-select"
-        value={currentFacility}
-        label="Facilities"
-        onChange={(e) => handleChange(e?.target?.value)}
-      >
-        {facilities?.map((facility) => (
-          <MenuItem key={facility.id} value={facility.id}>
-            {facility.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </>
-  );
-};
+import Selection from 'components/Selection';
+import { FormControl } from '@mui/material';
 
 const DrawerContent = () => {
   const { facility } = useSelector((state) => state.filter);
@@ -42,8 +21,9 @@ const DrawerContent = () => {
       }}
     >
       <FormControl required variant="standard" sx={{ m: 3, mt: 10, minWidth: 180 }}>
-        <FacilitiesSelection
+        <Selection
           facilities={facilities}
+          label="Measures"
           currentFacility={facility}
           handleChange={(newFacility) => {
             dispatch(inputSelection({ type: 'facility', value: newFacility }));
