@@ -14,7 +14,7 @@ public class MeasureConfigurationAPI {
       measureConfigurationService = SpringContext.getBean(MeasureConfigurationService.class);
    }
 
-   @Operation(name = MctConstants.LIST_MEASURE_OPERATION_NAME)
+   @Operation(name = MctConstants.LIST_MEASURE_OPERATION_NAME, idempotent = true)
    public Bundle listMeasures() {
       return measureConfigurationService.listMeasures();
    }

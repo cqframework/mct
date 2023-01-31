@@ -14,7 +14,7 @@ public class ReceivingSystemConfigurationAPI {
       receivingSystemConfigurationService = SpringContext.getBean(ReceivingSystemConfigurationService.class);
    }
 
-   @Operation(name = MctConstants.LIST_REC_SYSTEM_OPERATION_NAME)
+   @Operation(name = MctConstants.LIST_REC_SYSTEM_OPERATION_NAME, idempotent = true)
    public Bundle listReceivingSystems() {
       return receivingSystemConfigurationService.listReceivingSystems();
    }
