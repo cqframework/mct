@@ -5,3 +5,8 @@ services:
       context: frontend/
     ports:
       - 3000:80
+  backend:
+    build:
+      context: java/
+    ports:
+      - 8088:8088

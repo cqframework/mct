@@ -97,7 +97,7 @@ const DashboardDefault = () => {
 
   const handleChange = (event, newValue) => setValue(newValue);
 
-  if (facility.length === 0) {
+  if (measure.length === 0) {
     return (
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <PromptChoiceCard>
@@ -106,7 +106,7 @@ const DashboardDefault = () => {
               <ArrowLeftOutlined /> Select a
             </Typography>
             <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
-              facility
+              Measure
             </Typography>
             <Typography variant="h1" gutterBottom>
               to Begin
