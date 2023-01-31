@@ -37,7 +37,7 @@ class FacilityRegistrationTest {
    @Test
    void listOrganizations() {
       Bundle result = client.operation().onServer().named(MctConstants.LIST_ORGANIZATIONS_OPERATION_NAME)
-              .withNoParameters(Parameters.class).returnResourceType(Bundle.class).execute();
+              .withNoParameters(Parameters.class).useHttpGet().returnResourceType(Bundle.class).execute();
       assertTrue(result.hasEntry());
       assertEquals(1, result.getEntry().size());
       assertTrue(result.getEntryFirstRep().hasResource());
@@ -48,7 +48,7 @@ class FacilityRegistrationTest {
    void listFacilities() {
       Parameters params = parameters(part(MctConstants.LIST_FACILITIES_PARAM, "Organization/acme"));
       Bundle result = client.operation().onServer().named(MctConstants.LIST_FACILITIES_OPERATION_NAME)
-              .withParameters(params).returnResourceType(Bundle.class).execute();
+              .withParameters(params).useHttpGet().returnResourceType(Bundle.class).execute();
       assertTrue(result.hasEntry());
       assertEquals(3, result.getEntry().size());
       for (Bundle.BundleEntryComponent entryComponent : result.getEntry()) {

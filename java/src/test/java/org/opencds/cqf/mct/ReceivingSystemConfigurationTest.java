@@ -32,7 +32,7 @@ class ReceivingSystemConfigurationTest {
    @Test
    void listReceivingSystems() {
       Bundle result = client.operation().onServer().named(MctConstants.LIST_REC_SYSTEM_OPERATION_NAME)
-              .withNoParameters(Parameters.class).returnResourceType(Bundle.class).execute();
+              .withNoParameters(Parameters.class).useHttpGet().returnResourceType(Bundle.class).execute();
       assertTrue(result.hasEntry());
       assertEquals(1, result.getEntry().size());
       assertTrue(result.getEntryFirstRep().hasResource());
