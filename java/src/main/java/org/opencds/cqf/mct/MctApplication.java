@@ -37,8 +37,8 @@ public class MctApplication extends SpringBootServletInitializer {
 	AutowireCapableBeanFactory beanFactory;
 
 	@Bean
-	public ServletRegistrationBean<RestfulServer> hapiServletRegistration(RestfulServer restfulServer) {
-		ServletRegistrationBean<RestfulServer> servletRegistrationBean = new ServletRegistrationBean<>();
+	public ServletRegistrationBean<RestfulServerWithCors> hapiServletRegistration(RestfulServerWithCors restfulServer) {
+		ServletRegistrationBean<RestfulServerWithCors> servletRegistrationBean = new ServletRegistrationBean<>();
 		beanFactory.autowireBean(restfulServer);
 		servletRegistrationBean.setName("MCT servlet");
 		servletRegistrationBean.setServlet(restfulServer);
@@ -49,8 +49,8 @@ public class MctApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public RestfulServer restfulServer(FhirContext fhirContext, SpringContext springContext) {
-		RestfulServer fhirServer = new RestfulServer(fhirContext);
+	public RestfulServerWithCors restfulServer(FhirContext fhirContext, SpringContext springContext) {
+		RestfulServerWithCors fhirServer = new RestfulServerWithCors(fhirContext);
 		fhirServer.registerProvider(new GatherAPI());
 		fhirServer.registerProvider(new FacilityRegistrationAPI());
 		fhirServer.registerProvider(new MeasureConfigurationAPI());
@@ -62,5 +62,5 @@ public class MctApplication extends SpringBootServletInitializer {
 	public FhirContext fhirContext(MctProperties properties) {
 		return FhirContext.forCached(properties.getFhirVersion());
 	}
-
 }
+
