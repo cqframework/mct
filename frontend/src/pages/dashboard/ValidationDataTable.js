@@ -1,11 +1,14 @@
-import * as React from 'react';
+import { useState, useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import { LeftOutlined, WarningOutlined, ExclamationCircleOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { IconButton, Tooltip, Typography } from '@mui/material';
+import { IconButton, Tooltip, Typography, Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Selection from 'components/Selection'
+import { inputSelection } from 'store/reducers/filter';
 
 const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
@@ -50,26 +53,40 @@ const SeverityIcon = ({ severity }) => {
 };
 
 export default function ValidationDataTable({ resources }) {
-  const [expanded, setExpanded] = React.useState('panel1');
+  const [expanded, setExpanded] = useState('panel1');
+  const { facility } = useSelector((state) => state.filter);
+  const { facilities } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
 
   const handleChange = (panel) => (_event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
   return (
-    <div>
-      <Typography variant={'h4'}>
-        Validation Messages
-      <Tooltip title={'Issues discovered from measure calculation'}>
-        <IconButton>
-          <InfoCircleOutlined />
-        </IconButton>
-      </Tooltip>    
-      </Typography>
-      
+    <Grid container spacing={2}>    
+        <Grid item xs={6}>
+        <Typography variant={'h4'}>
+          Validation Messages
+        <Tooltip title={'Issues discovered from measure calculation'}>
+          <IconButton>
+            <InfoCircleOutlined />
+          </IconButton>
+        </Tooltip>    
+        </Typography>
+      </Grid>
+      <Grid item xs={6}>
+        <Selection
+          options={facilities}
+          label="Facilities"
+          currentSelection={facility || facilities[0]}
+          handleChange={(newFacility) => {
+            dispatch(inputSelection({ type: 'facility', value: newFacility }));
+          }}
+        />
+        </Grid>  
+      <Grid item xs={12}>
       {resources.map((i) => {
         const resourceOperationOutcomes = i?.contained?.filter(i => i.resourceType === 'OperationOutcome')?.[0]
-
         return (
           <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
             <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={resourceOperationOutcomes != null}>
@@ -90,6 +107,7 @@ export default function ValidationDataTable({ resources }) {
           </Accordion>
         );
       })}
-    </div>
+      </Grid>
+    </Grid>
   );
 }

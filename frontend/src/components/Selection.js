@@ -6,6 +6,7 @@ const Selection = ({ currentSelection, handleChange, options, label }) => {
       <InputLabel id={`${label}-select-label`}>{label}</InputLabel>
       <Select
         labelId={`${label}-select-label`}
+        sx={{minWidth: 200}}
         id={`${label}-select`}
         value={currentSelection}
         label={label}

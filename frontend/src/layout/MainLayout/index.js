@@ -20,7 +20,7 @@ const MainLayout = () => {
   const matchDownLG = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
 
-  const { drawerOpen, facility, organization } = useSelector((state) => state.filter);
+  const { drawerOpen, measure, organization } = useSelector((state) => state.filter);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -71,7 +71,7 @@ const MainLayout = () => {
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
-      {facility.length > 0 && <Header open={open} handleDrawerToggle={handleDrawerToggle} />}
+      {measure.length > 0 && <Header open={open} handleDrawerToggle={handleDrawerToggle} />}
       <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
       <Box component="main" sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar />

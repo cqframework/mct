@@ -53,19 +53,19 @@ const buildMeasurePayload = (facility, measure, quarter) => {
     resourceType: 'Parameters',
     parameter: [
       {
-        name: 'facility',
+        name: 'facilities',
         valueString: facility
       },
       {
         name: 'period',
-        period
+        valuePeriod: period
       },
       {
         name: 'measure',
-        resource: measureResource
+        valueString: measureResource
       },
       {
-        name: 'patient',
+        name: 'patients',
         resource: null // TODO: Need to get hardcoded list of group patients
       }
     ]
@@ -80,6 +80,7 @@ const DashboardDefault = () => {
   useEffect(() => {
     const callGatherApi = async () => {
       const parametersPayload = buildMeasurePayload(facility, measure, date);
+      debugger
       // const measureReportJson = await fetch('api/$gather', {
       //   method: 'POST',
       //   headers: {
@@ -90,7 +91,7 @@ const DashboardDefault = () => {
       setMeasureReport(MeasureReportJson);
     };
 
-    if (date?.length != 0 && measure?.length != 0 && facility.length !== 0) {
+    if (date?.length != 0 && measure?.length != 0) {
       callGatherApi();
     }
   }, [measure, date, facility]);
@@ -116,27 +117,9 @@ const DashboardDefault = () => {
       </Grid>
     );
   }
-
-  if (measure.length === 0 || measureReport == null) {
-    return (
-      <Grid item xs={12} sx={{ mb: -2.25 }}>
-        <PromptChoiceCard>
-          <Box sx={{ display: 'flex', ml: 1, fontSize: 30 }}>
-            <Typography variant="h1" gutterBottom>
-              <ArrowUpOutlined /> Select a{' '}
-            </Typography>
-            <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
-              measure
-            </Typography>
-          </Box>
-        </PromptChoiceCard>
-      </Grid>
-    );
-  }
-
   const description = extractDescription(measureReport);
-  const population = populationGather(measureReport.group[0]);
-  const stratifier = parseStratifier(measureReport);
+  // const population = populationGather(measureReport.group[0]);
+  // const stratifier = parseStratifier(measureReport);
 
   const individualListInfo = gatherIndividualList(MeasureReportMCT);
   const patientInfo = gatherPatientDisplayData(individualListInfo.patient);
@@ -146,9 +129,9 @@ const DashboardDefault = () => {
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Individual Data" {...a11yProps(0)} />
-            <Tab label="Population Data" {...a11yProps(1)} />
-            <Tab label="Demo" {...a11yProps(2)} />
+            <Tab label="Patient Data" {...a11yProps(0)} />
+            {/* <Tab label="Population Data" {...a11yProps(1)} />
+            <Tab label="Demo" {...a11yProps(2)} /> */}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
@@ -159,7 +142,7 @@ const DashboardDefault = () => {
             <ValidationDataTable resources={individualListInfo.resources} />
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        {/* <TabPanel value={value} index={1}>
           <Grid item xs={12} sx={{ mb: -2.25 }}>
             <Typography variant="h1">Diabetes Report Population Data Demographics</Typography>
             <Typography variant="p" color="textSecondary">
@@ -188,7 +171,7 @@ const DashboardDefault = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <DemoGraph />
-        </TabPanel>
+        </TabPanel> */}
       </>
     </Grid>
   );
