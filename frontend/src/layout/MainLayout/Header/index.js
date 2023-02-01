@@ -55,14 +55,12 @@ const Header = ({ open, handleDrawerToggle }) => {
     </Toolbar>
   );
 
-  // app-bar params
   const appBar = {
     position: 'fixed',
     color: 'inherit',
     elevation: 0,
     sx: {
       borderBottom: `1px solid ${theme.palette.divider}`
-      // boxShadow: theme.customShadows.z1
     }
   };
 

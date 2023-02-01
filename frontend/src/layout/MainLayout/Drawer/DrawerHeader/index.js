@@ -26,7 +26,7 @@ const DrawerHeader = ({ open }) => {
             target="_blank"
           />
         </Stack>
-        <Typography sx={{ fontWeight: 'bold' }} variant="span">
+        <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }} variant="span">
           {organization.name}
         </Typography>
       </Stack>

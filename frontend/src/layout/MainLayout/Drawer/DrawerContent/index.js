@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 import Selection from 'components/Selection';
 import { FormControl } from '@mui/material';
+import { useEffect } from 'react';
 
 const DrawerContent = () => {
-  const { facility } = useSelector((state) => state.filter);
-  const { facilities } = useSelector((state) => state.data);
-  const dispatch = useDispatch();
+  const { measure } = useSelector((state) => state.filter);
+  const { measures } = useSelector((state) => state.data);
 
+  const dispatch = useDispatch();
   return (
     <SimpleBar
       sx={{
@@ -22,11 +23,11 @@ const DrawerContent = () => {
     >
       <FormControl required variant="standard" sx={{ m: 3, mt: 10, minWidth: 180 }}>
         <Selection
-          facilities={facilities}
+          options={measures}
           label="Measures"
-          currentFacility={facility}
-          handleChange={(newFacility) => {
-            dispatch(inputSelection({ type: 'facility', value: newFacility }));
+          currentSelection={measure}
+          handleChange={(newMeasure) => {
+            dispatch(inputSelection({ type: 'measure', value: newMeasure }));
           }}
         />
       </FormControl>

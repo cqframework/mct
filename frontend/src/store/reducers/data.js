@@ -1,18 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import organizationBundle from 'fixtures/BundleOrganization.json';
 import facilityBundle from 'fixtures/BundleLocation.json';
-// import measureBundle from 'fixtures/Measure.json';
+
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:8088'
 
-//TODO: Hookup apis here
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
-  await new Promise((r) => setTimeout(r, 1500));
+  const organizationBundle = await fetch(`${BASE_URL}/mct/$list-organizations`).then((res) => res.json());
   return organizationBundle.entry.map((i) => i.resource);
 });
 
 export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId) => {
-  await new Promise((r) => setTimeout(r, 2000));
+  const facilityBundle = await fetch(`${BASE_URL}/mct/$list-facilities`).then((res) => res.json());
   return facilityBundle.entry.map((i) => i.resource);
 });
 
@@ -40,7 +39,7 @@ const data = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchFacilities.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'finalized';
         state.facilities = state.facilities = action.payload;
       })
       .addCase(fetchFacilities.rejected, (state, action) => {
@@ -68,7 +67,7 @@ const data = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchMeasures.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'finalized';
         state.measures = state.measures = action.payload;
       })
       .addCase(fetchMeasures.rejected, (state, action) => {
