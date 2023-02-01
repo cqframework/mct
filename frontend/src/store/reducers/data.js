@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import organizationBundle from 'fixtures/BundleOrganization.json';
-import facilityBundle from 'fixtures/BundleLocation.json';
+import { inputSelection } from './filter';
 
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:8088'
@@ -10,9 +9,12 @@ export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', as
   return organizationBundle.entry.map((i) => i.resource);
 });
 
-export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId) => {
+export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId, { dispatch }) => {
   const facilityBundle = await fetch(`${BASE_URL}/mct/$list-facilities`).then((res) => res.json());
-  return facilityBundle.entry.map((i) => i.resource);
+  const mappedFacilities = facilityBundle.entry.map((i) => i.resource);
+  const firstFacility = mappedFacilities?.[0]?.id // set first one as default
+  dispatch(inputSelection({ type: "facility", value: firstFacility }))
+  return mappedFacilities
 });
 
 

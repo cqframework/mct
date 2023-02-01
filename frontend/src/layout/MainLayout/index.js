@@ -63,7 +63,7 @@ const MainLayout = () => {
     const organizationName = organizations.find((org) => org.id === organization)?.name;
     return (
     <LoadingPage>
-      <Typography variant="h1">Retrieving Facilties from</Typography>
+      <Typography variant="h1">Retrieving Facilties and Measures from</Typography>
       <Typography sx={{color: 'primary.main'}}variant="h1">{organizationName}</Typography>
     </LoadingPage>
     )
