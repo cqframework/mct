@@ -61,7 +61,7 @@ export default function ValidationDataTable({ resources }) {
   const handleChange = (panel) => (_event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-
+  debugger
   return (
     <Grid container spacing={2}>    
         <Grid item xs={6}>
@@ -78,7 +78,7 @@ export default function ValidationDataTable({ resources }) {
         <Selection
           options={facilities}
           label="Facilities"
-          currentSelection={facility || facilities[0]}
+          currentSelection={facility}
           handleChange={(newFacility) => {
             dispatch(inputSelection({ type: 'facility', value: newFacility }));
           }}
