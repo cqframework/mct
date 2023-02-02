@@ -20,7 +20,7 @@ jobs:
       # if: branch = main
       script:
         - docker build -t mct-frontend:$TRAVIS_COMMIT ./frontend
-        - sed -i '' 's/localhost:8080/mct-cqf-ruler/g' ./java/src/main/resources/configuration/facilities/facilities-bundle.json
+        - sed -i 's/localhost:8080/mct-cqf-ruler/g' ./java/src/main/resources/configuration/facilities/facilities-bundle.json
         - DOCKER_BUILDKIT=1 docker build -t mct-backend:$TRAVIS_COMMIT ./java
         - cd $TRAVIS_BUILD_DIR
         - ./bin/deploy.sh
