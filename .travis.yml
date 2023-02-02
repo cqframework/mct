@@ -17,7 +17,7 @@ jobs:
         - docker run --entrypoint yarn mct-frontendtest:$TRAVIS_COMMIT test-ci
       install: skip
     - stage: deploy
-      if: branch = main
+      # if: branch = main
       script:
         - docker build -t mct-frontend:$TRAVIS_COMMIT ./frontend
         - sed -i '' 's/localhost:8080/mct-cqf-ruler/g' ./java/src/main/resources/configuration/facilities/facilities-bundle.json
