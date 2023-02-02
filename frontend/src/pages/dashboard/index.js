@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 import { Stack, Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
-
+import Selection from 'components/Selection'
 import PromptChoiceCard from './PromptChoiceCard';
 import MainCard from 'components/MainCard';
-import DemoGraph from './DemoGraph';
-
-import MeasureReportJson from 'fixtures/MeasureReport.json';
-import MeasureReportMCT from 'fixtures/MeasureReportMCT.json';
+import Patient from 'fixtures/Patient.json'
+import LoadingPage from 'components/LoadingPage'
 import { useDispatch, useSelector } from 'react-redux';
 import { extractDescription, gatherIndividualList, populationGather, parseStratifier } from 'utils/measureReportHelpers';
 import { gatherPatientDisplayData } from 'utils/patientHelper';
-import PopulationStatistics from './PopulationStatistics';
-import PatientColumnChart from './PatientColumnChart';
+
 import ValidationDataTable from './ValidationDataTable';
 import { createPeriodFromQuarter } from 'utils/queryHelper';
+import { inputSelection } from 'store/reducers/filter';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -46,15 +44,14 @@ const PatientInfoCard = ({ name, birthDate, gender, mrn }) => (
   </Card>
 );
 
-const buildMeasurePayload = (facility, measure, quarter) => {
+const buildMeasurePayload = (facilityId, measureResourceUrl, quarter) => {
   const period = createPeriodFromQuarter(quarter);
-  const measureResource = measure; // TODO: need to get actual measure resource
   return {
     resourceType: 'Parameters',
     parameter: [
       {
         name: 'facilities',
-        valueString: facility
+        valueString: `Location/${facilityId}`
       },
       {
         name: 'period',
@@ -62,11 +59,23 @@ const buildMeasurePayload = (facility, measure, quarter) => {
       },
       {
         name: 'measure',
-        valueString: measureResource
+        valueString: measureResourceUrl
       },
       {
         name: 'patients',
-        resource: null // TODO: Need to get hardcoded list of group patients
+        resource: {
+          "resourceType": "Group",
+          "id": "102",
+          "type": "person",
+          "actual": true,
+          "member": [
+              {
+                  "entity": {
+                      "reference": "Patient/denom-EXM104"
+                  }
+              }
+          ]
+        }
       }
     ]
   };
@@ -74,21 +83,25 @@ const buildMeasurePayload = (facility, measure, quarter) => {
 
 const DashboardDefault = () => {
   const { facility, date, measure } = useSelector((state) => state.filter);
+  const { facilities, measures } = useSelector((state) => state.data);
   const [value, setValue] = useState(0);
   const [measureReport, setMeasureReport] = useState(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const callGatherApi = async () => {
-      const parametersPayload = buildMeasurePayload(facility, measure, date);
-      debugger
-      // const measureReportJson = await fetch('api/$gather', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(parametersPayload)
-      // }).then((response) => response.json());
-      setMeasureReport(MeasureReportJson);
+      const facilityResource = facilities.find(i => i.id === facility)
+      const measureResource = measures.find(i => i.id === measure)
+      const parametersPayload = buildMeasurePayload(facilityResource.id, measureResource.url, date);
+      const measureReportJson = await fetch('http://localhost:8088/mct/$gather', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(parametersPayload)
+      }).then((response) => response.json());
+      setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
     };
 
     if (date?.length != 0 && measure?.length != 0) {
@@ -118,11 +131,8 @@ const DashboardDefault = () => {
     );
   }
   const description = extractDescription(measureReport);
-  // const population = populationGather(measureReport.group[0]);
-  // const stratifier = parseStratifier(measureReport);
 
-  const individualListInfo = gatherIndividualList(MeasureReportMCT);
-  const patientInfo = gatherPatientDisplayData(individualListInfo.patient);
+  const patientInfo = gatherPatientDisplayData(Patient);
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -130,48 +140,28 @@ const DashboardDefault = () => {
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Patient Data" {...a11yProps(0)} />
-            {/* <Tab label="Population Data" {...a11yProps(1)} />
-            <Tab label="Demo" {...a11yProps(2)} /> */}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
+          { measureReport == null ? <LoadingPage /> : (
+            <>
           <Grid item xs={4} sx={{ mb: -2.25 }}>
             <PatientInfoCard {...patientInfo} />
           </Grid>
           <Grid item xs={8} sx={{ mb: -2.25 }}>
-            <ValidationDataTable resources={individualListInfo.resources} />
+            <Selection
+              options={facilities}
+              label="Facilities"
+              currentSelection={facility}
+              handleChange={(newFacility) => {
+                dispatch(inputSelection({ type: 'facility', value: newFacility }));
+              }}
+            />
+            <ValidationDataTable resources={gatherIndividualList(measureReport).resources} />
           </Grid>
+          </>
+          )}
         </TabPanel>
-        {/* <TabPanel value={value} index={1}>
-          <Grid item xs={12} sx={{ mb: -2.25 }}>
-            <Typography variant="h1">Diabetes Report Population Data Demographics</Typography>
-            <Typography variant="p" color="textSecondary">
-              {description}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <PopulationStatistics population={population} />
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container alignItems="center" justifyContent="space-between">
-              <Grid item>
-                <Typography variant="h5">Ethnicity</Typography>
-              </Grid>
-            </Grid>
-            <MainCard sx={{ mt: 1.75 }}>
-              <Stack spacing={1.5} sx={{ mb: -12 }}>
-                <Typography variant="h6" color="secondary">
-                  {stratifier['54133-4'].title}
-                </Typography>
-              </Stack>
-              <PatientColumnChart stratifier={stratifier['54133-4']} />
-            </MainCard>
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <DemoGraph />
-        </TabPanel> */}
       </>
     </Grid>
   );

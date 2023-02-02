@@ -1,3 +1,5 @@
+import MeasureReportMCT from 'fixtures/MeasureReportMCT.json';
+
 const extractDescription = (measureReport) => {
   const extUrl = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description';
   return measureReport?.extension?.find((extension) => extension.url === extUrl)?.valueString;
@@ -36,12 +38,14 @@ const parseStratifier = (measureReport) => {
   return stratifier;
 };
 
-const gatherIndividualList = (measureReport) => {
+const gatherIndividualList = (measureReportBundle) => {
+  const measureReport = measureReportBundle.entry.find(i => i.resource.type === 'individual').resource
   if (measureReport?.type !== 'individual') {
     console.warn('This is not a individual measure report');
     return null;
   }
-  return measureReport.contained?.[0]?.entry.reduce((acc, entry) => {
+
+  return MeasureReportMCT.contained?.[0]?.entry.reduce((acc, entry) => {
     const resourceType = entry.resource.resourceType;
     if (resourceType !== 'List') {
       if (resourceType === 'Patient') {
