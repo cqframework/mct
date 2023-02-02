@@ -6,7 +6,7 @@ metadata:
   labels:
     tag: {{ .Values.tag }}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: mct-cqf-ruler
   ports:
