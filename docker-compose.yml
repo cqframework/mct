@@ -10,3 +10,7 @@ services:
       context: java/
     ports:
       - 8088:8088
+  cqf-ruler:
+    image: alphora/cqf-ruler:vsm_draft_operation 
+    ports:
+      - 8080:8080
