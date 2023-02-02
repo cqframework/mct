@@ -1,10 +1,10 @@
 version: "3.9"
 services:
-  frontend:
-    build:
-      context: frontend/
-    ports:
-      - 3000:80
+  # frontend:
+  #   build:
+  #     context: frontend/
+  #   ports:
+  #     - 3000:80
   backend:
     build:
       context: java/

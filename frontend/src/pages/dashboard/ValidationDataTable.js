@@ -54,14 +54,11 @@ const SeverityIcon = ({ severity }) => {
 
 export default function ValidationDataTable({ resources }) {
   const [expanded, setExpanded] = useState('panel1');
-  const { facility } = useSelector((state) => state.filter);
-  const { facilities } = useSelector((state) => state.data);
-  const dispatch = useDispatch();
 
   const handleChange = (panel) => (_event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-  debugger
+
   return (
     <Grid container spacing={2}>    
         <Grid item xs={6}>
@@ -74,16 +71,6 @@ export default function ValidationDataTable({ resources }) {
         </Tooltip>    
         </Typography>
       </Grid>
-      <Grid item xs={6}>
-        <Selection
-          options={facilities}
-          label="Facilities"
-          currentSelection={facility}
-          handleChange={(newFacility) => {
-            dispatch(inputSelection({ type: 'facility', value: newFacility }));
-          }}
-        />
-        </Grid>  
       <Grid item xs={12}>
       {resources.map((i) => {
         const resourceOperationOutcomes = i?.contained?.filter(i => i.resourceType === 'OperationOutcome')?.[0]
