@@ -95,14 +95,23 @@ const DashboardDefault = () => {
       const facilityResource = facilities.find(i => i.id === facility)
       const measureResource = measures.find(i => i.id === measure)
       const parametersPayload = buildMeasurePayload(facilityResource.id, measureResource.url, date);
-      const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(parametersPayload)
-      }).then((response) => response.json());
-      setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
+        try {
+          const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(parametersPayload)
+          }).then((response) => response?.json());
+
+          if (measureReportJson?.resourceType === 'OperationOutcome') {
+            console.error(measureReportJson)
+          } else {
+            setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
+          }
+      } catch (err) {
+        console.error(err)
+      }
     };
 
     if (date?.length != 0 && measure?.length != 0) {
