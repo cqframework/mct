@@ -14,6 +14,7 @@ import { gatherPatientDisplayData } from 'utils/patientHelper';
 import ValidationDataTable from './ValidationDataTable';
 import { createPeriodFromQuarter } from 'utils/queryHelper';
 import { inputSelection } from 'store/reducers/filter';
+import { baseUrl } from 'config'
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -94,7 +95,7 @@ const DashboardDefault = () => {
       const facilityResource = facilities.find(i => i.id === facility)
       const measureResource = measures.find(i => i.id === measure)
       const parametersPayload = buildMeasurePayload(facilityResource.id, measureResource.url, date);
-      const measureReportJson = await fetch('http://localhost:8088/mct/$gather', {
+      const measureReportJson = await fetch(`http://${baseUrl}/mct/$gather`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
