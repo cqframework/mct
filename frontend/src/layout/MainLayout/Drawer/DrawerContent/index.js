@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 import Selection from 'components/Selection';
 import { FormControl } from '@mui/material';
-import { useEffect } from 'react';
 
 const DrawerContent = () => {
   const { measure } = useSelector((state) => state.filter);
