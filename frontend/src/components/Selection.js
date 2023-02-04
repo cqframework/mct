@@ -1,20 +1,20 @@
 import { InputLabel, Select, MenuItem } from '@mui/material';
 
-const Selection = ({ currentSelection, handleChange, options, label }) => {
+const Selection = ({ currentSelection, targetDisplayField = 'name', handleChange, options, label }) => {
   return (
     <>
       <InputLabel id={`${label}-select-label`}>{label}</InputLabel>
       <Select
         labelId={`${label}-select-label`}
-        sx={{minWidth: 200}}
+        sx={{ minWidth: 200 }}
         id={`${label}-select`}
         value={currentSelection}
         label={label}
         onChange={(e) => handleChange(e?.target?.value)}
       >
-        {options?.map((facility) => (
-          <MenuItem key={facility.id} value={facility.id}>
-            {facility.name}
+        {options?.map((opts) => (
+          <MenuItem key={opts.id} value={opts.id}>
+            {opts[targetDisplayField]}
           </MenuItem>
         ))}
       </Select>
@@ -22,4 +22,4 @@ const Selection = ({ currentSelection, handleChange, options, label }) => {
   );
 };
 
-export default Selection
+export default Selection;

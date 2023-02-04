@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Stack, Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
+import { Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import Selection from 'components/Selection'
 import PromptChoiceCard from './PromptChoiceCard';
-import MainCard from 'components/MainCard';
-import Patient from 'fixtures/Patient.json'
-import LoadingPage from 'components/LoadingPage'
 import { useDispatch, useSelector } from 'react-redux';
-import { extractDescription, gatherIndividualList, populationGather, parseStratifier } from 'utils/measureReportHelpers';
-import { gatherPatientDisplayData } from 'utils/patientHelper';
-
-import ValidationDataTable from './ValidationDataTable';
 import { createPeriodFromQuarter } from 'utils/queryHelper';
-import { inputSelection } from 'store/reducers/filter';
-import { baseUrl } from 'config'
+import { baseUrl } from 'config';
+import IndividualMeasureReport from './IndividualMeasureReport';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -27,23 +19,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`
   };
 }
-
-const PatientInfoCard = ({ name, birthDate, gender, mrn }) => (
-  <Card sx={{ minWidth: 275 }}>
-    <CardContent>
-      <Typography sx={{ fontSize: 20 }} color="primary.main" gutterBottom>
-        {name}
-      </Typography>
-      <Typography variant="h5" component="div">
-        {birthDate}
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        {gender}
-      </Typography>
-      <Typography variant="body2">MRN: {mrn}</Typography>
-    </CardContent>
-  </Card>
-);
 
 const buildMeasurePayload = (facilityId, measureResourceUrl, quarter) => {
   const period = createPeriodFromQuarter(quarter);
@@ -65,16 +40,16 @@ const buildMeasurePayload = (facilityId, measureResourceUrl, quarter) => {
       {
         name: 'patients',
         resource: {
-          "resourceType": "Group",
-          "id": "102",
-          "type": "person",
-          "actual": true,
-          "member": [
-              {
-                  "entity": {
-                      "reference": "Patient/denom-EXM104"
-                  }
+          resourceType: 'Group',
+          id: '102',
+          type: 'person',
+          actual: true,
+          member: [
+            {
+              entity: {
+                reference: 'Patient/denom-EXM104'
               }
+            }
           ]
         }
       }
@@ -87,30 +62,28 @@ const DashboardDefault = () => {
   const { facilities, measures } = useSelector((state) => state.data);
   const [value, setValue] = useState(0);
   const [measureReport, setMeasureReport] = useState(null);
-
-  const dispatch = useDispatch();
+  const measureResource = measures.find((i) => i.id === measure);
 
   useEffect(() => {
     const callGatherApi = async () => {
-      const facilityResource = facilities.find(i => i.id === facility)
-      const measureResource = measures.find(i => i.id === measure)
+      const facilityResource = facilities.find((i) => i.id === facility);
       const parametersPayload = buildMeasurePayload(facilityResource.id, measureResource.url, date);
-        try {
-          const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(parametersPayload)
-          }).then((response) => response?.json());
+      try {
+        const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(parametersPayload)
+        }).then((response) => response?.json());
 
-          if (measureReportJson?.resourceType === 'OperationOutcome') {
-            console.error(measureReportJson)
-          } else {
-            setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
-          }
+        if (measureReportJson?.resourceType === 'OperationOutcome') {
+          console.error(measureReportJson);
+        } else {
+          setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
+        }
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     };
 
@@ -140,9 +113,6 @@ const DashboardDefault = () => {
       </Grid>
     );
   }
-  const description = extractDescription(measureReport);
-
-  const patientInfo = gatherPatientDisplayData(Patient);
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -153,24 +123,7 @@ const DashboardDefault = () => {
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
-          { measureReport == null ? <LoadingPage /> : (
-            <>
-          <Grid item xs={4} sx={{ mb: -2.25 }}>
-            <PatientInfoCard {...patientInfo} />
-          </Grid>
-          <Grid item xs={8} sx={{ mb: -2.25 }}>
-            <Selection
-              options={facilities}
-              label="Facilities"
-              currentSelection={facility}
-              handleChange={(newFacility) => {
-                dispatch(inputSelection({ type: 'facility', value: newFacility }));
-              }}
-            />
-            <ValidationDataTable resources={gatherIndividualList(measureReport).resources} />
-          </Grid>
-          </>
-          )}
+          <IndividualMeasureReport measureReport={measureReport} measureName={measureResource.title} />
         </TabPanel>
       </>
     </Grid>

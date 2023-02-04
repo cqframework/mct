@@ -1,4 +1,4 @@
-import MeasureReportMCT from 'fixtures/MeasureReportMCT.json';
+import Patient from 'fixtures/Patient';
 
 const extractDescription = (measureReport) => {
   const extUrl = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description';
@@ -39,23 +39,27 @@ const parseStratifier = (measureReport) => {
 };
 
 const gatherIndividualList = (measureReportBundle) => {
-  const measureReport = measureReportBundle.entry.find(i => i.resource.type === 'individual').resource
+  const entries = measureReportBundle?.entry?.map((i) => i?.resource);
+
+  const measureReport = entries?.find((i) => i?.resourceType === 'MeasureReport');
+
   if (measureReport?.type !== 'individual') {
     console.warn('This is not a individual measure report');
     return null;
   }
 
-  return MeasureReportMCT.contained?.[0]?.entry.reduce((acc, entry) => {
-    const resourceType = entry.resource.resourceType;
-    if (resourceType !== 'List') {
-      if (resourceType === 'Patient') {
-        acc['patient'] = entry.resource;
-        return acc;
-      }
-      acc['resources'] = [...(acc['resources'] || []), entry.resource];
+  const extractedMeasureReport = {
+    patient: Patient,
+    resources: [],
+    description: extractDescription(measureReport)
+  };
+
+  entries.forEach((entry) => {
+    if (entry?.resourceType !== 'MeasureReport') {
+      extractedMeasureReport.resources.push(entry);
     }
-    return acc;
-  }, {});
+  });
+  return extractedMeasureReport;
 };
 
 const populationGather = (measureReportGroup) => {

@@ -1,29 +1,31 @@
-import { InputLabel, Select, FormControl, Typography, MenuItem, Box } from '@mui/material';
+import { FormControl, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Selection from 'components/Selection';
 
-const DateSelection = ({ date, handleChange }) => (
-  <>
-    <InputLabel id="date-select-label">Date Range</InputLabel>
-    <Select
-      labelId="date-select-label"
-      id="date-select"
-      defaultValue="q1"
-      value={date}
-      label="Date Range"
-      onChange={(e) => handleChange(e.target.value)}
-    >
-      <MenuItem value={'q1'}>2022 - Q1</MenuItem>
-      <MenuItem value={'q2'}>2022 - Q2</MenuItem>
-      <MenuItem value={'q3'}>2022 - Q3</MenuItem>
-      <MenuItem value={'q4'}>2022 - Q4</MenuItem>
-    </Select>
-  </>
-);
+const dateOptions = [
+  {
+    id: 'q1',
+    name: '2022 - Q1'
+  },
+  {
+    id: 'q2',
+    name: '2022 - Q2'
+  },
+  {
+    id: 'q3',
+    name: '2022 - Q3'
+  },
+  {
+    id: 'q4',
+    name: '2022 - Q4'
+  }
+];
 
 const HeaderContent = () => {
-  const { date, } = useSelector((state) => state.filter);
+  const { date, facility } = useSelector((state) => state.filter);
+  const { facilities } = useSelector((state) => state.data);
+
   const dispatch = useDispatch();
 
   return (
@@ -35,7 +37,26 @@ const HeaderContent = () => {
           minWidth: 200
         }}
       >
-        <DateSelection date={date} handleChange={(value) => dispatch(inputSelection({ type: 'date', value }))} />
+        <Selection
+          options={facilities}
+          label="Facility"
+          currentSelection={facility}
+          handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
+        />
+      </FormControl>
+      <FormControl
+        required
+        sx={{
+          m: 1,
+          minWidth: 200
+        }}
+      >
+        <Selection
+          options={dateOptions}
+          label="Date Range"
+          currentSelection={date}
+          handleChange={(value) => dispatch(inputSelection({ type: 'date', value }))}
+        />
       </FormControl>
     </Box>
   );
