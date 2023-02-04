@@ -24,6 +24,7 @@ const DrawerContent = () => {
         <Selection
           options={measures}
           label="Measures"
+          targetDisplayField="title"
           currentSelection={measure}
           handleChange={(newMeasure) => {
             dispatch(inputSelection({ type: 'measure', value: newMeasure }));

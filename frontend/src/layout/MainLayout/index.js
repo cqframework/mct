@@ -12,15 +12,14 @@ import { fetchOrganizations, fetchFacilities, fetchMeasures } from 'store/reduce
 import LoadingPage from 'components/LoadingPage';
 import OrganizationSelection from './OrganizationSelection';
 import { inputSelection } from 'store/reducers/filter';
-
+import { isEqual } from 'lodash';
 const MainLayout = () => {
   const theme = useTheme();
+  const { drawerOpen, measure, organization } = useSelector((state) => state.filter, isEqual);
   const { organizations, facilities, status } = useSelector((state) => state.data);
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
-
-  const { drawerOpen, measure, organization } = useSelector((state) => state.filter);
 
   // drawer toggler
   const [open, setOpen] = useState(drawerOpen);
@@ -43,7 +42,7 @@ const MainLayout = () => {
     if (organizations.length === 0 && status === 'idle') {
       dispatch(fetchOrganizations());
     } else if (organization.length !== 0 && status === 'succeeded') {
-      dispatch(fetchMeasures())
+      dispatch(fetchMeasures());
       dispatch(fetchFacilities());
     }
   }, [dispatch, organization, organizations, status]);
@@ -62,11 +61,13 @@ const MainLayout = () => {
   } else if (facilities.length === 0) {
     const organizationName = organizations.find((org) => org.id === organization)?.name;
     return (
-    <LoadingPage>
-      <Typography variant="h1">Retrieving Facilties and Measures from</Typography>
-      <Typography sx={{color: 'primary.main'}}variant="h1">{organizationName}</Typography>
-    </LoadingPage>
-    )
+      <LoadingPage>
+        <Typography variant="h1">Retrieving Facilties and Measures from</Typography>
+        <Typography sx={{ color: 'primary.main' }} variant="h1">
+          {organizationName}
+        </Typography>
+      </LoadingPage>
+    );
   }
 
   return (
