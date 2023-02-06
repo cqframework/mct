@@ -20,6 +20,19 @@
 		<cql-translator.version>2.4.0</cql-translator.version>
 		<guava.version>31.1-jre</guava.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>oss-sonatype</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-sonatype-public</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,6 +59,21 @@
 			<artifactId>hapi-fhir-server</artifactId>
 			<version>${hapi.version}</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>ca.uhn.hapi.fhir</groupId>-->
+<!--			<artifactId>org.hl7.fhir.r5</artifactId>-->
+<!--			<version>5.6.36</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>ca.uhn.hapi.fhir</groupId>-->
+<!--			<artifactId>org.hl7.fhir.convertors</artifactId>-->
+<!--			<version>5.6.36</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>ca.uhn.hapi.fhir</groupId>-->
+<!--			<artifactId>org.hl7.fhir.validation</artifactId>-->
+<!--			<version>5.6.36</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -67,6 +95,26 @@
 			<artifactId>model-jackson</artifactId>
 			<version>${cql-translator.version}</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>info.cqframework</groupId>-->
+<!--			<artifactId>cql-to-elm</artifactId>-->
+<!--			<version>${cql-translator.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>info.cqframework</groupId>-->
+<!--			<artifactId>model</artifactId>-->
+<!--			<version>${cql-translator.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>info.cqframework</groupId>-->
+<!--			<artifactId>elm</artifactId>-->
+<!--			<version>${cql-translator.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>info.cqframework</groupId>-->
+<!--			<artifactId>cql</artifactId>-->
+<!--			<version>${cql-translator.version}</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

@@ -6,6 +6,7 @@ import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.util.ClasspathUtil;
 import ca.uhn.fhir.validation.FhirValidator;
+import org.cqframework.cql.cql2elm.LibrarySourceProvider;
 import org.hl7.fhir.common.hapi.validation.support.CachingValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.CommonCodeSystemsTerminologyService;
 import org.hl7.fhir.common.hapi.validation.support.InMemoryTerminologyServerValidationSupport;
@@ -35,13 +36,16 @@ import org.opencds.cqf.cql.evaluator.builder.library.FhirFileLibrarySourceProvid
 import org.opencds.cqf.cql.evaluator.builder.library.TypedLibrarySourceProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.terminology.FhirFileTerminologyProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.terminology.TypedTerminologyProviderFactory;
+import org.opencds.cqf.cql.evaluator.cql2elm.content.fhir.BundleFhirLibrarySourceProvider;
 import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.DirectoryBundler;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
+import org.opencds.cqf.mct.service.DataRequirementsService;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
+import org.opencds.cqf.mct.service.PatientDataService;
 import org.opencds.cqf.mct.service.ReceivingSystemConfigurationService;
 import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
@@ -255,6 +259,16 @@ public class MctConfig {
    }
 
    @Bean
+   public PatientDataService patientDataService() {
+      return new PatientDataService();
+   }
+
+   @Bean
+   public DataRequirementsService dataRequirementsService() {
+      return new DataRequirementsService();
+   }
+
+   @Bean
    public String pathToConfigurationResources() {
       return Objects.requireNonNull(ClasspathUtil.class.getClassLoader().getResource("configuration")).getPath();
    }
@@ -281,5 +295,10 @@ public class MctConfig {
    public Bundle terminologyBundle(FhirContext fhirContext) {
       return fhirContext.newJsonParser().parseResource(Bundle.class,
               ClasspathUtil.loadResourceAsStream("classpath:configuration/terminology/terminology-bundle.json"));
+   }
+
+   @Bean
+   public LibrarySourceProvider bundleFhirLibrarySourceProvider(FhirContext fhirContext, Bundle measuresBundle, AdapterFactory adapterFactory, LibraryVersionSelector libraryVersionSelector) {
+      return new BundleFhirLibrarySourceProvider(fhirContext, measuresBundle, adapterFactory, libraryVersionSelector);
    }
 }

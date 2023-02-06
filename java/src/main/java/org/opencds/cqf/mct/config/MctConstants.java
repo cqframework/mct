@@ -31,8 +31,17 @@ public class MctConstants {
    // Receiving System Configuration Constants
    public static final String LIST_REC_SYSTEM_OPERATION_NAME = "$list-receiving-systems";
 
+   // Extensions
+   public static final String VALIDATION_EXTENSION_URL = "http://cms.gov/fhir/mct/StructureDefinition/validation-result";
+   public static final String LOCATION_EXTENSION_URL = "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location";
+
+   // Tags
+   public static final String LOCATION_TAG_SYSTEM = "http://cms.gov/fhir/mct/tags/Location";
+
    // OperationOutcome Constants
    public static final String SEVERITY_ERROR = "error";
+   public static final String SEVERITY_INFORMATION = "information";
    public static final String CODE_PROCESSING = "processing";
+   public static final String CODE_INFORMATIONAL = "informational";
 
 }
