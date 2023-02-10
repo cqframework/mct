@@ -33,6 +33,7 @@
         "import/order": 0,
         "no-console": 0,
         "jsx-a11y/anchor-is-valid": 0,
+        "jsx-a11y/no-autofocus": 0,
         "prefer-destructuring": 0,
         "no-shadow": 0,
         "prettier/prettier": [
