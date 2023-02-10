@@ -7,16 +7,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function AlertDialog({ isVisible, setVisibility, organizationId, organizationName, setStatusMessage }) {
-  const handleClose = () => {
+  const handleClose = ({ isSubmit }) => {
     setVisibility(false);
-    setStatusMessage(true);
+    if (isSubmit) {
+      setStatusMessage(true);
+    }
   };
 
   const handleSubmit = async () => {
-    // await fetch(`${baseUrl}/mct/$submit?organization${organizationId}`,{
+    //TODO Re-enable when implementation complete on backend.
+    // await fetch(`${baseUrl}/mct/$submit?organization=${organizationId}`,{
     //   method: 'POST'
     // });
-    handleClose();
+    handleClose({ isSubmit: true });
   };
 
   return (

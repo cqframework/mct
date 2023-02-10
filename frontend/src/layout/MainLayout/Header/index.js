@@ -2,19 +2,15 @@ import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Toolbar, useMediaQuery, Button } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/icons';
 
-// project import
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 import AlertDialog from 'components/AlertDialog';
-// assets
-import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/icons';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -27,6 +23,7 @@ const Header = ({ open, handleDrawerToggle }) => {
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
   const { measure, organization } = useSelector((state) => state.filter);
   const { organizations } = useSelector((state) => state.data);
+
   const iconBackColor = 'grey.100';
   const iconBackColorOpen = 'grey.200';
 
@@ -37,7 +34,9 @@ const Header = ({ open, handleDrawerToggle }) => {
 
     setIsStatusMessageVisible(false);
   };
+
   const targetedOrganization = organizations.find((i) => i.id === organization);
+
   const mainHeader = (
     <Toolbar>
       <IconButton
