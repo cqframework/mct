@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { inputSelection } from './filter';
-import { baseUrl } from 'config';
+import { baseUrl } from 'config';
 
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
   const organizationBundle = await fetch(`${baseUrl}/mct/$list-organizations`).then((res) => res.json());
@@ -8,14 +8,13 @@ export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', as
 });
 
 export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId, { dispatch }) => {
-  const facilityBundle = await fetch(`${baseUrl}/mct/$list-facilities`).then((res) => res.json());
+  const facilityBundle = await fetch(`${baseUrl}/mct/$list-facilities?organization=${organizationId}`).then((res) => res.json());
   await new Promise((r) => setTimeout(r, 1000));
   const mappedFacilities = facilityBundle.entry.map((i) => i.resource);
-  const firstFacility = mappedFacilities?.[0]?.id // set first one as default
-  dispatch(inputSelection({ type: "facility", value: firstFacility }))
-  return mappedFacilities
+  const firstFacility = mappedFacilities?.[0]?.id; // set first one as default
+  dispatch(inputSelection({ type: 'facility', value: firstFacility }));
+  return mappedFacilities;
 });
-
 
 export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facilityId) => {
   const measureBundle = await fetch(`${baseUrl}/mct/$list-measures`).then((res) => res.json());

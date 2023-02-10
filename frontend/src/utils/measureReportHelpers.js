@@ -5,20 +5,6 @@ const extractDescription = (measureReport) => {
   return measureReport?.extension?.find((extension) => extension.url === extUrl)?.valueString;
 };
 
-const parseMeasureReport = (measureReport) => {
-  const { type } = measureReport;
-  switch (type) {
-    case 'individual':
-      break;
-    case 'subject-list':
-      break;
-    case 'summary':
-      break;
-    default:
-      break;
-  }
-};
-
 const parseStratifier = (measureReport) => {
   const stratifier = {};
   measureReport.group[0].stratifier.forEach((data) => {
@@ -79,4 +65,4 @@ const populationGather = (measureReportGroup) => {
   return population;
 };
 
-export { extractDescription, parseMeasureReport, gatherIndividualList, populationGather, parseStratifier };
+export { extractDescription, gatherIndividualList, populationGather, parseStratifier };
