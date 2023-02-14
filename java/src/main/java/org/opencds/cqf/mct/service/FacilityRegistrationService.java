@@ -1,6 +1,7 @@
 package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.context.FhirContext;
+import org.apache.commons.collections4.IterableUtils;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Endpoint;
@@ -9,6 +10,9 @@ import org.hl7.fhir.r4.model.Resource;
 import org.opencds.cqf.cql.evaluator.engine.retrieve.BundleRetrieveProvider;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FacilityRegistrationService {
 
@@ -30,6 +34,11 @@ public class FacilityRegistrationService {
 
    public Bundle listFacilities(String organizationId) {
       Bundle facilities = new Bundle().setType(Bundle.BundleType.COLLECTION);
+      getLocations(organizationId).forEach(x -> facilities.addEntry().setResource(x));
+      return facilities;
+   }
+
+   public List<Location> getLocations(String organizationId) {
       Iterable<Object> results;
       if (organizationId == null) {
          results = bundleRetrieveProvider.retrieve(null, null, null,
@@ -44,8 +53,7 @@ public class FacilityRegistrationService {
                  organizationId, "Location", null, null, null, null,
                  null, null, null, null);
       }
-      results.forEach(x -> facilities.addEntry().setResource((Resource) x));
-      return facilities;
+      return IterableUtils.toList(results).stream().map(Location.class::cast).collect(Collectors.toList());
    }
 
    public Location getFacility(String locationId) {

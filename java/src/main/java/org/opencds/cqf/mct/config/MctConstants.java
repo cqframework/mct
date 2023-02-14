@@ -31,6 +31,13 @@ public class MctConstants {
    // Receiving System Configuration Constants
    public static final String LIST_REC_SYSTEM_OPERATION_NAME = "$list-receiving-systems";
 
+   // Patient Selector Constants
+   public static final String PATIENT_SELECTOR_OPERATION_NAME = "$list-patients";
+   public static final String PATIENT_SELECTOR_ORG_ID_PARAM = "organizationId";
+
+   // Generate Patient Data Constants
+   public static final String GENERATE_PATIENT_DATA_OPERATION_NAME = "$generate-patient-data";
+
    // Extensions
    public static final String VALIDATION_EXTENSION_URL = "http://cms.gov/fhir/mct/StructureDefinition/validation-result";
    public static final String LOCATION_EXTENSION_URL = "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location";

@@ -2,20 +2,44 @@ package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.util.ClasspathUtil;
 import ca.uhn.fhir.util.DateUtils;
 import ca.uhn.fhir.util.OperationOutcomeUtil;
+import org.cqframework.cql.cql2elm.CqlTranslator;
+import org.cqframework.cql.cql2elm.CqlTranslatorOptions;
+import org.cqframework.cql.cql2elm.DefaultLibrarySourceProvider;
+import org.cqframework.cql.cql2elm.LibraryManager;
+import org.cqframework.cql.cql2elm.LibrarySourceLoader;
+import org.cqframework.cql.cql2elm.LibrarySourceProvider;
+import org.cqframework.cql.cql2elm.ModelManager;
+import org.cqframework.cql.cql2elm.PriorityLibrarySourceLoader;
+import org.cqframework.cql.elm.execution.Library;
+import org.cqframework.cql.elm.execution.VersionedIdentifier;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.Parameters;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Period;
 import org.hl7.fhir.r4.model.PrimitiveType;
 import org.hl7.fhir.r4.model.Resource;
+import org.opencds.cqf.cql.engine.data.DataProvider;
+import org.opencds.cqf.cql.engine.data.ExternalFunctionProvider;
+import org.opencds.cqf.cql.engine.data.SystemExternalFunctionProvider;
+import org.opencds.cqf.cql.engine.execution.Context;
+import org.opencds.cqf.cql.engine.serializing.jackson.JsonCqlLibraryReader;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
 
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
@@ -25,9 +49,11 @@ public class PatientDataService {
 
    private final FhirContext fhirContext;
    private List<OperationOutcome> missingDataRequirements;
+   private final DataProvider dataProvider;
 
    public PatientDataService() {
       fhirContext = SpringContext.getBean(FhirContext.class);
+      dataProvider = SpringContext.getBean(DataProvider.class);
       missingDataRequirements = new ArrayList<>();
    }
 
@@ -51,6 +77,13 @@ public class PatientDataService {
          returnBundle.getEntry().addAll(getPatientData(facilityUrl, facility, patientId, period, types).getEntry());
       }
       return returnBundle;
+   }
+
+   public Bundle getPatients(String facilityUrl) {
+      IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
+      return client.operation().onType(Patient.class)
+              .named("$everything").withParameters(parameters(part("_type", "Patient")))
+              .returnResourceType(Bundle.class).execute();
    }
 
    public List<OperationOutcome> getMissingDataRequirementsAndClear() {
@@ -91,6 +124,34 @@ public class PatientDataService {
          }
          missingDataRequirements.add(missingProfile);
       }
+   }
+
+   public Bundle generatePatientData() throws NoSuchMethodException, IOException {
+      VersionedIdentifier versionedIdentifier =
+              new VersionedIdentifier().withId("CMS104TestDataGenerator").withVersion("1.0.0");
+      File cqlFile = new File(Objects.requireNonNull(Objects.requireNonNull(ClasspathUtil.class.getClassLoader().getResource(
+              "configuration/patient-data-gen-libraries/" + "CMS104TestDataGenerator" + ".cql")).getFile(), "UTF-8"));
+      ModelManager modelManager = new ModelManager();
+      LibraryManager libraryManager = new LibraryManager(modelManager);
+      LibrarySourceLoader librarySourceLoader = new PriorityLibrarySourceLoader();
+      LibrarySourceProvider librarySourceProvider = new DefaultLibrarySourceProvider(
+              Path.of(Objects.requireNonNull(ClasspathUtil.class.getClassLoader().getResource(
+                      "configuration/patient-data-gen-libraries")).getPath()));
+      librarySourceLoader.registerProvider(librarySourceProvider);
+      CqlTranslatorOptions options = CqlTranslatorOptions.defaultOptions();
+      CqlTranslator translator = CqlTranslator.fromFile(cqlFile, modelManager, libraryManager, null, options);
+      Library library = new JsonCqlLibraryReader().read(translator.toJson());
+      Context context = new Context(library);
+      ExternalFunctionProvider externalFunctionProvider = new SystemExternalFunctionProvider(Collections.singletonList(PatientDataService.class.getMethod("getRandomNumber")));
+      context.registerExternalFunctionProvider(versionedIdentifier, externalFunctionProvider);
+      context.registerDataProvider("http://hl7.org/fhir", dataProvider);
+      Object result = context.resolveExpressionRef("TestDataGenerationResult").evaluate(context);
+
+      return (Bundle) result;
+   }
+
+   public static BigDecimal getRandomNumber() {
+      return BigDecimal.valueOf(new Random().nextDouble());
    }
 
 }

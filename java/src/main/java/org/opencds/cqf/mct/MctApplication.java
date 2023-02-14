@@ -5,7 +5,9 @@ import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
 import org.opencds.cqf.mct.api.FacilityRegistrationAPI;
 import org.opencds.cqf.mct.api.GatherAPI;
+import org.opencds.cqf.mct.api.GeneratePatientDataAPI;
 import org.opencds.cqf.mct.api.MeasureConfigurationAPI;
+import org.opencds.cqf.mct.api.PatientSelectorAPI;
 import org.opencds.cqf.mct.api.ReceivingSystemConfigurationAPI;
 import org.opencds.cqf.mct.config.MctProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,8 @@ public class MctApplication extends SpringBootServletInitializer {
 		fhirServer.registerProvider(new FacilityRegistrationAPI());
 		fhirServer.registerProvider(new MeasureConfigurationAPI());
 		fhirServer.registerProvider(new ReceivingSystemConfigurationAPI());
+		fhirServer.registerProvider(new GeneratePatientDataAPI());
+		fhirServer.registerProvider(new PatientSelectorAPI());
 		return fhirServer;
 	}
 

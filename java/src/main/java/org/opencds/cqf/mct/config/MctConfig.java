@@ -16,6 +16,8 @@ import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
 import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.utilities.npm.NpmPackage;
+import org.opencds.cqf.cql.engine.data.CompositeDataProvider;
+import org.opencds.cqf.cql.engine.data.DataProvider;
 import org.opencds.cqf.cql.engine.fhir.model.R4FhirModelResolver;
 import org.opencds.cqf.cql.engine.fhir.retrieve.RestFhirRetrieveProvider;
 import org.opencds.cqf.cql.engine.fhir.searchparam.SearchParameterResolver;
@@ -120,6 +122,11 @@ public class MctConfig {
            Set<TypedRetrieveProviderFactory> typedRetrieveProviderFactories) {
       return new org.opencds.cqf.cql.evaluator.builder.data.DataProviderFactory(
               fhirContext, modelResolverFactories, typedRetrieveProviderFactories);
+   }
+
+   @Bean
+   public DataProvider dataProvider(ModelResolver modelResolver, Set<TypedRetrieveProviderFactory> typedRetrieveProviderFactories) {
+      return new CompositeDataProvider(modelResolver, typedRetrieveProviderFactories.iterator().next().create("blah", null));
    }
 
    @Bean
