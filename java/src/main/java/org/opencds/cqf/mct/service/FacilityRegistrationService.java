@@ -66,7 +66,7 @@ public class FacilityRegistrationService {
       Object result = results.iterator().hasNext() ? results.iterator().next() : null;
       return (Location) result;
    }
-
+   
    public String getFacilityUrl(String facilityId) {
       Location facility = getFacility(facilityId);
       for (Resource containedResource : facility.getContained()) {

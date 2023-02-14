@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  organization: '',
   facility: '',
   date: 'q1',
   measure: '',

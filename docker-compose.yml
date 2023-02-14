@@ -1,7 +1,16 @@
 version: "3.9"
 services:
-  frontend:
+  # frontend:
+  #   build:
+  #     context: frontend/
+  #   ports:
+  #     - 3000:80
+  backend:
     build:
-      context: frontend/
+      context: java/
     ports:
-      - 3000:80
+      - 8088:8088
+  cqf-ruler:
+    image: alphora/cqf-ruler:vsm_draft_operation 
+    ports:
+      - 8080:8080

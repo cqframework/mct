@@ -10,7 +10,7 @@ describe('queryHelper', () => {
       jest.useFakeTimers("modern");
       jest.setSystemTime(new Date(1578958478000));
       const dateRange = createPeriodFromQuarter('q1')
-      expect(dateRange.start).toEqual('01-01-2020')
+      expect(dateRange.start).toEqual('2022-01-01T00:00:00+00:00')
     })
   })
   

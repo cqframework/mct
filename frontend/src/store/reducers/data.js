@@ -1,56 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { inputSelection } from './filter';
+import { baseUrl } from 'config';
 
-const DEMO_BUNDLE = {
-  resourceType: 'Bundle',
-  entry: [
-    {
-      fullUrl: 'http://localhost/something',
-      resource: {
-        resourceType: 'Organization',
-        id: '2',
-        text: {
-          status: 'generated',
-          div: '<div xmlns="http://www.w3.org/1999/xhtml">\n      \n      <p>XYZ Insurance</p>\n    \n    </div>'
-        },
-        identifier: [
-          {
-            system: 'urn:oid:2.16.840.1.113883.3.19.2.3',
-            value: '666666'
-          }
-        ],
-        name: 'Yale New Haven Hospital',
-        alias: ['Yale New Haven Hospital']
-      }
-    },
-    {
-      fullUrl: 'http://localhost/something',
-      resource: {
-        resourceType: 'Organization',
-        id: '44',
-        text: {
-          status: 'generated',
-          div: '<div xmlns="http://www.w3.org/1999/xhtml">\n      \n      <p>XYZ Insurance</p>\n    \n    </div>'
-        },
-        identifier: [
-          {
-            system: 'urn:oid:2.16.840.1.113883.3.19.2.3',
-            value: '666666'
-          }
-        ],
-        name: 'XYZ Insurance',
-        alias: ['ABC Insurance']
-      }
-    }
-  ]
-};
+export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
+  const organizationBundle = await fetch(`${baseUrl}/mct/$list-organizations`).then((res) => res.json());
+  return organizationBundle.entry.map((i) => i.resource);
+});
 
-export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async () => {
-  await new Promise((r) => setTimeout(r, 2000));
-  return DEMO_BUNDLE.entry.map((i) => i.resource);
+export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId, { dispatch }) => {
+  const facilityBundle = await fetch(`${baseUrl}/mct/$list-facilities?organization=${organizationId}`).then((res) => res.json());
+  await new Promise((r) => setTimeout(r, 1000));
+  const mappedFacilities = facilityBundle.entry.map((i) => i.resource);
+  const firstFacility = mappedFacilities?.[0]?.id; // set first one as default
+  dispatch(inputSelection({ type: 'facility', value: firstFacility }));
+  return mappedFacilities;
+});
+
+export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facilityId) => {
+  const measureBundle = await fetch(`${baseUrl}/mct/$list-measures`).then((res) => res.json());
+  return measureBundle.entry.map((i) => i.resource);
 });
 
 const initialState = {
   facilities: [],
+  organizations: [],
   measures: [],
   status: 'idle',
   error: null
@@ -66,10 +39,38 @@ const data = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchFacilities.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'finalized';
         state.facilities = state.facilities = action.payload;
       })
       .addCase(fetchFacilities.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchOrganizations.pending, (state, action) => {
+        state.organizations = [];
+        state.status = 'loading';
+      })
+      .addCase(fetchOrganizations.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.organizations = state.organizations = action.payload;
+      })
+      .addCase(fetchOrganizations.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchMeasures.pending, (state, action) => {
+        state.measures = [];
+        state.status = 'loading';
+      })
+      .addCase(fetchMeasures.fulfilled, (state, action) => {
+        state.status = 'finalized';
+        state.measures = state.measures = action.payload;
+      })
+      .addCase(fetchMeasures.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
