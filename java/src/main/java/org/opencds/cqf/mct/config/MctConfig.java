@@ -48,6 +48,7 @@ import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
 import org.opencds.cqf.mct.service.PatientDataService;
+import org.opencds.cqf.mct.service.PatientSelectorService;
 import org.opencds.cqf.mct.service.ReceivingSystemConfigurationService;
 import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
@@ -248,6 +249,11 @@ public class MctConfig {
    @Bean
    public FacilityRegistrationService facilityRegistrationService() {
       return new FacilityRegistrationService();
+   }
+
+   @Bean
+   public PatientSelectorService patientSelectorService() {
+      return new PatientSelectorService();
    }
 
    @Bean
