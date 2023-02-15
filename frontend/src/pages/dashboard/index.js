@@ -58,8 +58,8 @@ const buildMeasurePayload = (facilityId, measureResourceUrl, quarter) => {
 };
 
 const DashboardDefault = () => {
-  const { facility, date, measure } = useSelector((state) => state.filter);
-  const { facilities, measures } = useSelector((state) => state.data);
+  const { facility, date, measure, patient } = useSelector((state) => state.filter);
+  const { facilities, measures, patients } = useSelector((state) => state.data);
   const [value, setValue] = useState(0);
   const [measureReport, setMeasureReport] = useState(null);
   const measureResource = measures.find((i) => i.id === measure);
@@ -114,16 +114,64 @@ const DashboardDefault = () => {
     );
   }
 
+  if (patient.length === 0) {
+    return (
+      <Grid item xs={12} sx={{ mb: -2.25 }}>
+        <PromptChoiceCard>
+          <Box sx={{ display: 'flex', mt: 10, fontSize: 30 }}>
+            <Typography variant="h1" gutterBottom>
+              <ArrowLeftOutlined /> Select a
+            </Typography>
+            <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
+              Patient
+            </Typography>
+            <Typography variant="h1" gutterBottom>
+              to Begin
+            </Typography>
+          </Box>
+        </PromptChoiceCard>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Patient Data" {...a11yProps(0)} />
+            <Tab label="Population Report Data" {...a11yProps(1)} />
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
           <IndividualMeasureReport measureReport={measureReport} measureName={measureResource.title} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Grid item xs={12} sx={{ mb: -2.25 }}>
+            <Typography variant="h1">Diabetes Report Data Demographics</Typography>
+            <Typography variant="p" color="textSecondary">
+              {description}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+            <PopulationStatistics population={population} />
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container alignItems="center" justifyContent="space-between">
+              <Grid item>
+                <Typography variant="h5">Ethnicity</Typography>
+              </Grid>
+            </Grid>
+            <MainCard sx={{ mt: 1.75 }}>
+              <Stack spacing={1.5} sx={{ mb: -12 }}>
+                <Typography variant="h6" color="secondary">
+                  {stratifier['54133-4'].title}
+                </Typography>
+              </Stack>
+              <PatientColumnChart stratifier={stratifier['54133-4']} />
+            </MainCard>
+          </Grid>
         </TabPanel>
       </>
     </Grid>

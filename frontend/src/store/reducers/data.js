@@ -21,8 +21,14 @@ export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facil
   return measureBundle.entry.map((i) => i.resource);
 });
 
+export const fetchPatients = createAsyncThunk('data/fetchPatients', async (facilityId) => {
+  const patientBundle = await fetch(`${baseUrl}/mct/$list-patients`).then((res) => res.json());
+  return patientBundle.entry.map((i) => i.resource);
+});
+
 const initialState = {
   facilities: [],
+  patients: [],
   organizations: [],
   measures: [],
   status: 'idle',
@@ -40,9 +46,22 @@ const data = createSlice({
       })
       .addCase(fetchFacilities.fulfilled, (state, action) => {
         state.status = 'finalized';
-        state.facilities = state.facilities = action.payload;
+        state.facilities = action.payload;
       })
       .addCase(fetchFacilities.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchPatients.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchPatients.fulfilled, (state, action) => {
+        state.status = 'finalized';
+        state.patients = action.payload;
+      })
+      .addCase(fetchPatients.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -54,7 +73,7 @@ const data = createSlice({
       })
       .addCase(fetchOrganizations.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.organizations = state.organizations = action.payload;
+        state.organizations = action.payload;
       })
       .addCase(fetchOrganizations.rejected, (state, action) => {
         state.status = 'failed';
@@ -68,7 +87,7 @@ const data = createSlice({
       })
       .addCase(fetchMeasures.fulfilled, (state, action) => {
         state.status = 'finalized';
-        state.measures = state.measures = action.payload;
+        state.measures = action.payload;
       })
       .addCase(fetchMeasures.rejected, (state, action) => {
         state.status = 'failed';

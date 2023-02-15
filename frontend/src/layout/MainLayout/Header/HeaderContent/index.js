@@ -23,13 +23,27 @@ const dateOptions = [
 ];
 
 const HeaderContent = () => {
-  const { date, facility } = useSelector((state) => state.filter);
-  const { facilities } = useSelector((state) => state.data);
+  const { date, facility, patient } = useSelector((state) => state.filter);
+  const { facilities, patients } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <FormControl
+        required
+        sx={{
+          m: 1,
+          minWidth: 200
+        }}
+      >
+        <Selection
+          options={facilities}
+          label="Patients"
+          currentSelection={patient}
+          handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
+        />
+      </FormControl>
       <FormControl
         required
         sx={{
