@@ -22,7 +22,7 @@ public class PatientSelectorService {
       for (Location location : facilityRegistrationService.getLocations(organizationId)) {
          Bundle patients = patientDataService.getPatients(facilityRegistrationService.getFacilityUrl(location.getId()));
          for (Bundle.BundleEntryComponent bundleComponent: patients.getEntry()) {
-            group.addMember().setEntity(new Reference(bundleComponent.getResource().getIdElement()));
+            group.addMember().setEntity(new Reference("Patient/" + bundleComponent.getResource().getIdElement().getIdPart()));
          }
       }
       return group;
@@ -33,7 +33,7 @@ public class PatientSelectorService {
       for (String facility : facilities) {
          Bundle patients = patientDataService.getPatients(facilityRegistrationService.getFacilityUrl(facility));
          for (Bundle.BundleEntryComponent bundleComponent: patients.getEntry()) {
-            group.addMember().setEntity(new Reference(bundleComponent.getResource().getIdElement()));
+            group.addMember().setEntity(new Reference("Patient/" + bundleComponent.getResource().getIdElement().getIdPart()));
          }
       }
       return group;

@@ -26,6 +26,8 @@ import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -41,6 +43,7 @@ public class GatherService {
    private final ValidationService validationService;
    private final FacilityRegistrationService facilityRegistrationService;
    private final PatientDataService patientDataService;
+   private final MeasureConfigurationService measureConfigurationService;
    private final DataRequirementsService dataRequirementsService;
    private final String pathToConfigurationResource;
 
@@ -54,44 +57,94 @@ public class GatherService {
       validationService = SpringContext.getBean(ValidationService.class);
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
       patientDataService = SpringContext.getBean(PatientDataService.class);
+      measureConfigurationService = SpringContext.getBean(MeasureConfigurationService.class);
       dataRequirementsService = SpringContext.getBean(DataRequirementsService.class);
       pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
    }
+
+//   public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
+//      Parameters parameters = new Parameters();
+//      R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
+//              terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
+//              fileFhirDalFactory, endpointConverter);
+//      for (String facility: facilities) {
+//         String facilityUrl = getFacilityUrl(facility);
+//         Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
+//         List<String> patientIds = getPatientIds(patients);
+//         Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
+//         Bundle patientData = patientDataService.getPatientData(facilityUrl, facility, patientIds, period, profilesToFetch);
+//         MeasureReport report = measureProcessor.evaluateMeasure(getMeasureUrl(facility, measureIdentifier),
+//                 DateUtils.convertDateToIso8601String(period.getStart()),
+//                 DateUtils.convertDateToIso8601String(period.getEnd()), null,
+//                 patientIds, null, configurationResourcesEndpoint,
+//                 configurationResourcesEndpoint, null, patientData);
+//         report.addExtension(getLocationExtension(facility));
+//         Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
+//         returnBundle.addEntry().setResource(report);
+//         List<DomainResource> validationResults = validation(patientData, report);
+//         validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
+//         parameters.addParameter().setName("return-bundle").setResource(returnBundle);
+//      }
+//      return parameters;
+//   }
 
    public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
       Parameters parameters = new Parameters();
       R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
               terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
               fileFhirDalFactory, endpointConverter);
+      Bundle populationData = new Bundle();
+      List<String> patientIds = getPatientIds(patients);
+      Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
+      Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
+      String measureUrl = getMeasureUrl(measureIdentifier);
+      Map<String, Bundle> patientBundles = new HashMap<>();
       for (String facility: facilities) {
          String facilityUrl = getFacilityUrl(facility);
-         Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-         List<String> patientIds = getPatientIds(patients);
-         Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
-         Bundle patientData = patientDataService.getPatientData(facilityUrl, facility, patientIds, period, profilesToFetch);
-         MeasureReport report = measureProcessor.evaluateMeasure(getMeasureUrl(facility, measureIdentifier),
-                 DateUtils.convertDateToIso8601String(period.getStart()),
-                 DateUtils.convertDateToIso8601String(period.getEnd()), null,
-                 patientIds, null, configurationResourcesEndpoint,
-                 configurationResourcesEndpoint, null, patientData);
-         report.addExtension(getLocationExtension(facility));
-         Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
-         returnBundle.addEntry().setResource(report);
-         List<DomainResource> validationResults = validation(patientData, report);
-         validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
-         parameters.addParameter().setName("return-bundle").setResource(returnBundle);
+         Bundle patientData;
+         MeasureReport report;
+         for (String patientId : patientIds) {
+            patientData = patientDataService.getPatientData(facilityUrl, facility, patientId, period, profilesToFetch);
+            populationData.getEntry().addAll(patientData.getEntry());
+            report = measureProcessor.evaluateMeasure(measureUrl,
+                    DateUtils.convertDateToIso8601String(period.getStart()),
+                    DateUtils.convertDateToIso8601String(period.getEnd()), null,
+                    Collections.singletonList(patientId), null, configurationResourcesEndpoint,
+                    configurationResourcesEndpoint, null, patientData);
+            report.addExtension(getLocationExtension(facility));
+            Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
+            returnBundle.addEntry().setResource(report);
+            List<DomainResource> validationResults = validation(patientData, report);
+            validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
+            patientBundles.put(patientId, returnBundle);
+         }
+      }
+      if (patientIds.size() > 1) {
+         parameters.addParameter().setName("population-report").setResource(
+                 measureProcessor.evaluateMeasure(measureUrl,
+                         DateUtils.convertDateToIso8601String(period.getStart()),
+                         DateUtils.convertDateToIso8601String(period.getEnd()), null,
+                         patientIds, null, configurationResourcesEndpoint,
+                         configurationResourcesEndpoint, null, populationData));
+      }
+      for (Map.Entry<String, Bundle> entry : patientBundles.entrySet()) {
+         parameters.addParameter().setName(entry.getKey()).setResource(entry.getValue());
       }
       return parameters;
    }
 
-   public String getMeasureUrl(String facilityId, String measureIdentifier) {
-      if (measureIdentifier.startsWith("http")) {
-         return measureIdentifier;
-      }
-      if (measureIdentifier.startsWith("Measure/")) {
-         return getFacilityUrl(facilityId) + "/" + measureIdentifier;
-      }
-      return getFacilityUrl(facilityId) + "/Measure/" + measureIdentifier;
+//   public String getMeasureUrl(String facilityId, String measureIdentifier) {
+//      if (measureIdentifier.startsWith("http")) {
+//         return measureIdentifier;
+//      }
+//      if (measureIdentifier.startsWith("Measure/")) {
+//         return getFacilityUrl(facilityId) + "/" + measureIdentifier;
+//      }
+//      return getFacilityUrl(facilityId) + "/Measure/" + measureIdentifier;
+//   }
+
+   public String getMeasureUrl(String measureIdentifier) {
+      return measureConfigurationService.getMeasure(measureIdentifier).getUrl();
    }
 
    public String getFacilityUrl(String facilityId) {
