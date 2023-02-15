@@ -11,6 +11,7 @@ import org.hl7.fhir.r4.model.Period;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
 import org.opencds.cqf.mct.service.GatherService;
+import org.opencds.cqf.mct.service.PatientSelectorService;
 
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class GatherAPI {
 
    private final FhirContext fhirContext;
    private final GatherService gatherService;
+   private final PatientSelectorService patientSelectorService;
 
    public GatherAPI() {
       fhirContext = SpringContext.getBean(FhirContext.class);
       gatherService = SpringContext.getBean(GatherService.class);
+      patientSelectorService = SpringContext.getBean(PatientSelectorService.class);
    }
 
    @Operation(name = MctConstants.GATHER_OPERATION_NAME)
@@ -34,6 +37,9 @@ public class GatherAPI {
                         @OperationParam(name = MctConstants.GATHER_PARAM_FACILITIES) List<String> facilities,
                         @OperationParam(name = MctConstants.GATHER_PARAM_MEASURE) String measureIdentifier,
                         @OperationParam(name = MctConstants.GATHER_PARAM_PERIOD) Period period) {
+      if (patients == null) {
+         patients = patientSelectorService.getPatientsForFacilities(facilities);
+      }
       try {
          validateParameters(patients, facilities, measureIdentifier, period);
       } catch (Exception e) {
