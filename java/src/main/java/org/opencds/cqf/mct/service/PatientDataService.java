@@ -82,9 +82,6 @@ public class PatientDataService {
    public Bundle getPatients(String facilityUrl) {
       IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
       return (Bundle) client.search().forResource(Patient.class).count(500).execute();
-//      return client.operation().onType(Patient.class)
-//              .named("$everything").withParameters(parameters(part("_type", "Patient")))
-//              .returnResourceType(Bundle.class).execute();
    }
 
    public List<OperationOutcome> getMissingDataRequirementsAndClear() {

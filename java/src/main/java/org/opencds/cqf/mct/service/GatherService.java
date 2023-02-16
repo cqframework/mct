@@ -62,32 +62,6 @@ public class GatherService {
       pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
    }
 
-//   public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
-//      Parameters parameters = new Parameters();
-//      R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
-//              terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
-//              fileFhirDalFactory, endpointConverter);
-//      for (String facility: facilities) {
-//         String facilityUrl = getFacilityUrl(facility);
-//         Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-//         List<String> patientIds = getPatientIds(patients);
-//         Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
-//         Bundle patientData = patientDataService.getPatientData(facilityUrl, facility, patientIds, period, profilesToFetch);
-//         MeasureReport report = measureProcessor.evaluateMeasure(getMeasureUrl(facility, measureIdentifier),
-//                 DateUtils.convertDateToIso8601String(period.getStart()),
-//                 DateUtils.convertDateToIso8601String(period.getEnd()), null,
-//                 patientIds, null, configurationResourcesEndpoint,
-//                 configurationResourcesEndpoint, null, patientData);
-//         report.addExtension(getLocationExtension(facility));
-//         Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
-//         returnBundle.addEntry().setResource(report);
-//         List<DomainResource> validationResults = validation(patientData, report);
-//         validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
-//         parameters.addParameter().setName("return-bundle").setResource(returnBundle);
-//      }
-//      return parameters;
-//   }
-
    public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
       Parameters parameters = new Parameters();
       R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
@@ -132,16 +106,6 @@ public class GatherService {
       }
       return parameters;
    }
-
-//   public String getMeasureUrl(String facilityId, String measureIdentifier) {
-//      if (measureIdentifier.startsWith("http")) {
-//         return measureIdentifier;
-//      }
-//      if (measureIdentifier.startsWith("Measure/")) {
-//         return getFacilityUrl(facilityId) + "/" + measureIdentifier;
-//      }
-//      return getFacilityUrl(facilityId) + "/Measure/" + measureIdentifier;
-//   }
 
    public String getMeasureUrl(String measureIdentifier) {
       return measureConfigurationService.getMeasure(measureIdentifier).getUrl();
