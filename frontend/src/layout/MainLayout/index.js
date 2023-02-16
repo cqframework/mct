@@ -13,6 +13,7 @@ import LoadingPage from 'components/LoadingPage';
 import OrganizationSelection from './OrganizationSelection';
 import { inputSelection } from 'store/reducers/filter';
 import { isEqual } from 'lodash';
+
 const MainLayout = () => {
   const theme = useTheme();
   const { drawerOpen, measure, organization } = useSelector((state) => state.filter, isEqual);

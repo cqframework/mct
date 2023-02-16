@@ -4,7 +4,7 @@ import { Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/materi
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import PromptChoiceCard from './PromptChoiceCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { baseUrl } from 'config';
+import LoadingPage from 'components/LoadingPage';
 import IndividualMeasureReport from './IndividualMeasureReport';
 
 const TabPanel = (props) => {
@@ -51,7 +51,7 @@ const DashboardDefault = () => {
         </PromptChoiceCard>
       </Grid>
     );
-  } else if (selectedPatients.length === 0 && measureReport == null) {
+  } else if (selectedPatients.length === 0 && measureReport === null) {
     return (
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <PromptChoiceCard>
@@ -69,7 +69,7 @@ const DashboardDefault = () => {
         </PromptChoiceCard>
       </Grid>
     );
-  } else if (measureReport == null) {
+  } else if (measureReport === 'pending') {
     return <LoadingPage message={'Retrieving measure report'} />;
   }
 
@@ -86,7 +86,7 @@ const DashboardDefault = () => {
           <IndividualMeasureReport measureReport={measureReport} measureName={measureResource.title} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Grid item xs={12} sx={{ mb: -2.25 }}>
+          {/* <Grid item xs={12} sx={{ mb: -2.25 }}>
             <Typography variant="h1">Diabetes Report Data Demographics</Typography>
             <Typography variant="p" color="textSecondary">
               {description}
@@ -110,7 +110,7 @@ const DashboardDefault = () => {
               </Stack>
               <PatientColumnChart stratifier={stratifier['54133-4']} />
             </MainCard>
-          </Grid>
+          </Grid> */}
         </TabPanel>
       </>
     </Grid>

@@ -11,6 +11,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 import AlertDialog from 'components/AlertDialog';
+import { executeGatherOperation } from 'store/reducers/data';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

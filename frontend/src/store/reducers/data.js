@@ -10,7 +10,7 @@ export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', as
 
 export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (organizationId, { dispatch }) => {
   const facilityBundle = await fetch(`${baseUrl}/mct/$list-facilities?organization=${organizationId}`).then((res) => res.json());
-  await new Promise((r) => setTimeout(r, 1000));
+  // await new Promise((r) => setTimeout(r, 1000));
   const mappedFacilities = facilityBundle.entry.map((i) => i.resource);
   const firstFacility = mappedFacilities?.[0]?.id; // set first one as default
   dispatch(inputSelection({ type: 'facility', value: firstFacility }));
@@ -27,12 +27,12 @@ export const fetchPatients = createAsyncThunk('data/fetchPatients', async (organ
   return patientGroup;
 });
 
-export const executeGatherOperation = createAsyncThunk('data/gatherOperation', async ({ getState }) => {
+export const executeGatherOperation = createAsyncThunk('data/gatherOperation', async (_, { getState }) => {
   const {
     filter: { selectedPatients, facility, measure, date }
   } = getState();
-
   const parametersPayload = buildMeasurePayload(facility, measure, date, selectedPatients);
+  debugger;
   const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
     method: 'POST',
     headers: {
@@ -40,12 +40,16 @@ export const executeGatherOperation = createAsyncThunk('data/gatherOperation', a
     },
     body: JSON.stringify(parametersPayload)
   }).then((response) => response?.json());
-
+  debugger;
   return measureReportJson;
 });
 
 const buildMeasurePayload = (facilityId, measureId, quarter, patients) => {
   const period = createPeriodFromQuarter(quarter);
+  const groupPatientResource = {
+    resourceType: 'Group',
+    member: patients.map((i) => ({ entity: { reference: i } }))
+  };
   return {
     resourceType: 'Parameters',
     parameter: [
@@ -63,7 +67,7 @@ const buildMeasurePayload = (facilityId, measureId, quarter, patients) => {
       },
       {
         name: 'patients',
-        resource: patients
+        resource: groupPatientResource
       }
     ]
   };
@@ -141,16 +145,10 @@ const data = createSlice({
 
     builder
       .addCase(executeGatherOperation.pending, (state, action) => {
-        state.measureReport = null;
-        state.status = 'loading';
+        state.measureReport = 'pending';
       })
       .addCase(executeGatherOperation.fulfilled, (state, action) => {
-        state.status = 'finalized';
         state.measureReport = action.payload;
-      })
-      .addCase(executeGatherOperation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
       });
   }
 });
