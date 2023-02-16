@@ -23,6 +23,7 @@ import org.opencds.cqf.cql.engine.fhir.retrieve.RestFhirRetrieveProvider;
 import org.opencds.cqf.cql.engine.fhir.searchparam.SearchParameterResolver;
 import org.opencds.cqf.cql.engine.model.ModelResolver;
 import org.opencds.cqf.cql.engine.retrieve.RetrieveProvider;
+import org.opencds.cqf.cql.engine.terminology.TerminologyProvider;
 import org.opencds.cqf.cql.evaluator.builder.DataProviderFactory;
 import org.opencds.cqf.cql.evaluator.builder.EndpointConverter;
 import org.opencds.cqf.cql.evaluator.builder.LibrarySourceProviderFactory;
@@ -88,6 +89,11 @@ public class MctConfig {
            FhirContext fhirContext, Set<TypedTerminologyProviderFactory> typedTerminologyProviderFactories) {
       return new org.opencds.cqf.cql.evaluator.builder.terminology.TerminologyProviderFactory(
               fhirContext, typedTerminologyProviderFactories);
+   }
+
+   @Bean
+   public TerminologyProvider terminologyProvider(TerminologyProviderFactory terminologyProviderFactory, Bundle terminologyBundle) {
+      return terminologyProviderFactory.create(terminologyBundle);
    }
 
    @Bean
