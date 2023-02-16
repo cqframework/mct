@@ -2,7 +2,10 @@ import { FormControl, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 import Selection from 'components/Selection';
+import { Button } from '@mui/material';
 import PatientMultiSelect from 'components/PatientMultiSelect';
+import { executeGatherOperation } from 'store/reducers/data';
+import { SendOutlined } from '@ant-design/icons';
 
 const dateOptions = [
   {
@@ -72,6 +75,14 @@ const HeaderContent = () => {
           handleChange={(value) => dispatch(inputSelection({ type: 'date', value }))}
         />
       </FormControl>
+      <Button
+        onClick={() => dispatch(executeGatherOperation())}
+        sx={{ lineHeight: '1.85rem', mt: 1 }}
+        variant="contained"
+        endIcon={<SendOutlined />}
+      >
+        Get Report
+      </Button>
     </Box>
   );
 };

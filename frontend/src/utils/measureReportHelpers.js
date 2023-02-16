@@ -29,11 +29,6 @@ const gatherIndividualList = (measureReportBundle) => {
 
   const measureReport = entries?.find((i) => i?.resourceType === 'MeasureReport');
 
-  if (measureReport?.type !== 'individual') {
-    console.warn('This is not a individual measure report');
-    return null;
-  }
-
   const extractedMeasureReport = {
     patient: Patient,
     resources: [],

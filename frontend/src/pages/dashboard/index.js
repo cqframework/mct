@@ -51,7 +51,7 @@ const DashboardDefault = () => {
         </PromptChoiceCard>
       </Grid>
     );
-  } else if (selectedPatients.length === 0 && measureReport === null) {
+  } else if (selectedPatients.length >= 0 && measureReport === null) {
     return (
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <PromptChoiceCard>
@@ -63,7 +63,7 @@ const DashboardDefault = () => {
               Patient(s)
             </Typography>
             <Typography variant="h1" gutterBottom>
-              for Report
+              and submit request for report
             </Typography>
           </Box>
         </PromptChoiceCard>

@@ -11,7 +11,6 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 import AlertDialog from 'components/AlertDialog';
-import { executeGatherOperation } from 'store/reducers/data';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -19,7 +18,6 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const Header = ({ open, handleDrawerToggle }) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const [openSubmitPrompt, setOpenSubmitPrompt] = useState(false);
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
@@ -81,15 +79,6 @@ const Header = ({ open, handleDrawerToggle }) => {
           Submit
         </Button>
       )} */}
-
-      <Button
-        onClick={() => dispatch(executeGatherOperation())}
-        sx={{ lineHeight: '1.85rem' }}
-        variant="contained"
-        endIcon={<SendOutlined />}
-      >
-        Get Report
-      </Button>
     </Toolbar>
   );
 
