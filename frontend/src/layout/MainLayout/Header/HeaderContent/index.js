@@ -2,6 +2,7 @@ import { FormControl, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 import Selection from 'components/Selection';
+import PatientMultiSelect from 'components/PatientMultiSelect';
 
 const dateOptions = [
   {
@@ -23,7 +24,7 @@ const dateOptions = [
 ];
 
 const HeaderContent = () => {
-  const { date, facility, patient } = useSelector((state) => state.filter);
+  const { date, facility, selectedPatients } = useSelector((state) => state.filter);
   const { facilities, patients } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
@@ -37,11 +38,10 @@ const HeaderContent = () => {
           minWidth: 200
         }}
       >
-        <Selection
-          options={facilities}
-          label="Patients"
-          currentSelection={patient}
-          handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
+        <PatientMultiSelect
+          patients={patients}
+          selectedPatients={selectedPatients}
+          handleChange={(value) => dispatch(inputSelection({ type: 'patient', value }))}
         />
       </FormControl>
       <FormControl
@@ -53,7 +53,7 @@ const HeaderContent = () => {
       >
         <Selection
           options={facilities}
-          label="Facility"
+          label="Facilities"
           currentSelection={facility}
           handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
         />

@@ -1,6 +1,6 @@
 import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Toolbar, useMediaQuery, Button } from '@mui/material';
@@ -18,6 +18,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const Header = ({ open, handleDrawerToggle }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [openSubmitPrompt, setOpenSubmitPrompt] = useState(false);
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
@@ -67,7 +68,7 @@ const Header = ({ open, handleDrawerToggle }) => {
         setVisibility={setOpenSubmitPrompt}
         setStatusMessage={setIsStatusMessageVisible}
       />
-      {measure?.length > 0 && (
+      {/* {measure?.length > 0 && (
         <Button
           onClick={() => {
             setOpenSubmitPrompt(true);
@@ -78,7 +79,16 @@ const Header = ({ open, handleDrawerToggle }) => {
         >
           Submit
         </Button>
-      )}
+      )} */}
+
+      <Button
+        onClick={() => dispatch(executeGatherOperation())}
+        sx={{ lineHeight: '1.85rem' }}
+        variant="contained"
+        endIcon={<SendOutlined />}
+      >
+        Get Report
+      </Button>
     </Toolbar>
   );
 

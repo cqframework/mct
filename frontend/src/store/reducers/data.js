@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { inputSelection } from './filter';
 import { baseUrl } from 'config';
+import { createPeriodFromQuarter } from 'utils/queryHelper';
 
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
   const organizationBundle = await fetch(`${baseUrl}/mct/$list-organizations`).then((res) => res.json());
@@ -21,16 +22,60 @@ export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facil
   return measureBundle.entry.map((i) => i.resource);
 });
 
-export const fetchPatients = createAsyncThunk('data/fetchPatients', async (facilityId) => {
-  const patientBundle = await fetch(`${baseUrl}/mct/$list-patients`).then((res) => res.json());
-  return patientBundle.entry.map((i) => i.resource);
+export const fetchPatients = createAsyncThunk('data/fetchPatients', async (organizationId) => {
+  const patientGroup = await fetch(`${baseUrl}/mct/$list-patients?organizationId=${organizationId}`).then((res) => res.json());
+  return patientGroup;
 });
+
+export const executeGatherOperation = createAsyncThunk('data/gatherOperation', async ({ getState }) => {
+  const {
+    filter: { selectedPatients, facility, measure, date }
+  } = getState();
+
+  const parametersPayload = buildMeasurePayload(facility, measure, date, selectedPatients);
+  const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(parametersPayload)
+  }).then((response) => response?.json());
+
+  return measureReportJson;
+});
+
+const buildMeasurePayload = (facilityId, measureId, quarter, patients) => {
+  const period = createPeriodFromQuarter(quarter);
+  return {
+    resourceType: 'Parameters',
+    parameter: [
+      {
+        name: 'facilities',
+        valueString: `Location/${facilityId}`
+      },
+      {
+        name: 'period',
+        valuePeriod: period
+      },
+      {
+        name: 'measure',
+        valueString: measureId
+      },
+      {
+        name: 'patients',
+        resource: patients
+      }
+    ]
+  };
+};
 
 const initialState = {
   facilities: [],
   patients: [],
   organizations: [],
   measures: [],
+
+  measureReport: null,
   status: 'idle',
   error: null
 };
@@ -90,6 +135,20 @@ const data = createSlice({
         state.measures = action.payload;
       })
       .addCase(fetchMeasures.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(executeGatherOperation.pending, (state, action) => {
+        state.measureReport = null;
+        state.status = 'loading';
+      })
+      .addCase(executeGatherOperation.fulfilled, (state, action) => {
+        state.status = 'finalized';
+        state.measureReport = action.payload;
+      })
+      .addCase(executeGatherOperation.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
