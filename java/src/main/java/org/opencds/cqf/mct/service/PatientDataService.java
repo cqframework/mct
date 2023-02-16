@@ -1,6 +1,7 @@
 package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.model.api.IQueryParameterType;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.util.ClasspathUtil;
 import ca.uhn.fhir.util.DateUtils;
@@ -46,7 +47,6 @@ import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.part;
 
 public class PatientDataService {
-
    private final FhirContext fhirContext;
    private List<OperationOutcome> missingDataRequirements;
    private final DataProvider dataProvider;
@@ -82,9 +82,6 @@ public class PatientDataService {
    public Bundle getPatients(String facilityUrl) {
       IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
       return (Bundle) client.search().forResource(Patient.class).count(500).execute();
-//      return client.operation().onType(Patient.class)
-//              .named("$everything").withParameters(parameters(part("_type", "Patient")))
-//              .returnResourceType(Bundle.class).execute();
    }
 
    public List<OperationOutcome> getMissingDataRequirementsAndClear() {
@@ -110,6 +107,15 @@ public class PatientDataService {
          }
       }
       return patientData;
+   }
+
+   public Bundle getPatientDataBundle(String facilityUrl, String facility, String patientId, Period period, Map<String, Map<String, List<IQueryParameterType>>> searchParams) {
+      IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
+      Bundle result = new Bundle();
+      for (Map.Entry<String, Map<String, List<IQueryParameterType>>> entry : searchParams.entrySet()) {
+         result.getEntry().addAll(((Bundle) client.search().forResource(entry.getKey()).where(entry.getValue()).execute()).getEntry());
+      }
+      return result;
    }
 
    private void recordMissingDataRequirements(Bundle bundle, String patientId, Map<String, String> types) {
