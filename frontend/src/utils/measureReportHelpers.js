@@ -24,23 +24,28 @@ const parseStratifier = (measureReport) => {
   return stratifier;
 };
 
-const gatherIndividualList = (measureReportBundle) => {
-  const entries = measureReportBundle?.entry?.map((i) => i?.resource);
+const gatherIndividualList = (measureReportParameters) => {
+  if (measureReportParameters.parameter.length === 1) {
+    const entries = measureReportParameters.parameter?.[0]?.resource?.entry;
 
-  const measureReport = entries?.find((i) => i?.resourceType === 'MeasureReport');
+    const extractedMeasureReport = {
+      patients: [],
+      resources: [],
+      measureReport: null
+    };
 
-  const extractedMeasureReport = {
-    patient: Patient,
-    resources: [],
-    description: extractDescription(measureReport)
-  };
+    entries.forEach(({ resource }) => {
+      if (resource.resourceType === 'MeasureReport') {
+        extractedMeasureReport.measureReport = resource;
+      } else if (resource.resourceType === 'Patient') {
+        extractedMeasureReport.patients.push(resource);
+      } else {
+        extractedMeasureReport.resources.push(resource);
+      }
+    });
 
-  entries.forEach((entry) => {
-    if (entry?.resourceType !== 'MeasureReport') {
-      extractedMeasureReport.resources.push(entry);
-    }
-  });
-  return extractedMeasureReport;
+    return extractedMeasureReport;
+  }
 };
 
 const populationGather = (measureReportGroup) => {

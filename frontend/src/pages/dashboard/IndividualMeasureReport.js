@@ -2,18 +2,16 @@ import { Box, Grid, Typography } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
 import LoadingPage from 'components/LoadingPage';
-import { gatherIndividualList } from 'utils/measureReportHelpers';
+import { gatherIndividualList, extractDescription } from 'utils/measureReportHelpers';
 import { gatherPatientDisplayData } from 'utils/patientHelper';
 
-const IndividualMeasureReport = ({ measureReport, measureName }) => {
-  const parsedReport = gatherIndividualList(measureReport);
+const IndividualMeasureReport = ({ measureReportPayload, measureName }) => {
+  const parsedReport = gatherIndividualList(measureReportPayload);
 
-  if (!measureReport || parsedReport == null) {
-    return <LoadingPage message={'Retrieving measure report'} />;
-  }
-
-  const { patient, description, resources } = parsedReport;
-  const patientInfo = gatherPatientDisplayData(patient);
+  const { patients, measureReport, resources } = parsedReport;
+  const description = extractDescription(measureReport);
+  const patientInfo = gatherPatientDisplayData(patients?.[0]);
+  debugger;
   return (
     <>
       <Grid item xs={12}>

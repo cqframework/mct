@@ -83,7 +83,7 @@ const DashboardDefault = () => {
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
-          <IndividualMeasureReport measureReport={measureReport} measureName={measureResource.title} />
+          <IndividualMeasureReport measureReportPayload={measureReport} measureName={measureResource.title} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           {/* <Grid item xs={12} sx={{ mb: -2.25 }}>

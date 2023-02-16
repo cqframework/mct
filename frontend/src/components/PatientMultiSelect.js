@@ -6,10 +6,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 
 const ITEM_HEIGHT = 48;
@@ -32,16 +31,13 @@ function getStyles(name, personName, theme) {
 const PatientMultiSelect = ({ patients }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [personName, setPersonName] = React.useState([]);
+  const { selectedPatients } = useSelector((state) => state.filter);
 
   const handleChange = (event) => {
     const {
       target: { value }
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    );
+
     dispatch(inputSelection({ type: 'selectedPatients', value }));
   };
   const patientIds = patients?.member?.map(({ entity }) => entity.reference);
@@ -54,25 +50,15 @@ const PatientMultiSelect = ({ patients }) => {
           id="patient-multiple-chip"
           multiple
           inputProps={{ autoFocus: true }}
-          value={personName}
+          value={selectedPatients}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Patients" />}
-          // renderValue={(selected) => (
-          //   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          //     {selected.map((value) => (
-          //       <Chip key={value} label={value} />
-          //     ))}
-          //   </Box>
-          // )}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {patientIds.map((patientId) => (
-            // <MenuItem key={patientId} value={patientId} style={getStyles(patientId, personName, theme)}>
-            //   {patientId}
-            // </MenuItem>
+          {patientIds?.map((patientId) => (
             <MenuItem key={patientId} value={patientId}>
-              <Checkbox checked={personName.indexOf(patientId) > -1} />
+              <Checkbox checked={selectedPatients.indexOf(patientId) > -1} />
               <ListItemText primary={patientId} />
             </MenuItem>
           ))}
