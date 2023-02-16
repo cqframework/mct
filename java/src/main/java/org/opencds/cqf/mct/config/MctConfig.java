@@ -252,11 +252,6 @@ public class MctConfig {
    }
 
    @Bean
-   public PatientSelectorService patientSelectorService() {
-      return new PatientSelectorService();
-   }
-
-   @Bean
    public GatherService gatherService() {
       return new GatherService();
    }
@@ -274,6 +269,11 @@ public class MctConfig {
    @Bean
    public PatientDataService patientDataService() {
       return new PatientDataService();
+   }
+
+   @Bean
+   public PatientSelectorService patientSelectorService() {
+      return new PatientSelectorService();
    }
 
    @Bean

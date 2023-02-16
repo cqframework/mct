@@ -49,6 +49,43 @@
     },
     {
       "resource": {
+        "resourceType": "Organization",
+        "id": "acme-local-test-org",
+        "meta": {
+          "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-organization" ]
+        },
+        "extension": [
+          {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/mct-receivingSystemEndpoint",
+            "valueReference": {
+              "reference": "Endpoint/local-receiving-system-endpoint"
+            }
+          }
+        ],
+        "identifier": [{
+          "system": "urn:oid:2.16.840.1.113883.4.336",
+          "use": "secondary",
+          "value": "ACME-CCN"
+        }],
+        "active": true,
+        "name": "ACME Provider Organization",
+        "telecom": [{
+          "system": "url",
+          "value": "https://acme.org",
+          "use": "work"
+        }],
+        "address": [{
+          "use": "work",
+          "type": "both",
+          "line": [ "123 Erewhon" ],
+          "city": "Dayton",
+          "state": "OH",
+          "postalCode": "45410"
+        }]
+      }
+    },
+    {
+      "resource": {
         "resourceType": "Location",
         "id": "local-test",
         "meta": {
@@ -80,7 +117,7 @@
         "name": "Local Test",
         "mode": "instance",
         "managingOrganization": {
-          "reference": "Organization/acme"
+          "reference": "Organization/acme-local-test-org"
         },
         "endpoint": [{
           "reference": "#local-test-endpoint"
