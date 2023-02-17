@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
-import { gatherIndividualList, extractDescription } from 'utils/measureReportHelpers';
+import { processMeasureReportPayload, extractDescription } from 'utils/measureReportHelpers';
 
 const IndividualMeasureReport = ({ measureReportPayload, measureName }) => {
-  const parsedReport = gatherIndividualList(measureReportPayload);
+  const parsedReport = processMeasureReportPayload(measureReportPayload);
 
   const { patients, measureReport, resources, operationOutcome } = parsedReport;
   const description = extractDescription(measureReport);

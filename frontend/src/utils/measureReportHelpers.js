@@ -24,12 +24,22 @@ const parseStratifier = (measureReport) => {
   return stratifier;
 };
 
-const gatherIndividualList = (measureReportParameters) => {
+const processMeasureReportPayload = (measureReportParameters) => {
   if (measureReportParameters.parameter.length === 1) {
     return gatherIndividualLevelData(measureReportParameters);
   } else {
-    const populationLevelData = (ctedMeasureReport = {
-      individualLevelDatas: []
+    const populationLevelData = {
+      individualLevelDatas: [],
+      populationData: null
+    };
+    measureReportParameters.parameter.forEach(({ name, resource }) => {
+      if (name === 'population-report') {
+        const populationData = populationGather(resource.group[0]);
+        populationLevelData.populationData = populationData;
+      } else {
+        const individualLevelData = gatherIndividualLevelData(parameter);
+        populationLevelData.individualLevelDatas.push(individualLevelData);
+      }
     });
 
     return populationLevelData;
@@ -78,4 +88,4 @@ const populationGather = (measureReportGroup) => {
   return population;
 };
 
-export { extractDescription, gatherIndividualList, populationGather, parseStratifier };
+export { extractDescription, processMeasureReportPayload, populationGather, parseStratifier };
