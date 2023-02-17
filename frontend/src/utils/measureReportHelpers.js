@@ -24,7 +24,7 @@ const parseStratifier = (measureReport) => {
 
 const processMeasureReportPayload = (measureReportParameters) => {
   if (measureReportParameters.parameter.length === 1) {
-    return gatherIndividualLevelData(measureReportParameters.parameter?.[0]?.resource?.entry);
+    return gatherIndividualLevelData(measureReportParameters.parameter?.[0]?.resource?.entry, measureReportParameters.parameter?.[0]?.name);
   } else {
     const populationLevelData = {
       individualLevelData: [],
@@ -37,7 +37,7 @@ const processMeasureReportPayload = (measureReportParameters) => {
         populationLevelData.populationData = populationData;
         populationLevelData.measureReport = resource;
       } else {
-        const individualLevelData = gatherIndividualLevelData(resource?.entry);
+        const individualLevelData = gatherIndividualLevelData(resource?.entry, name);
         populationLevelData.individualLevelData.push(individualLevelData);
       }
     });
@@ -46,8 +46,9 @@ const processMeasureReportPayload = (measureReportParameters) => {
   }
 };
 
-const gatherIndividualLevelData = (measureReportEntries) => {
+const gatherIndividualLevelData = (measureReportEntries, name) => {
   const individualLevelData = {
+    name,
     patients: [],
     resources: [],
     measureReport: null,

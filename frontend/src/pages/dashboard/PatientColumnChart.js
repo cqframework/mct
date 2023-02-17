@@ -110,7 +110,6 @@ const PatientColumnChart = ({ stratifier }) => {
       data: Object.values(stratifier.data).map((i) => i.numerator.count)
     }
   ]);
-  console.log(series);
 
   const [options, setOptions] = useState(columnChartOptions);
 

@@ -1,12 +1,10 @@
 import { Grid, Typography } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
-import { processMeasureReportPayload, extractDescription } from 'utils/measureReportHelpers';
+import { extractDescription } from 'utils/measureReportHelpers';
 
-const IndividualMeasureReport = ({ measureReportPayload, measureName }) => {
-  const parsedReport = processMeasureReportPayload(measureReportPayload);
-
-  const { patients, measureReport, resources, operationOutcome } = parsedReport;
+const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
+  const { patients, measureReport, resources, operationOutcome } = processedMeasureReport;
   const description = extractDescription(measureReport);
 
   const sortedResources = resources?.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);

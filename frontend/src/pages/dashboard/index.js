@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
+
 import PromptChoiceCard from './PromptChoiceCard';
-import { useSelector } from 'react-redux';
 import LoadingPage from 'components/LoadingPage';
+import { processMeasureReportPayload } from 'utils/measureReportHelpers';
+
 import IndividualMeasureReport from './IndividualMeasureReport';
 import PopulationMeasureReport from './PopulationMeasureReport';
 
@@ -23,12 +25,6 @@ function a11yProps(index) {
 const DashboardDefault = () => {
   const { measure, selectedPatients } = useSelector((state) => state.filter);
   const { measures, measureReport } = useSelector((state) => state.data);
-
-  const [currentMeasureReport, setCurrentMeasureReport] = useState(measureReport);
-
-  useEffect(() => {
-    setCurrentMeasureReport(measureReport);
-  }, [measureReport]);
 
   const [value, setValue] = useState(0);
 
@@ -73,22 +69,32 @@ const DashboardDefault = () => {
   } else if (measureReport === 'pending') {
     return <LoadingPage message={'Retrieving Measure Report'} />;
   }
-  const isInvididualView = measureReport?.parameter?.length === 1;
+  const isPopulationMeasureReport = measureReport?.parameter?.length > 1;
+
+  const processedMeasureReport = processMeasureReportPayload(measureReport);
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
-            <Tab label={isInvididualView ? 'Individual Data' : 'Population Report Data'} {...a11yProps(0)} />
+            <Tab label={isPopulationMeasureReport ? 'Population Report Data' : processedMeasureReport?.name} {...a11yProps(0)} />
+            {isPopulationMeasureReport &&
+              processedMeasureReport?.individualLevelData?.map((i, index) => <Tab label={`${i.name}`} {...a11yProps(index + 1)} />)}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
-          {isInvididualView ? (
-            <IndividualMeasureReport measureReportPayload={measureReport} measureName={measureResource.title} />
+          {isPopulationMeasureReport ? (
+            <PopulationMeasureReport processedMeasureReport={processedMeasureReport} />
           ) : (
-            <PopulationMeasureReport measureReport={measureReport} />
+            <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
           )}
         </TabPanel>
+        {processedMeasureReport?.individualLevelData?.map((i, index) => (
+          <TabPanel value={value} index={index + 1}>
+            <IndividualMeasureReport processedMeasureReport={i} measureName={measureResource.title} />
+          </TabPanel>
+        ))}
       </>
     </Grid>
   );

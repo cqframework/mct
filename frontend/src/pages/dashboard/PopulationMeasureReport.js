@@ -8,12 +8,12 @@ import PopulationChartRealDataDemo from './PopulationChartRealDataDemo';
 
 const fixtureMeasureReport = mrFixture.parameter[0].resource;
 
-const PopulationMeasureReport = ({ measureReport }) => {
+const PopulationMeasureReport = ({ processedMeasureReport }) => {
   const stratifier = parseStratifier(fixtureMeasureReport);
   const description = extractDescription(fixtureMeasureReport);
   const fxiturePopulation = populationGather(fixtureMeasureReport.group[0]);
 
-  const { populationData, measureReport: preProcessedMeasureReport } = processMeasureReportPayload(measureReport);
+  const { populationData, measureReport } = processedMeasureReport;
   return (
     <>
       <Grid item xs={12} sx={{ mb: -2.25 }}>
@@ -42,7 +42,7 @@ const PopulationMeasureReport = ({ measureReport }) => {
         <MainCard sx={{ mt: 3 }}>
           <Stack spacing={1.5}>
             <Typography color="secondary">Actual Measure Report Data for</Typography>
-            <Typography color="primary">${preProcessedMeasureReport.measure}</Typography>
+            <Typography color="primary">{measureReport.measure}</Typography>
           </Stack>
           <PopulationChartRealDataDemo populationData={populationData} />
         </MainCard>
