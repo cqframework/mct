@@ -26,26 +26,39 @@ const parseStratifier = (measureReport) => {
 
 const gatherIndividualList = (measureReportParameters) => {
   if (measureReportParameters.parameter.length === 1) {
-    const entries = measureReportParameters.parameter?.[0]?.resource?.entry;
-
-    const extractedMeasureReport = {
-      patients: [],
-      resources: [],
-      measureReport: null
-    };
-
-    entries.forEach(({ resource }) => {
-      if (resource.resourceType === 'MeasureReport') {
-        extractedMeasureReport.measureReport = resource;
-      } else if (resource.resourceType === 'Patient') {
-        extractedMeasureReport.patients.push(resource);
-      } else {
-        extractedMeasureReport.resources.push(resource);
-      }
+    return gatherIndividualLevelData(measureReportParameters);
+  } else {
+    const populationLevelData = (ctedMeasureReport = {
+      individualLevelDatas: []
     });
 
-    return extractedMeasureReport;
+    return populationLevelData;
   }
+};
+
+const gatherIndividualLevelData = (measureReportParameters) => {
+  const entries = measureReportParameters.parameter?.[0]?.resource?.entry;
+
+  const individualLevelData = {
+    patients: [],
+    resources: [],
+    measureReport: null,
+    operationOutcome: null
+  };
+
+  entries.forEach(({ resource }) => {
+    if (resource.resourceType === 'MeasureReport') {
+      individualLevelData.measureReport = resource;
+    } else if (resource.resourceType === 'Patient') {
+      individualLevelData.patients.push(resource);
+    } else if (resource.resourceType === 'OperationOutcome') {
+      individualLevelData.operationOutcome = resource;
+    } else {
+      individualLevelData.resources.push(resource);
+    }
+  });
+
+  return individualLevelData;
 };
 
 const populationGather = (measureReportGroup) => {

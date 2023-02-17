@@ -1,14 +1,12 @@
-import { useState, useEffect} from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { LeftOutlined, WarningOutlined, ExclamationCircleOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { LeftOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { IconButton, Tooltip, Typography, Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
 
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Selection from 'components/Selection'
-import { inputSelection } from 'store/reducers/filter';
+import SeverityIcon from 'components/SeverityIcon';
 
 const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
@@ -41,17 +39,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)'
 }));
 
-const SeverityIcon = ({ severity }) => {
-  switch (severity) {
-    case 'warning':
-      return <WarningOutlined style={{ color: 'orange' }} />;
-    case 'error':
-      return <ExclamationCircleOutlined style={{ color: 'red' }} />;
-    case 'information':
-      return <InfoCircleOutlined style={{ color: '#1890ff' }} />;
-  }
-};
-
 export default function ValidationDataTable({ resources }) {
   const [expanded, setExpanded] = useState('panel1');
 
@@ -60,40 +47,50 @@ export default function ValidationDataTable({ resources }) {
   };
 
   return (
-    <Grid container spacing={2}>    
-        <Grid item xs={6}>
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
         <Typography variant={'h4'}>
           Validation Messages
-        <Tooltip title={'Issues discovered from measure calculation'}>
-          <IconButton>
-            <InfoCircleOutlined />
-          </IconButton>
-        </Tooltip>    
+          <Tooltip title={'Issues discovered from measure calculation'}>
+            <IconButton>
+              <InfoCircleOutlined />
+            </IconButton>
+          </Tooltip>
         </Typography>
       </Grid>
       <Grid item xs={12}>
-      {resources.map((i) => {
-        const resourceOperationOutcomes = i?.contained?.filter(i => i.resourceType === 'OperationOutcome')?.[0]
-        return (
-          <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
-            <AccordionSummary aria-controls={`panel${i.id}-content`} id={`panel${i.id}-header`} isOperationOutcome={resourceOperationOutcomes != null}>
-              <Typography>{i.resourceType}/{i.id}</Typography>
-              {resourceOperationOutcomes && (
-                <Typography sx={{color: 'red', ml: 1.5, fontWeight: 'bold'}}>{`(${resourceOperationOutcomes?.issue?.length}) issues`}</Typography>
-              )}
-            </AccordionSummary>
-            {resourceOperationOutcomes &&
-              resourceOperationOutcomes?.issue?.map((issue, index) => (
+        {resources.map((i) => {
+          let resourceOperationOutcomes = i?.contained?.filter((i) => i.resourceType === 'OperationOutcome')?.[0];
+          if (i.resourceType === 'OperationOutcome') {
+            resourceOperationOutcomes = i;
+          }
+
+          return (
+            <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
+              <AccordionSummary
+                aria-controls={`panel${i.id}-content`}
+                id={`panel${i.id}-header`}
+                isOperationOutcome={resourceOperationOutcomes != null}
+              >
+                <Typography>{i.resourceType === 'OperationOutcome' ? 'Unspecified' : `${i.resourceType}/${i.id}`}</Typography>
+                {resourceOperationOutcomes && (
+                  <Typography
+                    sx={{ color: 'red', ml: 1.5, fontWeight: 'bold' }}
+                  >{`(${resourceOperationOutcomes?.issue?.length}) Issues`}</Typography>
+                )}
+              </AccordionSummary>
+              {resourceOperationOutcomes?.issue?.map((issue, index) => (
                 <AccordionDetails key={`${i.id}-${index}`}>
                   <Typography>
                     <SeverityIcon severity={issue.severity} />
-                    {'  '}{issue.diagnostics}
+                    {'  '}
+                    {issue.diagnostics}
                   </Typography>
                 </AccordionDetails>
               ))}
-          </Accordion>
-        );
-      })}
+            </Accordion>
+          );
+        })}
       </Grid>
     </Grid>
   );

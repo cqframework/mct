@@ -70,7 +70,7 @@ const DashboardDefault = () => {
       </Grid>
     );
   } else if (measureReport === 'pending') {
-    return <LoadingPage message={'Retrieving measure report'} />;
+    return <LoadingPage message={'Retrieving Measure Report'} />;
   }
 
   return (
@@ -78,8 +78,8 @@ const DashboardDefault = () => {
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} onChange={(event, newValue) => setValue(newValue)}>
-            <Tab label="Patient Data" {...a11yProps(0)} />
-            <Tab label="Population Report Data" {...a11yProps(1)} />
+            <Tab label="Individual Data" {...a11yProps(0)} />
+            {measureReport?.parameter?.length > 1 && <Tab label="Population Report Data" {...a11yProps(1)} />}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>

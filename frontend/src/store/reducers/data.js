@@ -32,7 +32,6 @@ export const executeGatherOperation = createAsyncThunk('data/gatherOperation', a
     filter: { selectedPatients, facility, measure, date }
   } = getState();
   const parametersPayload = buildMeasurePayload(facility, measure, date, selectedPatients);
-  debugger;
   const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
     method: 'POST',
     headers: {
@@ -40,7 +39,6 @@ export const executeGatherOperation = createAsyncThunk('data/gatherOperation', a
     },
     body: JSON.stringify(parametersPayload)
   }).then((response) => response?.json());
-  debugger;
   return measureReportJson;
 });
 
