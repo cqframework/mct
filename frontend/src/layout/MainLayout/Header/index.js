@@ -69,7 +69,7 @@ const Header = ({ open, handleDrawerToggle }) => {
         setVisibility={setOpenSubmitPrompt}
         setStatusMessage={setIsStatusMessageVisible}
       />
-      {measureReport != null && (
+      {measureReport && measureReport !== 'pending' && (
         <Button
           onClick={() => {
             setOpenSubmitPrompt(true);

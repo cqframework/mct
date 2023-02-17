@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
@@ -29,6 +29,11 @@ const DashboardDefault = () => {
   const [value, setValue] = useState(0);
 
   const measureResource = measures.find((i) => i.id === measure);
+
+  useEffect(() => {
+    console.log('Resetting Tabs back to first tab');
+    setValue(0);
+  }, [measureReport]);
 
   if (measure.length === 0) {
     return (
@@ -70,7 +75,6 @@ const DashboardDefault = () => {
     return <LoadingPage message={'Retrieving Measure Report'} />;
   }
   const isPopulationMeasureReport = measureReport?.parameter?.length > 1;
-
   const processedMeasureReport = processMeasureReportPayload(measureReport);
 
   return (
