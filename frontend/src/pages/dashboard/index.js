@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
+import { Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import PromptChoiceCard from './PromptChoiceCard';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoadingPage from 'components/LoadingPage';
 import IndividualMeasureReport from './IndividualMeasureReport';
+import PopulationMeasureReport from './PopulationMeasureReport';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -72,45 +73,21 @@ const DashboardDefault = () => {
   } else if (measureReport === 'pending') {
     return <LoadingPage message={'Retrieving Measure Report'} />;
   }
-
+  const isInvididualView = measureReport?.parameter?.length === 1;
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
-          <Tabs value={value} onChange={(event, newValue) => setValue(newValue)}>
-            <Tab label="Individual Data" {...a11yProps(0)} />
-            {measureReport?.parameter?.length > 1 && <Tab label="Population Report Data" {...a11yProps(1)} />}
+          <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
+            <Tab label={isInvididualView ? 'Individual Data' : 'Population Report Data'} {...a11yProps(0)} />
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
-          <IndividualMeasureReport measureReportPayload={measureReport} measureName={measureResource.title} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {/* <Grid item xs={12} sx={{ mb: -2.25 }}>
-            <Typography variant="h1">Diabetes Report Data Demographics</Typography>
-            <Typography variant="p" color="textSecondary">
-              {description}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <PopulationStatistics population={population} />
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container alignItems="center" justifyContent="space-between">
-              <Grid item>
-                <Typography variant="h5">Ethnicity</Typography>
-              </Grid>
-            </Grid>
-            <MainCard sx={{ mt: 1.75 }}>
-              <Stack spacing={1.5} sx={{ mb: -12 }}>
-                <Typography variant="h6" color="secondary">
-                  {stratifier['54133-4'].title}
-                </Typography>
-              </Stack>
-              <PatientColumnChart stratifier={stratifier['54133-4']} />
-            </MainCard>
-          </Grid> */}
+          {isInvididualView ? (
+            <IndividualMeasureReport measureReportPayload={measureReport} measureName={measureResource.title} />
+          ) : (
+            <PopulationMeasureReport measureReport={measureReport} />
+          )}
         </TabPanel>
       </>
     </Grid>

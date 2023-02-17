@@ -1,5 +1,3 @@
-import Patient from 'fixtures/Patient';
-
 const extractDescription = (measureReport) => {
   const extUrl = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description';
   return measureReport?.extension?.find((extension) => extension.url === extUrl)?.valueString;
@@ -26,19 +24,21 @@ const parseStratifier = (measureReport) => {
 
 const processMeasureReportPayload = (measureReportParameters) => {
   if (measureReportParameters.parameter.length === 1) {
-    return gatherIndividualLevelData(measureReportParameters);
+    return gatherIndividualLevelData(measureReportParameters.parameter?.[0]?.resource?.entry);
   } else {
     const populationLevelData = {
-      individualLevelDatas: [],
-      populationData: null
+      individualLevelData: [],
+      populationData: null,
+      measureReport: null
     };
     measureReportParameters.parameter.forEach(({ name, resource }) => {
       if (name === 'population-report') {
         const populationData = populationGather(resource.group[0]);
         populationLevelData.populationData = populationData;
+        populationLevelData.measureReport = resource;
       } else {
-        const individualLevelData = gatherIndividualLevelData(parameter);
-        populationLevelData.individualLevelDatas.push(individualLevelData);
+        const individualLevelData = gatherIndividualLevelData(resource?.entry);
+        populationLevelData.individualLevelData.push(individualLevelData);
       }
     });
 
@@ -46,9 +46,7 @@ const processMeasureReportPayload = (measureReportParameters) => {
   }
 };
 
-const gatherIndividualLevelData = (measureReportParameters) => {
-  const entries = measureReportParameters.parameter?.[0]?.resource?.entry;
-
+const gatherIndividualLevelData = (measureReportEntries) => {
   const individualLevelData = {
     patients: [],
     resources: [],
@@ -56,7 +54,7 @@ const gatherIndividualLevelData = (measureReportParameters) => {
     operationOutcome: null
   };
 
-  entries.forEach(({ resource }) => {
+  measureReportEntries.forEach(({ resource }) => {
     if (resource.resourceType === 'MeasureReport') {
       individualLevelData.measureReport = resource;
     } else if (resource.resourceType === 'Patient') {
@@ -73,6 +71,7 @@ const gatherIndividualLevelData = (measureReportParameters) => {
 
 const populationGather = (measureReportGroup) => {
   const population = {};
+
   measureReportGroup?.population?.forEach((data) => {
     const key = data.code.coding?.[0]?.code;
 

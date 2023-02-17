@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
 
-// chart options
-const LOINC_MAP = {
-  '2135-2': 'Hispanic or Latino',
-  '2186-5': 'Non-Hispanic or Latino',
-  '2054-5': 'Black or African American'
-};
-
-const PatientColumnChart = ({ stratifier }) => {
+const PopulationChartRealDataDemo = ({ populationData }) => {
   const theme = useTheme();
-  const allEthnicities = Object.keys(stratifier.data);
-  const descriptionA = stratifier.data[allEthnicities[0]].denominator.description;
-  const descriptionB = stratifier.data[allEthnicities[0]].numerator.description;
+  const categories = Object.keys(populationData);
+
   const columnChartOptions = {
     chart: {
       type: 'bar',
@@ -41,7 +29,7 @@ const PatientColumnChart = ({ stratifier }) => {
       colors: ['transparent']
     },
     xaxis: {
-      categories: allEthnicities.map((code) => LOINC_MAP[code] || code)
+      categories
     },
     yaxis: {
       title: {
@@ -102,15 +90,10 @@ const PatientColumnChart = ({ stratifier }) => {
 
   const [series] = useState([
     {
-      name: descriptionA,
-      data: Object.values(stratifier.data).map((i) => i.denominator.count)
-    },
-    {
-      name: descriptionB,
-      data: Object.values(stratifier.data).map((i) => i.numerator.count)
+      name: 'MR Data',
+      data: categories.map((i) => populationData[i].count)
     }
   ]);
-  console.log(series);
 
   const [options, setOptions] = useState(columnChartOptions);
 
@@ -154,5 +137,4 @@ const PatientColumnChart = ({ stratifier }) => {
     </div>
   );
 };
-
-export default PatientColumnChart;
+export default PopulationChartRealDataDemo;
