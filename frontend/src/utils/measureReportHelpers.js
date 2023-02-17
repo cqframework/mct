@@ -51,9 +51,10 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
     name,
     patients: [],
     resources: [],
-    measureReport: null,
-    operationOutcome: null
+    measureReport: null
   };
+  // we will add this at the end
+  let operationOutcome = null;
 
   measureReportEntries.forEach(({ resource }) => {
     if (resource.resourceType === 'MeasureReport') {
@@ -61,11 +62,13 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
     } else if (resource.resourceType === 'Patient') {
       individualLevelData.patients.push(resource);
     } else if (resource.resourceType === 'OperationOutcome') {
-      individualLevelData.operationOutcome = resource;
+      operationOutcome = resource;
     } else {
       individualLevelData.resources.push(resource);
     }
   });
+
+  if (operationOutcome) individualLevelData.resources.push(operationOutcome);
 
   return individualLevelData;
 };

@@ -8,7 +8,6 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
   const description = extractDescription(measureReport);
 
   const sortedResources = resources?.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);
-  if (operationOutcome) sortedResources?.push(operationOutcome);
 
   return (
     <>
@@ -24,7 +23,7 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
         <PatientInfoCard patient={patients?.[0]} />
       </Grid>
       <Grid item xs={8}>
-        <ValidationDataTable resources={sortedResources} operationOutcome={operationOutcome} />
+        <ValidationDataTable resources={sortedResources} />
       </Grid>
     </>
   );
