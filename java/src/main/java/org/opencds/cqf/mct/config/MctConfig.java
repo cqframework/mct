@@ -271,10 +271,6 @@ public class MctConfig {
       return new PatientDataService();
    }
 
-   @Bean
-   public PatientSelectorService patientSelectorService() {
-      return new PatientSelectorService();
-   }
 
    @Bean
    public DataRequirementsService dataRequirementsService() {

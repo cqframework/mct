@@ -1,19 +1,14 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
-import LoadingPage from 'components/LoadingPage';
-import { gatherIndividualList } from 'utils/measureReportHelpers';
-import { gatherPatientDisplayData } from 'utils/patientHelper';
+import { extractDescription } from 'utils/measureReportHelpers';
 
-const IndividualMeasureReport = ({ measureReport, measureName }) => {
-  const parsedReport = gatherIndividualList(measureReport);
+const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
+  const { patients, measureReport, resources, operationOutcome } = processedMeasureReport;
+  const description = extractDescription(measureReport);
 
-  if (!measureReport || parsedReport == null) {
-    return <LoadingPage message={'Retrieving measure report'} />;
-  }
+  const sortedResources = resources?.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);
 
-  const { patient, description, resources } = parsedReport;
-  const patientInfo = gatherPatientDisplayData(patient);
   return (
     <>
       <Grid item xs={12}>
@@ -25,10 +20,10 @@ const IndividualMeasureReport = ({ measureReport, measureName }) => {
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <PatientInfoCard {...patientInfo} />
+        <PatientInfoCard patient={patients?.[0]} />
       </Grid>
       <Grid item xs={8}>
-        <ValidationDataTable resources={resources} />
+        <ValidationDataTable resources={sortedResources} />
       </Grid>
     </>
   );

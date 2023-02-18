@@ -1,0 +1,1777 @@
+{
+  "resourceType": "Parameters",
+  "parameter": [
+      {
+          "name": "population-report",
+          "resource": {
+              "resourceType": "MeasureReport",
+              "language": "en",
+              "extension": [
+                  {
+                      "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+                      "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge"
+                  }
+              ],
+              "status": "complete",
+              "type": "summary",
+              "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+              "date": "2023-02-16T16:31:22+00:00",
+              "period": {
+                  "start": "2022-01-01T09:00:00+00:00",
+                  "end": "2022-03-31T11:00:00+00:00"
+              },
+              "improvementNotation": {
+                  "coding": [
+                      {
+                          "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+                          "code": "increase"
+                      }
+                  ]
+              },
+              "group": [
+                  {
+                      "population": [
+                          {
+                              "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+                              "code": {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                          "code": "initial-population",
+                                          "display": "Initial Population"
+                                      }
+                                  ]
+                              },
+                              "count": 1
+                          },
+                          {
+                              "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+                              "code": {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                          "code": "denominator",
+                                          "display": "Denominator"
+                                      }
+                                  ]
+                              },
+                              "count": 1
+                          },
+                          {
+                              "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+                              "code": {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                          "code": "denominator-exclusion",
+                                          "display": "Denominator Exclusion"
+                                      }
+                                  ]
+                              },
+                              "count": 0
+                          },
+                          {
+                              "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+                              "code": {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                          "code": "denominator-exception",
+                                          "display": "Denominator Exception"
+                                      }
+                                  ]
+                              },
+                              "count": 0
+                          },
+                          {
+                              "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+                              "code": {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                          "code": "numerator",
+                                          "display": "Numerator"
+                                      }
+                                  ]
+                              },
+                              "count": 1
+                          }
+                      ],
+                      "measureScore": {
+                          "value": 1.0
+                      }
+                  }
+              ]
+          }
+      },
+      {
+          "name": "Patient/denom-EXM104",
+          "resource": {
+              "resourceType": "Bundle",
+              "type": "collection",
+              "entry": [
+                  {
+                      "resource": {
+                          "resourceType": "MeasureReport",
+                          "language": "en",
+                          "extension": [
+                              {
+                                  "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+                                  "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge"
+                              },
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+                                  "valueReference": {
+                                      "reference": "Location/local-test"
+                                  }
+                              }
+                          ],
+                          "status": "complete",
+                          "type": "individual",
+                          "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+                          "subject": {
+                              "reference": "Patient/denom-EXM104"
+                          },
+                          "date": "2023-02-16T16:31:21+00:00",
+                          "period": {
+                              "start": "2022-01-01T09:00:00+00:00",
+                              "end": "2022-03-31T11:00:00+00:00"
+                          },
+                          "improvementNotation": {
+                              "coding": [
+                                  {
+                                      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+                                      "code": "increase"
+                                  }
+                              ]
+                          },
+                          "group": [
+                              {
+                                  "population": [
+                                      {
+                                          "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "initial-population",
+                                                      "display": "Initial Population"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator",
+                                                      "display": "Denominator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exclusion",
+                                                      "display": "Denominator Exclusion"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exception",
+                                                      "display": "Denominator Exception"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "numerator",
+                                                      "display": "Numerator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      }
+                                  ]
+                              }
+                          ],
+                          "evaluatedResource": [
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      }
+                                  ],
+                                  "reference": "Encounter/denom-EXM104-2"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Encounter",
+                          "id": "denom-EXM104-2",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "0b94be0d-76a1-4d78-bb19-950eee159b58",
+                                  "issue": [
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_5"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                                          "location": [
+                                              "Encounter.class",
+                                              "Line 1, Col 480"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_NoValid_2_CC"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                                          "location": [
+                                              "Encounter.type[0]",
+                                              "Line 1, Col 535"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_System_Unknown"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                                          "location": [
+                                              "Encounter.diagnosis[0].use.coding[0]",
+                                              "Line 1, Col 858"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#0b94be0d-76a1-4d78-bb19-950eee159b58"
+                                  }
+                              }
+                          ],
+                          "status": "finished",
+                          "class": {
+                              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                              "code": "IMP",
+                              "display": "inpatient encounter"
+                          },
+                          "type": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://snomed.info/sct",
+                                          "code": "32485007",
+                                          "display": "Hospital admission (procedure)"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "subject": {
+                              "reference": "Patient/denom-EXM104"
+                          },
+                          "period": {
+                              "start": "2019-08-21T00:00:00-06:00",
+                              "end": "2019-12-19T08:15:00-07:00"
+                          },
+                          "diagnosis": [
+                              {
+                                  "condition": {
+                                      "reference": "Condition/denom-EXM104-1"
+                                  },
+                                  "use": {
+                                      "coding": [
+                                          {
+                                              "system": "http://hl7.org/fhir/diagnosis-role",
+                                              "code": "billing",
+                                              "display": "Billing"
+                                          }
+                                      ]
+                                  },
+                                  "rank": 1
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No MedicationRequest resources found for patient: Patient/denom-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/denom-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/denom-EXM104"
+                              }
+                          ]
+                      }
+                  }
+              ]
+          }
+      },
+      {
+          "name": "Patient/no-ip-EXM104",
+          "resource": {
+              "resourceType": "Bundle",
+              "type": "collection",
+              "entry": [
+                  {
+                      "resource": {
+                          "resourceType": "MeasureReport",
+                          "language": "en",
+                          "extension": [
+                              {
+                                  "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+                                  "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge"
+                              },
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+                                  "valueReference": {
+                                      "reference": "Location/local-test"
+                                  }
+                              }
+                          ],
+                          "status": "complete",
+                          "type": "individual",
+                          "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+                          "subject": {
+                              "reference": "Patient/no-ip-EXM104"
+                          },
+                          "date": "2023-02-16T16:31:21+00:00",
+                          "period": {
+                              "start": "2022-01-01T09:00:00+00:00",
+                              "end": "2022-03-31T11:00:00+00:00"
+                          },
+                          "improvementNotation": {
+                              "coding": [
+                                  {
+                                      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+                                      "code": "increase"
+                                  }
+                              ]
+                          },
+                          "group": [
+                              {
+                                  "population": [
+                                      {
+                                          "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "initial-population",
+                                                      "display": "Initial Population"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator",
+                                                      "display": "Denominator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exclusion",
+                                                      "display": "Denominator Exclusion"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exception",
+                                                      "display": "Denominator Exception"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "numerator",
+                                                      "display": "Numerator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      }
+                                  ]
+                              }
+                          ],
+                          "evaluatedResource": [
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      }
+                                  ],
+                                  "reference": "Encounter/no-ip-EXM104-2"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Encounter",
+                          "id": "no-ip-EXM104-2",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "39958bf6-6820-4c23-b9fc-8910842c2716",
+                                  "issue": [
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_5"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                                          "location": [
+                                              "Encounter.class",
+                                              "Line 1, Col 480"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_NoValid_2_CC"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                                          "location": [
+                                              "Encounter.type[0]",
+                                              "Line 1, Col 535"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_System_Unknown"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                                          "location": [
+                                              "Encounter.diagnosis[0].use.coding[0]",
+                                              "Line 1, Col 858"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#39958bf6-6820-4c23-b9fc-8910842c2716"
+                                  }
+                              }
+                          ],
+                          "status": "finished",
+                          "class": {
+                              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                              "code": "IMP",
+                              "display": "inpatient encounter"
+                          },
+                          "type": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://snomed.info/sct",
+                                          "code": "32485007",
+                                          "display": "Hospital admission (procedure)"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "subject": {
+                              "reference": "Patient/no-ip-EXM104"
+                          },
+                          "period": {
+                              "start": "2019-08-21T00:00:00-06:00",
+                              "end": "2019-12-19T08:15:00-07:00"
+                          },
+                          "diagnosis": [
+                              {
+                                  "condition": {
+                                      "reference": "Condition/no-ip-EXM104-1"
+                                  },
+                                  "use": {
+                                      "coding": [
+                                          {
+                                              "system": "http://hl7.org/fhir/diagnosis-role",
+                                              "code": "billing",
+                                              "display": "Billing"
+                                          }
+                                      ]
+                                  },
+                                  "rank": 1
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/no-ip-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/no-ip-EXM104"
+                              }
+                          ]
+                      }
+                  }
+              ]
+          }
+      },
+      {
+          "name": "Patient/denomexcl-EXM104",
+          "resource": {
+              "resourceType": "Bundle",
+              "type": "collection",
+              "entry": [
+                  {
+                      "resource": {
+                          "resourceType": "MeasureReport",
+                          "language": "en",
+                          "extension": [
+                              {
+                                  "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+                                  "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge"
+                              },
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+                                  "valueReference": {
+                                      "reference": "Location/local-test"
+                                  }
+                              }
+                          ],
+                          "status": "complete",
+                          "type": "individual",
+                          "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+                          "subject": {
+                              "reference": "Patient/denomexcl-EXM104"
+                          },
+                          "date": "2023-02-16T16:31:21+00:00",
+                          "period": {
+                              "start": "2022-01-01T09:00:00+00:00",
+                              "end": "2022-03-31T11:00:00+00:00"
+                          },
+                          "improvementNotation": {
+                              "coding": [
+                                  {
+                                      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+                                      "code": "increase"
+                                  }
+                              ]
+                          },
+                          "group": [
+                              {
+                                  "population": [
+                                      {
+                                          "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "initial-population",
+                                                      "display": "Initial Population"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator",
+                                                      "display": "Denominator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exclusion",
+                                                      "display": "Denominator Exclusion"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exception",
+                                                      "display": "Denominator Exception"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "numerator",
+                                                      "display": "Numerator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      }
+                                  ]
+                              }
+                          ],
+                          "evaluatedResource": [
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      }
+                                  ],
+                                  "reference": "Encounter/denomexcl-EXM104-2"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Encounter",
+                          "id": "denomexcl-EXM104-2",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "dc2d06df-f9b2-4b34-ba64-a1540e1a3b5f",
+                                  "issue": [
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_5"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                                          "location": [
+                                              "Encounter.class",
+                                              "Line 1, Col 484"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_NoValid_2_CC"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                                          "location": [
+                                              "Encounter.type[0]",
+                                              "Line 1, Col 539"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_System_Unknown"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                                          "location": [
+                                              "Encounter.diagnosis[0].use.coding[0]",
+                                              "Line 1, Col 870"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#dc2d06df-f9b2-4b34-ba64-a1540e1a3b5f"
+                                  }
+                              }
+                          ],
+                          "status": "finished",
+                          "class": {
+                              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                              "code": "IMP",
+                              "display": "inpatient encounter"
+                          },
+                          "type": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://snomed.info/sct",
+                                          "code": "32485007",
+                                          "display": "Hospital admission (procedure)"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "subject": {
+                              "reference": "Patient/denomexcl-EXM104"
+                          },
+                          "period": {
+                              "start": "2019-08-21T00:00:00-06:00",
+                              "end": "2019-12-19T08:15:00-07:00"
+                          },
+                          "diagnosis": [
+                              {
+                                  "condition": {
+                                      "reference": "Condition/denomexcl-EXM104-1"
+                                  },
+                                  "use": {
+                                      "coding": [
+                                          {
+                                              "system": "http://hl7.org/fhir/diagnosis-role",
+                                              "code": "billing",
+                                              "display": "Billing"
+                                          }
+                                      ]
+                                  },
+                                  "rank": 1
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No MedicationRequest resources found for patient: Patient/denomexcl-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/denomexcl-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/denomexcl-EXM104"
+                              }
+                          ]
+                      }
+                  }
+              ]
+          }
+      },
+      {
+          "name": "Patient/numer-EXM104",
+          "resource": {
+              "resourceType": "Bundle",
+              "type": "collection",
+              "entry": [
+                  {
+                      "resource": {
+                          "resourceType": "MeasureReport",
+                          "language": "en",
+                          "extension": [
+                              {
+                                  "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+                                  "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge"
+                              },
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+                                  "valueReference": {
+                                      "reference": "Location/local-test"
+                                  }
+                              }
+                          ],
+                          "status": "complete",
+                          "type": "individual",
+                          "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+                          "subject": {
+                              "reference": "Patient/numer-EXM104"
+                          },
+                          "date": "2023-02-16T16:31:01+00:00",
+                          "period": {
+                              "start": "2022-01-01T09:00:00+00:00",
+                              "end": "2022-03-31T11:00:00+00:00"
+                          },
+                          "improvementNotation": {
+                              "coding": [
+                                  {
+                                      "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+                                      "code": "increase"
+                                  }
+                              ]
+                          },
+                          "group": [
+                              {
+                                  "population": [
+                                      {
+                                          "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "initial-population",
+                                                      "display": "Initial Population"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 1
+                                      },
+                                      {
+                                          "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator",
+                                                      "display": "Denominator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 1
+                                      },
+                                      {
+                                          "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exclusion",
+                                                      "display": "Denominator Exclusion"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "denominator-exception",
+                                                      "display": "Denominator Exception"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 0
+                                      },
+                                      {
+                                          "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+                                          "code": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                                      "code": "numerator",
+                                                      "display": "Numerator"
+                                                  }
+                                              ]
+                                          },
+                                          "count": 1
+                                      }
+                                  ],
+                                  "measureScore": {
+                                      "value": 1.0
+                                  }
+                              }
+                          ],
+                          "evaluatedResource": [
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83"
+                                      }
+                                  ],
+                                  "reference": "MedicationRequest/numer-EXM104-5"
+                              },
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "874052F5-D503-4C5C-A436-05900B0967E3"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83"
+                                      }
+                                  ],
+                                  "reference": "Condition/numer-EXM104-1"
+                              },
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "874052F5-D503-4C5C-A436-05900B0967E3"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83"
+                                      }
+                                  ],
+                                  "reference": "Encounter/numer-EXM104-2"
+                              },
+                              {
+                                  "extension": [
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "874052F5-D503-4C5C-A436-05900B0967E3"
+                                      },
+                                      {
+                                          "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                                          "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83"
+                                      }
+                                  ],
+                                  "reference": "Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "MedicationRequest",
+                          "id": "numer-EXM104-5",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "bd675ee5-1a79-4dc1-97be-f8c1611a36e5",
+                                  "issue": [
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Validation_VAL_Profile_Minimum"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "MedicationRequest.requester: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest)",
+                                          "location": [
+                                              "MedicationRequest",
+                                              "Line 1, Col 2"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_NoValid_2_CC"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "None of the codings provided are in the value set 'US Core Medication Codes (RxNorm)' (http://hl7.org/fhir/us/core/ValueSet/us-core-medication-codes), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://www.nlm.nih.gov/research/umls/rxnorm#1037045)",
+                                          "location": [
+                                              "MedicationRequest.medication.ofType(CodeableConcept)",
+                                              "Line 1, Col 561"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Type_Specific_Checks_DT_DateTime_TZ"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "if a date has a time, it must have a timezone",
+                                          "location": [
+                                              "MedicationRequest.authoredOn",
+                                              "Line 1, Col 772"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#bd675ee5-1a79-4dc1-97be-f8c1611a36e5"
+                                  }
+                              }
+                          ],
+                          "status": "completed",
+                          "intent": "order",
+                          "category": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
+                                          "code": "discharge",
+                                          "display": "Discharge"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "medicationCodeableConcept": {
+                              "coding": [
+                                  {
+                                      "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                                      "code": "1037045",
+                                      "display": "dabigatran etexilate 150 MG Oral Capsule"
+                                  }
+                              ]
+                          },
+                          "subject": {
+                              "reference": "Patient/numer-EXM104"
+                          },
+                          "authoredOn": "2021-12-17T08:00:00"
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Condition",
+                          "id": "numer-EXM104-1",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "verificationStatus": {
+                              "coding": [
+                                  {
+                                      "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                                      "code": "confirmed",
+                                      "display": "Confirmed"
+                                  }
+                              ]
+                          },
+                          "category": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                                          "code": "encounter-diagnosis",
+                                          "display": "Encounter Diagnosis"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "code": {
+                              "coding": [
+                                  {
+                                      "system": "http://snomed.info/sct",
+                                      "code": "116288000",
+                                      "display": "Paralytic stroke (disorder)"
+                                  }
+                              ]
+                          },
+                          "subject": {
+                              "reference": "Patient/numer-EXM104"
+                          }
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Encounter",
+                          "id": "numer-EXM104-2",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "b16b481d-5738-4d67-805b-d30b05553f4f",
+                                  "issue": [
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_5"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                                          "location": [
+                                              "Encounter.class",
+                                              "Line 1, Col 480"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "warning",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_NoValid_2_CC"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                                          "location": [
+                                              "Encounter.type[0]",
+                                              "Line 1, Col 535"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_System_Unknown"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                                          "location": [
+                                              "Encounter.diagnosis[0].use.coding[0]",
+                                              "Line 1, Col 858"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#b16b481d-5738-4d67-805b-d30b05553f4f"
+                                  }
+                              }
+                          ],
+                          "status": "finished",
+                          "class": {
+                              "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                              "code": "IMP",
+                              "display": "inpatient encounter"
+                          },
+                          "type": [
+                              {
+                                  "coding": [
+                                      {
+                                          "system": "http://snomed.info/sct",
+                                          "code": "32485007",
+                                          "display": "Hospital admission (procedure)"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "subject": {
+                              "reference": "Patient/numer-EXM104"
+                          },
+                          "period": {
+                              "start": "2021-10-21T00:00:00-06:00",
+                              "end": "2022-01-19T08:15:00-07:00"
+                          },
+                          "diagnosis": [
+                              {
+                                  "condition": {
+                                      "reference": "Condition/numer-EXM104-1"
+                                  },
+                                  "use": {
+                                      "coding": [
+                                          {
+                                              "system": "http://hl7.org/fhir/diagnosis-role",
+                                              "code": "billing",
+                                              "display": "Billing"
+                                          }
+                                      ]
+                                  },
+                                  "rank": 1
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "Patient",
+                          "id": "numer-EXM104",
+                          "meta": {
+                              "versionId": "1",
+                              "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+                              "source": "#YLpjDs57sCrXR1x9",
+                              "profile": [
+                                  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+                                  "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient"
+                              ],
+                              "tag": [
+                                  {
+                                      "system": "http://cms.gov/fhir/mct/tags/Location",
+                                      "display": "Location/local-test"
+                                  }
+                              ]
+                          },
+                          "text": {
+                              "status": "generated",
+                              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div class=\"hapiHeaderText\">Louise <b>JONES </b></div><table class=\"hapiPropertyTable\"><tbody><tr><td>Identifier</td><td>9999999911</td></tr><tr><td>Date of birth</td><td><span>21 November 1971</span></td></tr></tbody></table></div>"
+                          },
+                          "contained": [
+                              {
+                                  "resourceType": "OperationOutcome",
+                                  "id": "06c8bce9-17a5-444b-b5b4-7bc941f8e414",
+                                  "issue": [
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Validation_VAL_Profile_Minimum"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)",
+                                          "location": [
+                                              "Patient.extension[0]",
+                                              "Line 1, Col 716"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_4a"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-race-category, and a code from this value set is required: The code system \"urn:oid:2.16.840.1.113883.6.238\" in the include in \"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2106-3'); The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not valid in the value set 'OmbRaceCategories'",
+                                          "location": [
+                                              "Patient.extension[0].extension[0].value.ofType(Coding)",
+                                              "Line 1, Col 877"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Validation_VAL_Profile_Minimum"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)",
+                                          "location": [
+                                              "Patient.extension[1]",
+                                              "Line 1, Col 916"
+                                          ]
+                                      },
+                                      {
+                                          "severity": "error",
+                                          "code": "processing",
+                                          "details": {
+                                              "coding": [
+                                                  {
+                                                      "system": "http://hl7.org/fhir/java-core-messageId",
+                                                      "code": "Terminology_TX_Confirm_4a"
+                                                  }
+                                              ]
+                                          },
+                                          "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category, and a code from this value set is required: The code system \"urn:oid:2.16.840.1.113883.6.238\" in the include in \"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2186-5'); The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not valid in the value set 'OmbEthnicityCategories'",
+                                          "location": [
+                                              "Patient.extension[1].extension[0].value.ofType(Coding)",
+                                              "Line 1, Col 1082"
+                                          ]
+                                      }
+                                  ]
+                              }
+                          ],
+                          "extension": [
+                              {
+                                  "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+                                  "extension": [
+                                      {
+                                          "url": "ombCategory",
+                                          "valueCoding": {
+                                              "system": "urn:oid:2.16.840.1.113883.6.238",
+                                              "code": "2106-3",
+                                              "display": "White"
+                                          }
+                                      }
+                                  ]
+                              },
+                              {
+                                  "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+                                  "extension": [
+                                      {
+                                          "url": "ombCategory",
+                                          "valueCoding": {
+                                              "system": "urn:oid:2.16.840.1.113883.6.238",
+                                              "code": "2186-5",
+                                              "display": "Not Hispanic or Latino"
+                                          }
+                                      }
+                                  ]
+                              },
+                              {
+                                  "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+                                  "valueReference": {
+                                      "reference": "#06c8bce9-17a5-444b-b5b4-7bc941f8e414"
+                                  }
+                              }
+                          ],
+                          "identifier": [
+                              {
+                                  "use": "usual",
+                                  "type": {
+                                      "coding": [
+                                          {
+                                              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                              "code": "MR",
+                                              "display": "Medical Record Number"
+                                          }
+                                      ]
+                                  },
+                                  "system": "http://hospital.smarthealthit.org",
+                                  "value": "9999999911"
+                              }
+                          ],
+                          "name": [
+                              {
+                                  "family": "Jones",
+                                  "given": [
+                                      "Louise"
+                                  ]
+                              }
+                          ],
+                          "gender": "female",
+                          "birthDate": "1971-11-21"
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  },
+                  {
+                      "resource": {
+                          "resourceType": "OperationOutcome",
+                          "issue": [
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104"
+                              },
+                              {
+                                  "severity": "information",
+                                  "code": "informational",
+                                  "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104"
+                              }
+                          ]
+                      }
+                  }
+              ]
+          }
+      }
+  ]
+}

@@ -1,5 +1,3 @@
-import Patient from 'fixtures/Patient';
-
 const extractDescription = (measureReport) => {
   const extUrl = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description';
   return measureReport?.extension?.find((extension) => extension.url === extUrl)?.valueString;
@@ -24,32 +22,60 @@ const parseStratifier = (measureReport) => {
   return stratifier;
 };
 
-const gatherIndividualList = (measureReportBundle) => {
-  const entries = measureReportBundle?.entry?.map((i) => i?.resource);
+const processMeasureReportPayload = (measureReportParameters) => {
+  if (measureReportParameters.parameter.length === 1) {
+    return gatherIndividualLevelData(measureReportParameters.parameter?.[0]?.resource?.entry, measureReportParameters.parameter?.[0]?.name);
+  } else {
+    const populationLevelData = {
+      individualLevelData: [],
+      populationData: null,
+      measureReport: null
+    };
+    measureReportParameters.parameter.forEach(({ name, resource }) => {
+      if (name === 'population-report') {
+        const populationData = populationGather(resource.group[0]);
+        populationLevelData.populationData = populationData;
+        populationLevelData.measureReport = resource;
+      } else {
+        const individualLevelData = gatherIndividualLevelData(resource?.entry, name);
+        populationLevelData.individualLevelData.push(individualLevelData);
+      }
+    });
 
-  const measureReport = entries?.find((i) => i?.resourceType === 'MeasureReport');
-
-  if (measureReport?.type !== 'individual') {
-    console.warn('This is not a individual measure report');
-    return null;
+    return populationLevelData;
   }
+};
 
-  const extractedMeasureReport = {
-    patient: Patient,
+const gatherIndividualLevelData = (measureReportEntries, name) => {
+  const individualLevelData = {
+    name,
+    patients: [],
     resources: [],
-    description: extractDescription(measureReport)
+    measureReport: null
   };
+  // we will add this at the end
+  let operationOutcome = null;
 
-  entries.forEach((entry) => {
-    if (entry?.resourceType !== 'MeasureReport') {
-      extractedMeasureReport.resources.push(entry);
+  measureReportEntries.forEach(({ resource }) => {
+    if (resource.resourceType === 'MeasureReport') {
+      individualLevelData.measureReport = resource;
+    } else if (resource.resourceType === 'Patient') {
+      individualLevelData.patients.push(resource);
+    } else if (resource.resourceType === 'OperationOutcome') {
+      operationOutcome = resource;
+    } else {
+      individualLevelData.resources.push(resource);
     }
   });
-  return extractedMeasureReport;
+
+  if (operationOutcome) individualLevelData.resources.push(operationOutcome);
+
+  return individualLevelData;
 };
 
 const populationGather = (measureReportGroup) => {
   const population = {};
+
   measureReportGroup?.population?.forEach((data) => {
     const key = data.code.coding?.[0]?.code;
 
@@ -65,4 +91,4 @@ const populationGather = (measureReportGroup) => {
   return population;
 };
 
-export { extractDescription, gatherIndividualList, populationGather, parseStratifier };
+export { extractDescription, processMeasureReportPayload, populationGather, parseStratifier };

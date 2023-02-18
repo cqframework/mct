@@ -9,7 +9,7 @@
   "link": [
     {
       "relation": "self",
-      "url": "http://localhost:8080/cqf-ruler-r4/fhir/Measure?_format=json"
+      "url": "http://cqf-ruler:8080/cqf-ruler-r4/fhir/Measure?_format=json"
     }
   ],
   "entry": [
@@ -876,7 +876,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/cqf-ruler-r4/fhir/Measure/SeenPatients",
+      "fullUrl": "http://cqf-ruler:8080/cqf-ruler-r4/fhir/Measure/SeenPatients",
       "resource": {
         "resourceType": "Measure",
         "id": "SeenPatients",
@@ -1563,7 +1563,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/cqf-ruler-r4/fhir/Measure/DiabetesHemoglobinA1cHbA1cPoorControl9FHIR",
+      "fullUrl": "http://cqf-ruler:8080/cqf-ruler-r4/fhir/Measure/DiabetesHemoglobinA1cHbA1cPoorControl9FHIR",
       "resource": {
         "resourceType": "Measure",
         "id": "DiabetesHemoglobinA1cHbA1cPoorControl9FHIR",
@@ -2864,7 +2864,7 @@
       }
     },
     {
-      "fullUrl": "http://localhost:8080/cqf-ruler-r4/fhir/Measure/ControllingBloodPressureFHIR",
+      "fullUrl": "http://cqf-ruler:8080/cqf-ruler-r4/fhir/Measure/ControllingBloodPressureFHIR",
       "resource": {
         "resourceType": "Measure",
         "id": "ControllingBloodPressureFHIR",

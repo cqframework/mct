@@ -1,12 +1,12 @@
 import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Toolbar, useMediaQuery, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, CloudUploadOutlined } from '@ant-design/icons';
 
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
@@ -21,7 +21,9 @@ const Header = ({ open, handleDrawerToggle }) => {
   const [openSubmitPrompt, setOpenSubmitPrompt] = useState(false);
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
-  const { measure, organization } = useSelector((state) => state.filter);
+  const { organization } = useSelector((state) => state.filter);
+  const { measureReport } = useSelector((state) => state.data);
+
   const { organizations } = useSelector((state) => state.data);
 
   const iconBackColor = 'grey.100';
@@ -67,14 +69,14 @@ const Header = ({ open, handleDrawerToggle }) => {
         setVisibility={setOpenSubmitPrompt}
         setStatusMessage={setIsStatusMessageVisible}
       />
-      {measure?.length > 0 && (
+      {measureReport && measureReport !== 'pending' && (
         <Button
           onClick={() => {
             setOpenSubmitPrompt(true);
           }}
           sx={{ lineHeight: '1.85rem' }}
           variant="contained"
-          endIcon={<SendOutlined />}
+          endIcon={<CloudUploadOutlined />}
         >
           Submit
         </Button>

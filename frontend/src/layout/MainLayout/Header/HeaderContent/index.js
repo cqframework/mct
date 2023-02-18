@@ -2,6 +2,10 @@ import { FormControl, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputSelection } from 'store/reducers/filter';
 import Selection from 'components/Selection';
+import { Button } from '@mui/material';
+import PatientMultiSelect from 'components/PatientMultiSelect';
+import { executeGatherOperation } from 'store/reducers/data';
+import { SendOutlined } from '@ant-design/icons';
 
 const dateOptions = [
   {
@@ -23,8 +27,8 @@ const dateOptions = [
 ];
 
 const HeaderContent = () => {
-  const { date, facility } = useSelector((state) => state.filter);
-  const { facilities } = useSelector((state) => state.data);
+  const { date, facility, selectedPatients } = useSelector((state) => state.filter);
+  const { facilities, patients } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
 
@@ -37,9 +41,22 @@ const HeaderContent = () => {
           minWidth: 200
         }}
       >
+        <PatientMultiSelect
+          patients={patients}
+          selectedPatients={selectedPatients}
+          handleChange={(value) => dispatch(inputSelection({ type: 'patient', value }))}
+        />
+      </FormControl>
+      <FormControl
+        required
+        sx={{
+          m: 1,
+          minWidth: 200
+        }}
+      >
         <Selection
           options={facilities}
-          label="Facility"
+          label="Facilities"
           currentSelection={facility}
           handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
         />
@@ -58,6 +75,14 @@ const HeaderContent = () => {
           handleChange={(value) => dispatch(inputSelection({ type: 'date', value }))}
         />
       </FormControl>
+      <Button
+        onClick={() => dispatch(executeGatherOperation())}
+        sx={{ lineHeight: '1.85rem', mt: 1 }}
+        variant="contained"
+        endIcon={<SendOutlined />}
+      >
+        Get Report
+      </Button>
     </Box>
   );
 };

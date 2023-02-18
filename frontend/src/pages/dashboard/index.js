@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-
-import { Box, Grid, Tabs, Tab, Typography, Card, CardContent } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Box, Grid, Tabs, Tab, Typography } from '@mui/material';
 import { ArrowLeftOutlined, ArrowUpOutlined } from '@ant-design/icons';
+
 import PromptChoiceCard from './PromptChoiceCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { createPeriodFromQuarter } from 'utils/queryHelper';
-import { baseUrl } from 'config';
+import LoadingPage from 'components/LoadingPage';
+import { processMeasureReportPayload } from 'utils/measureReportHelpers';
+
 import IndividualMeasureReport from './IndividualMeasureReport';
+import PopulationMeasureReport from './PopulationMeasureReport';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -20,79 +22,18 @@ function a11yProps(index) {
   };
 }
 
-const buildMeasurePayload = (facilityId, measureResourceUrl, quarter) => {
-  const period = createPeriodFromQuarter(quarter);
-  return {
-    resourceType: 'Parameters',
-    parameter: [
-      {
-        name: 'facilities',
-        valueString: `Location/${facilityId}`
-      },
-      {
-        name: 'period',
-        valuePeriod: period
-      },
-      {
-        name: 'measure',
-        valueString: measureResourceUrl
-      },
-      {
-        name: 'patients',
-        resource: {
-          resourceType: 'Group',
-          id: '102',
-          type: 'person',
-          actual: true,
-          member: [
-            {
-              entity: {
-                reference: 'Patient/denom-EXM104'
-              }
-            }
-          ]
-        }
-      }
-    ]
-  };
-};
-
 const DashboardDefault = () => {
-  const { facility, date, measure } = useSelector((state) => state.filter);
-  const { facilities, measures } = useSelector((state) => state.data);
+  const { measure, selectedPatients } = useSelector((state) => state.filter);
+  const { measures, measureReport } = useSelector((state) => state.data);
+
   const [value, setValue] = useState(0);
-  const [measureReport, setMeasureReport] = useState(null);
+
   const measureResource = measures.find((i) => i.id === measure);
 
   useEffect(() => {
-    const callGatherApi = async () => {
-      const facilityResource = facilities.find((i) => i.id === facility);
-      const parametersPayload = buildMeasurePayload(facilityResource.id, measureResource.url, date);
-      try {
-        const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(parametersPayload)
-        }).then((response) => response?.json());
-
-        if (measureReportJson?.resourceType === 'OperationOutcome') {
-          console.error(measureReportJson);
-        } else {
-          setMeasureReport(measureReportJson?.parameter?.[0]?.resource);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    if (date?.length != 0 && measure?.length != 0) {
-      callGatherApi();
-    }
-  }, [measure, date, facility]);
-
-  const handleChange = (event, newValue) => setValue(newValue);
+    console.log('Resetting Tabs back to first tab');
+    setValue(0);
+  }, [measureReport]);
 
   if (measure.length === 0) {
     return (
@@ -112,19 +53,52 @@ const DashboardDefault = () => {
         </PromptChoiceCard>
       </Grid>
     );
+  } else if (selectedPatients.length >= 0 && measureReport === null) {
+    return (
+      <Grid item xs={12} sx={{ mb: -2.25 }}>
+        <PromptChoiceCard>
+          <Box sx={{ display: 'flex', mt: 10, fontSize: 30 }}>
+            <Typography variant="h1" gutterBottom>
+              <ArrowUpOutlined /> Select
+            </Typography>
+            <Typography variant="h1" sx={{ ml: 1, mr: 1, color: 'primary.main' }}>
+              Patient(s)
+            </Typography>
+            <Typography variant="h1" gutterBottom>
+              and submit request for report
+            </Typography>
+          </Box>
+        </PromptChoiceCard>
+      </Grid>
+    );
+  } else if (measureReport === 'pending') {
+    return <LoadingPage message={'Retrieving Measure Report'} />;
   }
+  const isPopulationMeasureReport = measureReport?.parameter?.length > 1;
+  const processedMeasureReport = processMeasureReportPayload(measureReport);
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Patient Data" {...a11yProps(0)} />
+          <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
+            <Tab label={isPopulationMeasureReport ? 'Population Report Data' : processedMeasureReport?.name} {...a11yProps(0)} />
+            {isPopulationMeasureReport &&
+              processedMeasureReport?.individualLevelData?.map((i, index) => <Tab label={`${i.name}`} {...a11yProps(index + 1)} />)}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
-          <IndividualMeasureReport measureReport={measureReport} measureName={measureResource.title} />
+          {isPopulationMeasureReport ? (
+            <PopulationMeasureReport processedMeasureReport={processedMeasureReport} />
+          ) : (
+            <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
+          )}
         </TabPanel>
+        {processedMeasureReport?.individualLevelData?.map((i, index) => (
+          <TabPanel value={value} index={index + 1}>
+            <IndividualMeasureReport processedMeasureReport={i} measureName={measureResource.title} />
+          </TabPanel>
+        ))}
       </>
     </Grid>
   );
