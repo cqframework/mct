@@ -24,6 +24,8 @@ import org.opencds.cqf.cql.evaluator.fhir.dal.BundleFhirDal;
 import org.opencds.cqf.cql.evaluator.measure.r4.R4MeasureProcessor;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
+import org.opencds.cqf.mct.data.DataRequirementsReport;
+import org.opencds.cqf.mct.data.PatientData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,9 +44,7 @@ public class GatherService {
    private final EndpointConverter endpointConverter;
    private final ValidationService validationService;
    private final FacilityRegistrationService facilityRegistrationService;
-   private final PatientDataService patientDataService;
    private final MeasureConfigurationService measureConfigurationService;
-   private final DataRequirementsService dataRequirementsService;
    private final String pathToConfigurationResource;
 
    public GatherService() {
@@ -56,9 +56,7 @@ public class GatherService {
       endpointConverter = SpringContext.getBean(EndpointConverter.class);
       validationService = SpringContext.getBean(ValidationService.class);
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
-      patientDataService = SpringContext.getBean(PatientDataService.class);
       measureConfigurationService = SpringContext.getBean(MeasureConfigurationService.class);
-      dataRequirementsService = SpringContext.getBean(DataRequirementsService.class);
       pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
    }
 
@@ -70,7 +68,6 @@ public class GatherService {
       Bundle populationData = new Bundle();
       List<String> patientIds = getPatientIds(patients);
       Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-      Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
       String measureUrl = getMeasureUrl(measureIdentifier);
       Map<String, Bundle> patientBundles = new HashMap<>();
       for (String facility: facilities) {
@@ -78,7 +75,8 @@ public class GatherService {
          Bundle patientData;
          MeasureReport report;
          for (String patientId : patientIds) {
-            patientData = patientDataService.getPatientData(facilityUrl, facility, patientId, period, profilesToFetch);
+            PatientData patientDataService = new PatientData();
+            patientData = patientDataService.getPatientDataBundle(facilityUrl, facility, patientId);
             populationData.getEntry().addAll(patientData.getEntry());
             report = measureProcessor.evaluateMeasure(measureUrl,
                     DateUtils.convertDateToIso8601String(period.getStart()),
@@ -88,7 +86,7 @@ public class GatherService {
             report.addExtension(getLocationExtension(facility));
             Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
             returnBundle.addEntry().setResource(report);
-            List<DomainResource> validationResults = validation(patientData, report);
+            List<DomainResource> validationResults = validation(patientData, report, patientDataService.getDataRequirementsReport());
             validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
             patientBundles.put(patientId, returnBundle);
          }
@@ -127,7 +125,7 @@ public class GatherService {
       return new Extension().setUrl(MctConstants.VALIDATION_EXTENSION_URL).setValue(new Reference(reference));
    }
 
-   private List<DomainResource> validation(Bundle bundle, MeasureReport report) {
+   private List<DomainResource> validation(Bundle bundle, MeasureReport report, DataRequirementsReport dataRequirementsReport) {
       List<DomainResource> resources = new ArrayList<>();
       BundleFhirDal bundleFhirDal = new BundleFhirDal(fhirContext, bundle);
       for (Reference reference : report.getEvaluatedResource()) {
@@ -142,8 +140,7 @@ public class GatherService {
          }
          resources.add(resource);
       }
-      resources.addAll(patientDataService.getMissingDataRequirementsAndClear());
+      resources.add(dataRequirementsReport.getReport());
       return resources;
    }
-
 }
