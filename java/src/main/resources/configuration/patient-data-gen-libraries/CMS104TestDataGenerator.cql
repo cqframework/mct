@@ -3,9 +3,10 @@ library CMS104TestDataGenerator version '1.0.0'
 using FHIR version '4.0.1'
 
 parameter MeasurementPeriod default Interval[@2022-01-01, @2022-03-31]
+parameter NumberOfTests default 200
 
 define NumberOfTestCases:
-    (expand { Interval[0'', 200''] } per 1'') exapandResult
+    (expand { Interval[ToQuantity(0), ToQuantity(NumberOfTests)] } per ToQuantity(1)) exapandResult
         return Truncate((start of exapandResult).value)
 
 define function getRandomNumber() returns Decimal : external
@@ -43,6 +44,15 @@ define FemaleFirstName_100:
 define LastNames_200:
     {'Galvez', 'Najera', 'Cornelius', 'Thrasher', 'Grove', 'Hughes', 'Cosgrove', 'Bollinger', 'Lane', 'Mejia', 'Downey', 'Brewer', 'Duncan', 'Gandy', 'Ash', 'Grimes', 'Forman', 'Robinson', 'Chow', 'Ha', 'Yancey', 'Carlton', 'Shank', 'Hamm', 'Shields', 'Anderson', 'Sheridan', 'Worden', 'Toro', 'Espinosa', 'Nagy', 'Beckwith', 'Molina', 'Ingram', 'Pace', 'Dominguez', 'Clough', 'Andres', 'Raymond', 'Spurlock', 'Liles', 'Chavarria', 'Acuna', 'Neil', 'Peterman', 'Rauch', 'Romero', 'Collazo', 'Burge', 'High', 'Girard', 'Taylor', 'Knudsen', 'Gale', 'Paz', 'Wagoner', 'Luce', 'Patterson', 'Close', 'Jack', 'Kinsey', 'Taggart', 'Engle', 'Masters', 'Clements', 'Brinkman', 'Singh', 'Yoo', 'Bailey', 'Broughton', 'Weis', 'Rock', 'Stokes', 'Elizondo', 'Wolf', 'Ambrose', 'Zapata', 'Garza', 'Godfrey', 'Brant', 'Yoder', 'Mcgrew', 'Sheets', 'Arias', 'Ketchum', 'Pauley', 'Kaminski', 'Devries', 'Beavers', 'Sharp', 'Ayres', 'Dailey', 'Schaffer', 'Cortez', 'Hill', 'Shen', 'Mackenzie', 'Strauss', 'Haynes', 'Kent', 'Andersen', 'Greiner', 'Muhammad', 'Salgado', 'Westfall', 'Dahl', 'Kimble', 'Zielinski', 'Culp', 'Bustos', 'Ramirez', 'Ruggiero', 'Joseph', 'Biddle', 'Meeker', 'Duke', 'Estep', 'Grossman', 'Becerra', 'Mohr', 'Ledbetter', 'Rogers', 'Estrella', 'Daugherty', 'Switzer', 'Weatherford', 'Schulze', 'Ott', 'Scroggins', 'Alcantar', 'Heinz', 'Adamson', 'Lafferty', 'Gifford', 'Peek', 'Burgos', 'Phelan', 'Weller', 'Barba', 'Sorensen', 'Hamel', 'Aguirre', 'Aponte', 'McCormack', 'Lantz', 'Schell', 'Burr', 'Currier', 'Carlson', 'Post', 'Crutchfield', 'Marx', 'Quick', 'Keck', 'Cho', 'Lindley', 'Whitson', 'Flood', 'McClintock', 'Nolan', 'Lightfoot', 'Bostic', 'Ashley', 'Roque', 'Mazur', 'Ware', 'Bautista', 'Kirkland', 'Wheaton', 'Waller', 'Gaddis', 'Tavares', 'Corey', 'Hadley', 'Kessler', 'Lehmann', 'Pringle', 'Lam', 'Gorman', 'Paris', 'Love', 'Goodrich', 'See', 'Ritter', 'Cornwell', 'Newton', 'Rowland', 'Ferrara', 'Benavides', 'Monroe', 'Pack', 'Brannon', 'Dove', 'Goldberg', 'Farrell', 'Harrington', 'Kaur', 'Lassiter', 'Antonio', 'Hale'}
 
+define RandomMaleFirstName:
+    MaleFirstName_100[RandomNumberInRange(0, 99)]
+
+define RandomFemaleFirstName:
+    FemaleFirstName_100[RandomNumberInRange(0, 99)]
+
+define RandomLastName:
+    LastNames_200[RandomNumberInRange(0, 199)]
+
 define ICD10IschemicStrokeCodes:
     Tuple {
         system: 'http://hl7.org/fhir/sid/icd-10-cm',
@@ -55,59 +65,71 @@ define SnomedIschemicStrokeCodes:
         codes: { '111297002', '116288000', '195185009', '195186005', '195189003', '195190007', '195212005', '195213000', '195216008', '195217004', '195230003', '230690007', '230691006', '230692004', '230693009', '230694003' , '230695002', '230696001', '230698000', '230699008', '230700009', '230701008', '307363008', '422504002', '426107000' }
     }
 
+define RxNormAntithromboticCodes:
+    Tuple {
+        system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+        codes: { '1037045', '1037179', '1092398', '1114198', '1116635', '1232082', '1232086', '1250907', '1361574', '1364435', '1364445', '1536467', '1536498', '1536503', '1536675', '1536815', '1536833', '1536840', '1537029', '1549682', '1593110', '1599543', '1599551', '1599555', '1658717', '1659195', '1659197', '1665356', '1666332', '1722689', '1723476', '1730187', '1804735', '1804737', '1804738', '1811631', '1811632', '198464', '198466', '198467', '198471', '198473', '198475', '198479', '198480', '1992427', '2059015', '212033', '243670', '243694', '252857', '2588062', '259081', '308278', '308297', '308351', '308363', '308409', '308411', '308416', '308417', '309362', '313406', '318272', '359221', '432638', '692836', '702316', '749196', '763111', '763116', '827318', '854228', '854235', '854238', '854241', '854245', '854248', '854252', '854255', '855288', '855296', '855302', '855312', '855318', '855324', '855332', '855338', '855344', '861356', '861360', '861363', '861365', '900528', '978725', '978733', '978736', '978740', '978744', '978746', '978755', '978759', '978777', '994430', '994435', '994528', '994535' }
+    }
+
 define InpatientEncounterCodes:
     { '183452005', '32485007' }
 
+define MedicationRequestStatusCodes:
+    { 'active', 'completed' }
+
 define GetRandomDateTimeDuringMeasurementPeriod:
-    DateTime(year from start of MeasurementPeriod, RandomNumberInRange(month from start of MeasurementPeriod, month from end of MeasurementPeriod), RandomDay, RandomHour, RandomMinute, RandomSecond, RandomMillisecond, EvaluationTimezone)
+    DateTime(
+        year from start of MeasurementPeriod,
+        RandomNumberInRange(month from start of MeasurementPeriod, month from end of MeasurementPeriod),
+        RandomDay, RandomHour, RandomMinute, RandomSecond, RandomMillisecond, EvaluationTimezone
+    )
+
+define function GetRandomDateInPeriod(startDate DateTime, endDate DateTime):
+    DateTime(
+        year from startDate,
+        if month from startDate > month from endDate then month from startDate else RandomNumberInRange(month from startDate, month from endDate),
+        if day from startDate > day from endDate then day from startDate else RandomNumberInRange(day from startDate, day from endDate),
+        hour from startDate, minute from startDate, second from startDate, millisecond from startDate, EvaluationTimezone
+    )
+
+define function BuildInNumeratorTestCases(count List<Integer>):
+    count C
+      let TestCaseId: 'in-numerator-' + ToString(C),
+          PatientReference: 'Patient/' + TestCaseId,
+          Halfway: C >= (Last(count) / 2),
+          PatientFirstName: if Halfway then RandomFemaleFirstName else RandomMaleFirstName,
+          PatientLastName: RandomLastName,
+          PatientGender: if Halfway then 'female' else 'male',
+          PatientBirthDate: Date(RandomNumberInRange(1950, 2000), RandomMonth, RandomDay),
+          TestPatient: BuildPatient(TestCaseId, PatientFirstName, PatientLastName, PatientGender, PatientBirthDate),
+          ConditionReference: 'Condition/' + TestCaseId,
+          IschemicStrokeCodeSets: { ICD10IschemicStrokeCodes, SnomedIschemicStrokeCodes },
+          RandomIschemicCodeSet: IschemicStrokeCodeSets[RandomNumberInRange(0, 1)],
+          IschemicCodeSystem: RandomIschemicCodeSet.system,
+          IschemicCodeCode: RandomIschemicCodeSet.codes[RandomNumberInRange(0, Length(RandomIschemicCodeSet.codes) - 1)],
+          TestCondition: BuildCondition(TestCaseId, IschemicCodeSystem, IschemicCodeCode, PatientReference),
+          RandomInpatientEncounterCode: InpatientEncounterCodes[RandomNumberInRange(0, 1)],
+          EncounterPeriodEnd: GetRandomDateTimeDuringMeasurementPeriod,
+          EncounterPeriodStart: EncounterPeriodEnd - ToQuantity(ToString(RandomNumberInRange(0, 120)) + ' days'),
+          EncounterInterval: Interval[EncounterPeriodStart, EncounterPeriodEnd],
+          TestEncounter: BuildEncounter(TestCaseId, 'finished', RandomInpatientEncounterCode, PatientReference, EncounterPeriodStart, EncounterPeriodEnd, ConditionReference, null, null),
+          AntithromboticMedReqAuthoredOn: GetRandomDateInPeriod(start of EncounterInterval, end of EncounterInterval),
+          AntithromboticMedReqStatus: MedicationRequestStatusCodes[RandomNumberInRange(0, 1)],
+          AntithromboticMedReqMedicationConcept: BuildCodeableConcept(RxNormAntithromboticCodes.system, RxNormAntithromboticCodes.codes[RandomNumberInRange(0, Length(RxNormAntithromboticCodes.codes) - 1)]),
+          TestMedReq: BuildMedicationRequest(TestCaseId, AntithromboticMedReqStatus, 'order', true, false, false, AntithromboticMedReqMedicationConcept, PatientReference, AntithromboticMedReqAuthoredOn, null, null, null)
+          return {
+              TestPatient,
+              TestCondition,
+              TestEncounter,
+              TestMedReq
+          }
+
 
 define BuildTestCases:
-    NumberOfTestCases testCase
-        let TestCaseId: 'test-' + ToString(testCase),
-        PatientReference: 'Patient/' + TestCaseId,
-        Halfway: testCase > 99,
-        PatientFirstName: if Halfway then FemaleFirstName_100[testCase - 100] else MaleFirstName_100[testCase],
-        PatientLastName: LastNames_200[testCase],
-        PatientGender: if Halfway then 'female' else 'male',
-        PatientBirthDate: Date(RandomNumberInRange(1950, 2000), RandomMonth, RandomDay),
-        TestPatient: BuildPatient(TestCaseId, PatientFirstName, PatientLastName, PatientGender, PatientBirthDate),
-        ConditionReference: 'Condition/' + TestCaseId,
-        IschemicStrokeCodeSets: { ICD10IschemicStrokeCodes, SnomedIschemicStrokeCodes },
-        RandomIschemicCodeSet: IschemicStrokeCodeSets[RandomNumberInRange(0, 1)],
-        IschemicCodeSystem: RandomIschemicCodeSet.system,
-        IschemicCodeCode: RandomIschemicCodeSet.codes[RandomNumberInRange(0, Length(RandomIschemicCodeSet.codes))],
-        TestCondition: BuildCondition(TestCaseId, IschemicCodeSystem, IschemicCodeCode, PatientReference),
-        RandomInpatientEncounterCode: InpatientEncounterCodes[RandomNumberInRange(0, 1)],
-        EncounterPeriodEnd: GetRandomDateTimeDuringMeasurementPeriod,
-        EncounterPeriodStartCandidate: GetRandomDateTimeDuringMeasurementPeriod,
-        EncounterPeriodStart:
-            if EncounterPeriodStartCandidate occurs before EncounterPeriodEnd and (days between EncounterPeriodStartCandidate and EncounterPeriodEnd < 120)
-                then EncounterPeriodStartCandidate
-                else DateTime(year from EncounterPeriodEnd, month from EncounterPeriodEnd, day from EncounterPeriodEnd, hour from EncounterPeriodStartCandidate, minute from EncounterPeriodStartCandidate, second from EncounterPeriodStartCandidate, millisecond from EncounterPeriodStartCandidate, timezoneoffset from EncounterPeriodStartCandidate) - ToQuantity(ToString(RandomNumberInRange(1, 3)) + 'months'),
-        EncounterInterval: Interval[EncounterPeriodStart, EncounterPeriodEnd],
-        TestEncounter: BuildeEncounter(TestCaseId, 'finished', RandomInpatientEncounterCode, PatientReference, EncounterInterval, ConditionReference, null, null)
-        return {
-            TestPatient,
-            TestCondition,
-            TestEncounter
-        }
+    BuildInNumeratorTestCases(NumberOfTestCases)
 
     define TestDataGenerationResult:
         BuildBundle(flatten BuildTestCases)
-
-// define Test_CMS104_In_InitialPopulation:
-//     BuildBundle({
-//         BuildPatient('test-in-initial-population', 'Jane', 'Doe', 'female', @2000-01-01),
-//         BuildCondition('test-in-initial-population', 'http://hl7.org/fhir/sid/icd-10-cm', 'I63.011', 'Patient/test-in-initial-population'),
-//         BuildeEncounter('test-in-initial-population', 'finished', '32485007', 'Patient/test-in-initial-population', Interval[@2022-10-20T12:30, @2022-10-22T09:00], 'Condition/test-in-initial-population', null, null)
-//     })
-
-// define Test_CMS104_Patient_Not_18:
-//     BuildBundle({
-//         BuildPatient('test-patient-not-18', 'Jane', 'Doe', 'female', @2006-01-01),
-//         BuildCondition('test-patient-not-18', 'http://hl7.org/fhir/sid/icd-10-cm', 'I63.011', 'Patient/test-patient-not-18'),
-//         BuildeEncounter('test-patient-not-18', 'finished', '32485007', 'Patient/test-patient-not-18', Interval[@2022-10-20T12:30, @2022-10-22T09:00], 'Condition/test-patient-not-18', null, null)
-//     })
 
 define function BuildBundle(resources List<FHIR.Resource>):
     FHIR.Bundle {
@@ -196,7 +218,7 @@ define function BuildCondition(id String, codeSystem String, codeCode String, su
         subject: FHIR.Reference { reference: FHIR.string { value: subject } }
     }
 
-define function BuildeEncounter(id String, status String, type String, subject String, period Interval<DateTime>, condition String, dischargeSystem String, dischargeCode String):
+define function BuildEncounter(id String, status String, type String, subject String, periodStart DateTime, periodEnd DateTime, condition String, dischargeSystem String, dischargeCode String):
     FHIR.Encounter {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter'),
@@ -206,7 +228,7 @@ define function BuildeEncounter(id String, status String, type String, subject S
             BuildCodeableConcept('http://snomed.info/sct', type)
         },
         subject: FHIR.Reference { reference: FHIR.string { value: subject } },
-        period: FHIR.Period { start: FHIR.dateTime { value: start of period }, end: FHIR.dateTime { value: end of period } },
+        period: FHIR.Period { start: FHIR.dateTime { value: periodStart }, end: FHIR.dateTime { value: periodEnd } },
         diagnosis: List<FHIR.Encounter.Diagnosis> {
             FHIR.Encounter.Diagnosis {
                 condition: FHIR.Reference { reference: FHIR.string { value: condition } },
@@ -252,15 +274,16 @@ define function BuildMedicationRequest(id String, status String, intent String, 
         status: FHIR.MedicationRequestStatus { value: status },
         intent: FHIR.MedicationRequestIntent { value: intent },
         category: List<FHIR.CodeableConcept> {
-            BuildCodeableConcept('http://hl7.org/fhir/ValueSet/medicationrequest-category',
+            BuildCodeableConcept('http://terminology.hl7.org/CodeSystem/medicationrequest-category',
                 if isCommunity then 'community' else if isDischarge then 'discharge' else 'inpatient')
         },
         doNotPerform: FHIR.boolean { value: doNotPerform },
         medication: if medication is String then FHIR.Reference { reference: FHIR.string { value: medication } } else medication,
         subject: FHIR.Reference { reference: FHIR.string { value: subject } },
         authoredOn: FHIR.dateTime { value: authoredOn },
-        requester: FHIR.Reference { reference: FHIR.string { value: requester } },
-        reasonCode: List<FHIR.CodeableConcept> {
-            BuildCodeableConcept(reasonCodeSystem, reasonCodeCode)
-        }
+        requester:
+            if requester is not null then FHIR.Reference { reference: FHIR.string { value: requester } } else null,
+        reasonCode: if reasonCodeSystem is not null and reasonCodeCode is not null
+            then List<FHIR.CodeableConcept> { BuildCodeableConcept(reasonCodeSystem, reasonCodeCode) }
+            else null
     }

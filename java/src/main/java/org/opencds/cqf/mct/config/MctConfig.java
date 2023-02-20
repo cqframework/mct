@@ -10,7 +10,6 @@ import org.cqframework.cql.cql2elm.LibrarySourceProvider;
 import org.hl7.fhir.common.hapi.validation.support.CachingValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.CommonCodeSystemsTerminologyService;
 import org.hl7.fhir.common.hapi.validation.support.InMemoryTerminologyServerValidationSupport;
-import org.hl7.fhir.common.hapi.validation.support.RemoteTerminologyServiceValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.SnapshotGeneratingValidationSupport;
 import org.hl7.fhir.common.hapi.validation.support.ValidationSupportChain;
 import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
@@ -48,7 +47,6 @@ import org.opencds.cqf.mct.service.DataRequirementsService;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
 import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
-import org.opencds.cqf.mct.service.PatientDataService;
 import org.opencds.cqf.mct.service.PatientSelectorService;
 import org.opencds.cqf.mct.service.ReceivingSystemConfigurationService;
 import org.opencds.cqf.mct.service.ValidationService;
@@ -232,7 +230,7 @@ public class MctConfig {
               mctNpmPackageValidationSupport,
               new CommonCodeSystemsTerminologyService(fhirContext),
               new DefaultProfileValidationSupport(fhirContext),
-              new RemoteTerminologyServiceValidationSupport(fhirContext, properties.getTerminologyServerUrl()),
+//              new RemoteTerminologyServiceValidationSupport(fhirContext, properties.getTerminologyServerUrl()),
               new InMemoryTerminologyServerValidationSupport(fhirContext),
               new SnapshotGeneratingValidationSupport(fhirContext)
       );
@@ -278,10 +276,9 @@ public class MctConfig {
    }
 
    @Bean
-   public PatientDataService patientDataService() {
-      return new PatientDataService();
+   public PatientSelectorService patientSelectorService() {
+      return new PatientSelectorService();
    }
-
 
    @Bean
    public DataRequirementsService dataRequirementsService() {

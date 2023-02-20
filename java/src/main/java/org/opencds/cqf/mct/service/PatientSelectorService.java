@@ -5,15 +5,16 @@ import org.hl7.fhir.r4.model.Group;
 import org.hl7.fhir.r4.model.Location;
 import org.hl7.fhir.r4.model.Reference;
 import org.opencds.cqf.mct.SpringContext;
+import org.opencds.cqf.mct.data.PatientData;
 
 import java.util.List;
 
 public class PatientSelectorService {
-   private final PatientDataService patientDataService;
+   private final PatientData patientDataService;
    private final FacilityRegistrationService facilityRegistrationService;
 
    public PatientSelectorService() {
-      patientDataService = SpringContext.getBean(PatientDataService.class);
+      patientDataService = new PatientData();
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
    }
 
