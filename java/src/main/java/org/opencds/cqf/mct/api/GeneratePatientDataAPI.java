@@ -1,23 +1,19 @@
 package org.opencds.cqf.mct.api;
 
 import ca.uhn.fhir.rest.annotation.Operation;
+import ca.uhn.fhir.rest.annotation.OperationParam;
 import org.hl7.fhir.r4.model.Bundle;
-import org.opencds.cqf.mct.SpringContext;
+import org.hl7.fhir.r4.model.IntegerType;
 import org.opencds.cqf.mct.config.MctConstants;
-import org.opencds.cqf.mct.service.PatientDataService;
+import org.opencds.cqf.mct.data.PatientData;
 
 import java.io.IOException;
 
 public class GeneratePatientDataAPI {
 
-   private final PatientDataService patientDataService;
-
-   public GeneratePatientDataAPI() {
-      patientDataService = SpringContext.getBean(PatientDataService.class);
-   }
-
    @Operation(name = MctConstants.GENERATE_PATIENT_DATA_OPERATION_NAME, idempotent = true)
-   public Bundle generatePatientData() throws IOException, NoSuchMethodException {
-      return patientDataService.generatePatientData();
+   public Bundle generatePatientData(@OperationParam(name = "numTestCases") IntegerType numTestCases) throws IOException, NoSuchMethodException {
+      if (numTestCases == null) numTestCases = new IntegerType(200);
+      return new PatientData().generatePatientData(numTestCases.getValue());
    }
 }

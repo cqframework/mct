@@ -24,6 +24,8 @@ import org.opencds.cqf.cql.evaluator.fhir.dal.BundleFhirDal;
 import org.opencds.cqf.cql.evaluator.measure.r4.R4MeasureProcessor;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
+import org.opencds.cqf.mct.data.DataRequirementsReport;
+import org.opencds.cqf.mct.data.PatientData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,9 +44,7 @@ public class GatherService {
    private final EndpointConverter endpointConverter;
    private final ValidationService validationService;
    private final FacilityRegistrationService facilityRegistrationService;
-   private final PatientDataService patientDataService;
    private final MeasureConfigurationService measureConfigurationService;
-   private final DataRequirementsService dataRequirementsService;
    private final String pathToConfigurationResource;
 
    public GatherService() {
@@ -56,37 +56,9 @@ public class GatherService {
       endpointConverter = SpringContext.getBean(EndpointConverter.class);
       validationService = SpringContext.getBean(ValidationService.class);
       facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
-      patientDataService = SpringContext.getBean(PatientDataService.class);
       measureConfigurationService = SpringContext.getBean(MeasureConfigurationService.class);
-      dataRequirementsService = SpringContext.getBean(DataRequirementsService.class);
       pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
    }
-
-//   public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
-//      Parameters parameters = new Parameters();
-//      R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
-//              terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
-//              fileFhirDalFactory, endpointConverter);
-//      for (String facility: facilities) {
-//         String facilityUrl = getFacilityUrl(facility);
-//         Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-//         List<String> patientIds = getPatientIds(patients);
-//         Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
-//         Bundle patientData = patientDataService.getPatientData(facilityUrl, facility, patientIds, period, profilesToFetch);
-//         MeasureReport report = measureProcessor.evaluateMeasure(getMeasureUrl(facility, measureIdentifier),
-//                 DateUtils.convertDateToIso8601String(period.getStart()),
-//                 DateUtils.convertDateToIso8601String(period.getEnd()), null,
-//                 patientIds, null, configurationResourcesEndpoint,
-//                 configurationResourcesEndpoint, null, patientData);
-//         report.addExtension(getLocationExtension(facility));
-//         Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
-//         returnBundle.addEntry().setResource(report);
-//         List<DomainResource> validationResults = validation(patientData, report);
-//         validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
-//         parameters.addParameter().setName("return-bundle").setResource(returnBundle);
-//      }
-//      return parameters;
-//   }
 
    public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
       Parameters parameters = new Parameters();
@@ -96,7 +68,6 @@ public class GatherService {
       Bundle populationData = new Bundle();
       List<String> patientIds = getPatientIds(patients);
       Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-      Map<String, String> profilesToFetch = dataRequirementsService.getProfiles();
       String measureUrl = getMeasureUrl(measureIdentifier);
       Map<String, Bundle> patientBundles = new HashMap<>();
       for (String facility: facilities) {
@@ -104,7 +75,8 @@ public class GatherService {
          Bundle patientData;
          MeasureReport report;
          for (String patientId : patientIds) {
-            patientData = patientDataService.getPatientData(facilityUrl, facility, patientId, period, profilesToFetch);
+            PatientData patientDataService = new PatientData();
+            patientData = patientDataService.getPatientDataBundle(facilityUrl, facility, patientId);
             populationData.getEntry().addAll(patientData.getEntry());
             report = measureProcessor.evaluateMeasure(measureUrl,
                     DateUtils.convertDateToIso8601String(period.getStart()),
@@ -114,7 +86,7 @@ public class GatherService {
             report.addExtension(getLocationExtension(facility));
             Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
             returnBundle.addEntry().setResource(report);
-            List<DomainResource> validationResults = validation(patientData, report);
+            List<DomainResource> validationResults = validation(patientData, report, patientDataService.getDataRequirementsReport());
             validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
             patientBundles.put(patientId, returnBundle);
          }
@@ -132,16 +104,6 @@ public class GatherService {
       }
       return parameters;
    }
-
-//   public String getMeasureUrl(String facilityId, String measureIdentifier) {
-//      if (measureIdentifier.startsWith("http")) {
-//         return measureIdentifier;
-//      }
-//      if (measureIdentifier.startsWith("Measure/")) {
-//         return getFacilityUrl(facilityId) + "/" + measureIdentifier;
-//      }
-//      return getFacilityUrl(facilityId) + "/Measure/" + measureIdentifier;
-//   }
 
    public String getMeasureUrl(String measureIdentifier) {
       return measureConfigurationService.getMeasure(measureIdentifier).getUrl();
@@ -163,7 +125,7 @@ public class GatherService {
       return new Extension().setUrl(MctConstants.VALIDATION_EXTENSION_URL).setValue(new Reference(reference));
    }
 
-   private List<DomainResource> validation(Bundle bundle, MeasureReport report) {
+   private List<DomainResource> validation(Bundle bundle, MeasureReport report, DataRequirementsReport dataRequirementsReport) {
       List<DomainResource> resources = new ArrayList<>();
       BundleFhirDal bundleFhirDal = new BundleFhirDal(fhirContext, bundle);
       for (Reference reference : report.getEvaluatedResource()) {
@@ -178,8 +140,7 @@ public class GatherService {
          }
          resources.add(resource);
       }
-      resources.addAll(patientDataService.getMissingDataRequirementsAndClear());
+      resources.add(dataRequirementsReport.getReport());
       return resources;
    }
-
 }
