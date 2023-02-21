@@ -1,13 +1,27 @@
-import { Grid, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Grid, Typography, Stack } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
 import { extractDescription } from 'utils/measureReportHelpers';
+import PatientsList from './PatientsList';
 
 const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
-  const { patients, measureReport, resources, operationOutcome } = processedMeasureReport;
+  const { individualLevelData, measureReport } = processedMeasureReport;
   const description = extractDescription(measureReport);
+  const [targetedPatient, setTargetedPatient] = useState(individualLevelData?.[0]);
 
-  const sortedResources = resources?.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);
+  const handlePatientChange = (patientId) => {
+    setTargetedPatient(individualLevelData.find((i, index) => i?.patient?.id === patientId || index === patientId)); //TODO: We should not use index but data is not available
+  };
+
+  const patientNameIdArr = individualLevelData.map((i, index) => {
+    const given = i?.patient?.name?.[0]?.given?.[0] || 'Unknown';
+    const family = i?.patient?.name?.[0]?.family || 'Unknown';
+    return {
+      id: i?.patient?.id || index, //TODO: We should not use index but data is not available
+      name: given + ' ' + family
+    };
+  });
 
   return (
     <>
@@ -19,11 +33,14 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
           {description}
         </Typography>
       </Grid>
-      <Grid item xs={4}>
-        <PatientInfoCard patient={patients?.[0]} />
+      <Grid item xs={2}>
+        <PatientsList handlePatientChange={handlePatientChange} patients={patientNameIdArr} />
       </Grid>
-      <Grid item xs={8}>
-        <ValidationDataTable resources={sortedResources} />
+      <Grid item xs={10}>
+        <Stack spacing={2}>
+          <PatientInfoCard patient={targetedPatient?.patient} />
+          <ValidationDataTable resources={targetedPatient?.resources} />
+        </Stack>
       </Grid>
     </>
   );

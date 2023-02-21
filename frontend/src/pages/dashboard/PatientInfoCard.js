@@ -20,12 +20,13 @@ const ExpandMore = styled((props) => {
 
 const PatientInfoCard = ({ patient }) => {
   const patientInfo = gatherPatientDisplayData(patient);
-  const { name, birthDate, gender, mrn } = patientInfo;
-  const [expanded, setExpanded] = React.useState(true);
+  const { name = 'Unknown', birthDate = 'Unknown', gender = 'Unknown', mrn = 'Unknown' } = patientInfo;
+  const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   return (
     <>
       <Typography variant={'h4'}>Patient Information</Typography>
@@ -58,7 +59,7 @@ const PatientInfoCard = ({ patient }) => {
           <CardContent>
             <List dense={true}>
               {patient?.contained?.[0]?.issue?.map((issue) => (
-                <>
+                <Box key={issue.location.toString() + patient?.id}>
                   <ListItem>
                     <ListItemIcon>
                       <SeverityIcon severity={issue.severity} />
@@ -66,7 +67,7 @@ const PatientInfoCard = ({ patient }) => {
                     <ListItemText primary={issue.diagnostics} secondary={null} />
                   </ListItem>
                   <Divider />
-                </>
+                </Box>
               ))}
             </List>
           </CardContent>

@@ -83,8 +83,7 @@ const DashboardDefault = () => {
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
             <Tab label={isPopulationMeasureReport ? 'Population Report Data' : processedMeasureReport?.name} {...a11yProps(0)} />
-            {isPopulationMeasureReport &&
-              processedMeasureReport?.individualLevelData?.map((i, index) => <Tab label={`${i.name}`} {...a11yProps(index + 1)} />)}
+            {isPopulationMeasureReport && <Tab label={'Individual Data'} {...a11yProps(1)} />}
           </Tabs>
         </Grid>
         <TabPanel value={value} index={0}>
@@ -94,11 +93,9 @@ const DashboardDefault = () => {
             <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
           )}
         </TabPanel>
-        {processedMeasureReport?.individualLevelData?.map((i, index) => (
-          <TabPanel value={value} index={index + 1}>
-            <IndividualMeasureReport processedMeasureReport={i} measureName={measureResource.title} />
-          </TabPanel>
-        ))}
+        <TabPanel value={value} index={1}>
+          <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
+        </TabPanel>
       </>
     </Grid>
   );
