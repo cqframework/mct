@@ -47,9 +47,9 @@ export default function ValidationDataTable({ resources }) {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       <Grid item xs={6}>
-        <Typography variant={'h4'}>
+        <Typography sx={{ mb: 2 }} variant={'h4'}>
           Validation Messages
           <Tooltip title={'Issues discovered from measure calculation'}>
             <IconButton>

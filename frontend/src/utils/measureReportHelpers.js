@@ -23,33 +23,78 @@ const parseStratifier = (measureReport) => {
 };
 
 const processMeasureReportPayload = (measureReportParameters) => {
+  const processedMeasureReport = {
+    individualLevelData: [],
+    populationData: null,
+    measureReport: null
+  };
   if (measureReportParameters.parameter.length === 1) {
-    return gatherIndividualLevelData(measureReportParameters.parameter?.[0]?.resource?.entry, measureReportParameters.parameter?.[0]?.name);
+    const individualData = gatherIndividualLevelData(
+      measureReportParameters.parameter?.[0]?.resource?.entry,
+      measureReportParameters.parameter?.[0]?.name
+    );
+    processedMeasureReport.measureReport = measureReportParameters.parameter?.[0]?.resource.entry.find(
+      ({ resource }) => resource.resourceType === 'MeasureReport'
+    ).resource;
+    processedMeasureReport.individualLevelData = [individualData];
+    return processedMeasureReport;
   } else {
-    const populationLevelData = {
-      individualLevelData: [],
-      populationData: null,
-      measureReport: null
-    };
     measureReportParameters.parameter.forEach(({ name, resource }) => {
       if (name === 'population-report') {
         const populationData = populationGather(resource.group[0]);
-        populationLevelData.populationData = populationData;
-        populationLevelData.measureReport = resource;
+        processedMeasureReport.populationData = populationData;
+        processedMeasureReport.measureReport = resource;
       } else {
         const individualLevelData = gatherIndividualLevelData(resource?.entry, name);
-        populationLevelData.individualLevelData.push(individualLevelData);
+        processedMeasureReport.individualLevelData.push(individualLevelData);
       }
     });
 
-    return populationLevelData;
+    return processedMeasureReport;
   }
+};
+
+const summarizeMeasureReport = (measureReport) => {
+  if (!measureReport) return null;
+  const processedContents = processMeasureReportPayload(measureReport);
+  const stats = {
+    patientCount: processedContents?.individualLevelData?.length,
+    resources: {}
+  };
+  // Summarize resources
+  const resources = processedContents?.individualLevelData?.flatMap(({ resources }) => resources);
+
+  resources.forEach((resource) => {
+    if (!stats.resources[resource?.resourceType]) {
+      stats.resources[resource?.resourceType] = {
+        information: 0,
+        warning: 0,
+        error: 0,
+        count: 0
+      };
+    }
+
+    if (resource.resourceType === 'OperationOutcome') {
+      resource.issue?.forEach((issue) => {
+        stats.resources[resource?.resourceType][issue.severity] += 1;
+      });
+      stats.resources[resource?.resourceType].count += 1;
+    } else {
+      resource?.contained
+        ?.find((i) => i.resourceType === 'OperationOutcome')
+        ?.issue?.forEach((issue) => {
+          stats.resources[resource?.resourceType][issue.severity] += 1;
+        });
+      stats.resources[resource.resourceType].count += 1;
+    }
+  });
+  return stats;
 };
 
 const gatherIndividualLevelData = (measureReportEntries, name) => {
   const individualLevelData = {
     name,
-    patients: [],
+    patient: null,
     resources: [],
     measureReport: null
   };
@@ -60,7 +105,7 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
     if (resource.resourceType === 'MeasureReport') {
       individualLevelData.measureReport = resource;
     } else if (resource.resourceType === 'Patient') {
-      individualLevelData.patients.push(resource);
+      individualLevelData.patient = resource;
     } else if (resource.resourceType === 'OperationOutcome') {
       operationOutcome = resource;
     } else {
@@ -68,6 +113,7 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
     }
   });
 
+  individualLevelData.resources = individualLevelData.resources.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);
   if (operationOutcome) individualLevelData.resources.push(operationOutcome);
 
   return individualLevelData;
@@ -91,4 +137,4 @@ const populationGather = (measureReportGroup) => {
   return population;
 };
 
-export { extractDescription, processMeasureReportPayload, populationGather, parseStratifier };
+export { extractDescription, processMeasureReportPayload, summarizeMeasureReport, populationGather, parseStratifier };
