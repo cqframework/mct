@@ -61,7 +61,8 @@ const PatientsList = ({ patients, handlePatientChange }) => {
                     key={patient?.id + index}
                     sx={{
                       '&.Mui-selected': {
-                        backgroundColor: 'primary.main'
+                        backgroundColor: 'primary.main',
+                        color: '#F8F6F0'
                       }
                     }}
                     selected={selectedIndex === patient?.id}
