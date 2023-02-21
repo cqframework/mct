@@ -21,10 +21,7 @@ const Header = ({ open, handleDrawerToggle }) => {
   const [openSubmitPrompt, setOpenSubmitPrompt] = useState(false);
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
-  const { organization } = useSelector((state) => state.filter);
   const { measureReport } = useSelector((state) => state.data);
-
-  const { organizations } = useSelector((state) => state.data);
 
   const iconBackColor = 'grey.100';
   const iconBackColorOpen = 'grey.200';
@@ -36,8 +33,6 @@ const Header = ({ open, handleDrawerToggle }) => {
 
     setIsStatusMessageVisible(false);
   };
-
-  const targetedOrganization = organizations.find((i) => i.id === organization);
 
   const mainHeader = (
     <Toolbar>
@@ -62,24 +57,21 @@ const Header = ({ open, handleDrawerToggle }) => {
           Successful Submission of Measure Report
         </Alert>
       </Snackbar>
-      <AlertDialog
-        organizationName={targetedOrganization.name}
-        organizationId={targetedOrganization.id}
-        isVisible={openSubmitPrompt}
-        setVisibility={setOpenSubmitPrompt}
-        setStatusMessage={setIsStatusMessageVisible}
-      />
+
       {measureReport && measureReport !== 'pending' && (
-        <Button
-          onClick={() => {
-            setOpenSubmitPrompt(true);
-          }}
-          sx={{ lineHeight: '1.85rem' }}
-          variant="contained"
-          endIcon={<CloudUploadOutlined />}
-        >
-          Submit
-        </Button>
+        <>
+          <AlertDialog isVisible={openSubmitPrompt} setVisibility={setOpenSubmitPrompt} setStatusMessage={setIsStatusMessageVisible} />
+          <Button
+            onClick={() => {
+              setOpenSubmitPrompt(true);
+            }}
+            sx={{ lineHeight: '1.85rem' }}
+            variant="contained"
+            endIcon={<CloudUploadOutlined />}
+          >
+            Submit
+          </Button>
+        </>
       )}
     </Toolbar>
   );

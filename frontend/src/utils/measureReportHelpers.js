@@ -54,6 +54,43 @@ const processMeasureReportPayload = (measureReportParameters) => {
   }
 };
 
+const summarizeMeasureReport = (measureReport) => {
+  if (!measureReport) return null;
+  const processedContents = processMeasureReportPayload(measureReport);
+  const stats = {
+    patientCount: processedContents?.individualLevelData?.length,
+    resources: {}
+  };
+  // Summarize resources
+  const resources = processedContents?.individualLevelData?.flatMap(({ resources }) => resources);
+
+  resources.forEach((resource) => {
+    if (!stats.resources[resource?.resourceType]) {
+      stats.resources[resource?.resourceType] = {
+        information: 0,
+        warning: 0,
+        error: 0,
+        count: 0
+      };
+    }
+
+    if (resource.resourceType === 'OperationOutcome') {
+      resource.issue?.forEach((issue) => {
+        stats.resources[resource?.resourceType][issue.severity] += 1;
+      });
+      stats.resources[resource?.resourceType].count += 1;
+    } else {
+      resource?.contained
+        ?.find((i) => i.resourceType === 'OperationOutcome')
+        ?.issue?.forEach((issue) => {
+          stats.resources[resource?.resourceType][issue.severity] += 1;
+        });
+      stats.resources[resource.resourceType].count += 1;
+    }
+  });
+  return stats;
+};
+
 const gatherIndividualLevelData = (measureReportEntries, name) => {
   const individualLevelData = {
     name,
@@ -100,4 +137,4 @@ const populationGather = (measureReportGroup) => {
   return population;
 };
 
-export { extractDescription, processMeasureReportPayload, populationGather, parseStratifier };
+export { extractDescription, processMeasureReportPayload, summarizeMeasureReport, populationGather, parseStratifier };

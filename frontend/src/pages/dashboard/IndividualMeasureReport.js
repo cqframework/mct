@@ -33,9 +33,11 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
           {description}
         </Typography>
       </Grid>
-      <Grid item xs={2}>
-        <PatientsList handlePatientChange={handlePatientChange} patients={patientNameIdArr} />
-      </Grid>
+      {individualLevelData?.length > 1 && (
+        <Grid item xs={2}>
+          <PatientsList handlePatientChange={handlePatientChange} patients={patientNameIdArr} />
+        </Grid>
+      )}
       <Grid item xs={10}>
         <Stack spacing={2}>
           <PatientInfoCard patient={targetedPatient?.patient} />

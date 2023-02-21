@@ -1,23 +1,18 @@
-const processForSummary = (state) => {
-  const { facilities, measures, patients, measureReport } = state.data;
-  const { facility, measure, selectedPatients } = state.filter;
-
-  // Organization
-  // Facility name
-  // Measure name
-
-  // patient count
-  // total issues broken down by severity (maybe on warn on the errors)
-
-  // Population details to remark about?
-};
-
-const getFacility = (state) => {
+export const getFacility = (state) => {
   const { facilities } = state.data;
+  const { facility: facilityId } = state.filter;
   return facilities.find((facility) => facility.id === facilityId);
 };
 
-const getMeasure = (state, measureId) => {
+export const getMeasure = (state) => {
   const { measures } = state.data;
-  return measures.find((measure) => measure.id === measureId);
+  const { measure } = state.filter;
+
+  return measures.find((measure) => measure.id === measure);
+};
+
+export const getOrganization = (state) => {
+  const { organizations } = state.data;
+  const { organization: organizationId } = state.filter;
+  return organizations.find((organization) => organization.id === organizationId);
 };

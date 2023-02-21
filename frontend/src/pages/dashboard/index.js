@@ -77,25 +77,49 @@ const DashboardDefault = () => {
   const isPopulationMeasureReport = measureReport?.parameter?.length > 1;
   const processedMeasureReport = processMeasureReportPayload(measureReport);
 
+  const generateTabs = () => {
+    const tabs = [];
+    const tabPanels = [];
+
+    if (isPopulationMeasureReport) {
+      tabs.push(<Tab label={isPopulationMeasureReport ? 'Population Report Data' : 'Individual Data'} {...a11yProps(0)} />);
+      tabs.push(<Tab label={'Individual Data'} {...a11yProps(1)} />);
+
+      tabPanels.push(
+        <TabPanel value={value} index={0}>
+          <PopulationMeasureReport processedMeasureReport={processedMeasureReport} />
+        </TabPanel>
+      );
+
+      tabPanels.push(
+        <TabPanel value={value} index={1}>
+          <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
+        </TabPanel>
+      );
+    } else {
+      tabs.push(<Tab label={'Individual Data'} {...a11yProps(0)} />);
+      tabPanels.push(
+        <TabPanel value={value} index={0}>
+          <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
+        </TabPanel>
+      );
+    }
+    return {
+      tabs,
+      tabPanels
+    };
+  };
+
+  const { tabs, tabPanels } = generateTabs();
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
           <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
-            <Tab label={isPopulationMeasureReport ? 'Population Report Data' : processedMeasureReport?.name} {...a11yProps(0)} />
-            {isPopulationMeasureReport && <Tab label={'Individual Data'} {...a11yProps(1)} />}
+            {tabs}
           </Tabs>
         </Grid>
-        <TabPanel value={value} index={0}>
-          {isPopulationMeasureReport ? (
-            <PopulationMeasureReport processedMeasureReport={processedMeasureReport} />
-          ) : (
-            <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
-          )}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <IndividualMeasureReport processedMeasureReport={processedMeasureReport} measureName={measureResource.title} />
-        </TabPanel>
+        {tabPanels}
       </>
     </Grid>
   );
