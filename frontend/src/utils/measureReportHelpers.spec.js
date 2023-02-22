@@ -1,4 +1,4 @@
-import demoData from '../fixtures/measureReport.json';
+import demoData from '../fixtures/MeasureReport.json';
 import mctPopulationPayloadData from '../fixtures/MeasureReportMCTPopulation.json';
 import mctIndividualPayloadData from '../fixtures/MeasureReportMCTIndividual.json';
 import {
