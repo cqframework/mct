@@ -4,7 +4,7 @@ import { summarizeMeasureReport } from 'utils/measureReportHelpers';
 import { Typography, Grid, Stack, Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { getFacility, getMeasure, getOrganization } from 'store/reducers/selector';
 import SeverityIcon from './SeverityIcon';
-import { baseUrl } from 'config';
+import { baseUrl, cqfServerUrl } from 'config';
 export default function AlertDialog({ isVisible, setVisibility, setStatusMessage }) {
   const { measureReport } = useSelector((state) => state.data);
   const facility = useSelector((state) => getFacility(state));
@@ -20,17 +20,25 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
   };
 
   const handleSubmit = async () => {
-    //TODO Re-enable when implementation complete on backend.
-    // await fetch(`${baseUrl}/mct/$submit?organization=${organization?.id}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     receivingSystemUrl: 'http://localhost:8080/fhir',
-    //     gatherResult: measureReport
-    //   })
-    // });
+    await fetch(`${baseUrl}/mct/$submit?organization=${organization?.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        resourceType: 'Parameters',
+        parameter: [
+          {
+            name: 'receivingSystemUrl',
+            valueString: `${cqfServerUrl}/fhir`
+          },
+          {
+            name: 'gatherResult',
+            resource: measureReport
+          }
+        ]
+      })
+    });
     handleClose({ isSubmit: true });
   };
 
