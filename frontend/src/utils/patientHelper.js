@@ -13,11 +13,7 @@ const gatherPatientDisplayData = (pt) => {
 
 const getMRNFromPatient = (patient) =>
   patient?.identifier?.find(
-    (item) =>
-      item?.type?.coding?.[0]?.system === 'http://terminology.hl7.org/CodeSystem/v2-0203' ||
-      item?.type?.coding?.[0]?.code === 'MR' ||
-      item.system === 'http://mgb.com/patient-mrn' ||
-      item.system === 'urn:oid:1.2.840.114350.1.13.362.3.7.3.737384.0' // MRN from MGB Epic System
+    (item) => item?.type?.coding?.[0]?.system === 'http://terminology.hl7.org/CodeSystem/v2-0203' || item?.type?.coding?.[0]?.code === 'MR'
   )?.value;
 
 const getDisplayName = (patient) => {
