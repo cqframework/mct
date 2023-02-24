@@ -22,13 +22,12 @@ const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, d
   const allEthnicitiesMap = {};
   measureReport.contained.forEach((i) => {
     //TODO:  There is a bug here that the string is all messed up together instead of being a javascript object
-    const ethnicity = i.code.coding.find((i) => LOINC_MAP_KEYS.some((v) => i.code.includes(v)));
-    if (ethnicity) {
-      // Now find the key that mapped to the long string
-      const index = LOINC_MAP_KEYS.findIndex((v) => ethnicity.code.includes(v));
-      allEthnicitiesMap[LOINC_MAP_KEYS[index]] = i.valueInteger;
+    if (i?.code?.coding?.[1]?.code === 'ethnicity') {
+      allEthnicitiesMap[i?.code?.coding?.[0]?.code] = i.valueInteger;
     }
   });
+
+  console.log(allEthnicitiesMap);
   const columnChartOptions = {
     chart: {
       type: 'bar',
@@ -114,6 +113,7 @@ const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, d
 
   const [series] = useState([
     {
+      name: 'Ethnicity',
       data: Object.values(allEthnicitiesMap)
     }
   ]);
