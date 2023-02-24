@@ -266,7 +266,7 @@
         } ],
         "content": [ {
           "contentType": "text/cql",
-          "data": "LyoKQHVwZGF0ZTogQlRSIDIwMjAtMDMtMzEgLT4KSW5jcmVtZW50ZWQgdmVyc2lvbiB0byAyLjAuMAoKQHVwZGF0ZTogQlRSIDIwMjItMDUtMjYgLT4KVXBkYXRlZCBGSElSIHZlcnNpb24gdG8gNC4wLjEKVXBkYXRlZCBGSElSSGVscGVycyB2ZXJzaW9uIHRvIDQuMC4wMDIKVXBkYXRlZCBmb3IgQVUgMjAyMiBDb250ZW50CiovCgpsaWJyYXJ5IFN1cHBsZW1lbnRhbERhdGFFbGVtZW50c1FJQ29yZTQgdmVyc2lvbiAnMy4wLjAwMCcKCnVzaW5nIFFJQ29yZSB2ZXJzaW9uICc0LjEuMScKCmluY2x1ZGUgRkhJUkhlbHBlcnMgdmVyc2lvbiAnNC4wLjAxMycgY2FsbGVkIEZISVJIZWxwZXJzCgp2YWx1ZXNldCAiRXRobmljaXR5IjogJ2h0dHA6Ly9jdHMubmxtLm5paC5nb3YvZmhpci9WYWx1ZVNldC8yLjE2Ljg0MC4xLjExNDIyMi40LjExLjgzNycKdmFsdWVzZXQgIk9OQyBBZG1pbmlzdHJhdGl2ZSBTZXgiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTEzNzYyLjEuNC4xJwp2YWx1ZXNldCAiUGF5ZXIiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTE0MjIyLjQuMTEuMzU5MScKdmFsdWVzZXQgIlJhY2UiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTE0MjIyLjQuMTEuODM2JwoKY29udGV4dCBQYXRpZW50CgpkZWZpbmUgIlNERSBFdGhuaWNpdHkiOgogIFBhdGllbnQuZXRobmljaXR5IEUKICAgIHJldHVybiBDb25jZXB0IHsKICAgICAgY29kZXM6IHsgRS5vbWJDYXRlZ29yeSB9IHVuaW9uIEUuZGV0YWlsZWQsCiAgICAgIGRpc3BsYXk6IEUudGV4dAogICAgfQoKZGVmaW5lICJTREUgUGF5ZXIiOgogIFtDb3ZlcmFnZTogdHlwZSBpbiAiUGF5ZXIiXSBQYXllcgogICAgcmV0dXJuIHsKICAgICAgY29kZTogUGF5ZXIudHlwZSwKICAgICAgcGVyaW9kOiBQYXllci5wZXJpb2QKICAgIH0KCmRlZmluZSAiU0RFIFJhY2UiOgogIFBhdGllbnQucmFjZSBSCiAgICByZXR1cm4gQ29uY2VwdCB7CiAgICAgIGNvZGVzOiBSLm9tYkNhdGVnb3J5IHVuaW9uIFIuZGV0YWlsZWQsCiAgICAgIGRpc3BsYXk6IFIudGV4dAogICAgfQoKZGVmaW5lICJTREUgU2V4IjoKICBjYXNlCiAgICAgIHdoZW4gUGF0aWVudC5nZW5kZXIgPSAnbWFsZScgdGhlbiBDb2RlIHsgY29kZTogJ00nLCBzeXN0ZW06ICdodHRwOi8vaGw3Lm9yZy9maGlyL3YzL0FkbWluaXN0cmF0aXZlR2VuZGVyJywgZGlzcGxheTogJ01hbGUnIH0KICAgICAgd2hlbiBQYXRpZW50LmdlbmRlciA9ICdmZW1hbGUnIHRoZW4gQ29kZSB7IGNvZGU6ICdGJywgc3lzdGVtOiAnaHR0cDovL2hsNy5vcmcvZmhpci92My9BZG1pbmlzdHJhdGl2ZUdlbmRlcicsIGRpc3BsYXk6ICdGZW1hbGUnIH0KICAgICAgZWxzZSBudWxsCiAgICBlbmQK"
+          "data": "LyoKQHVwZGF0ZTogQlRSIDIwMjAtMDMtMzEgLT4KSW5jcmVtZW50ZWQgdmVyc2lvbiB0byAyLjAuMAoKQHVwZGF0ZTogQlRSIDIwMjItMDUtMjYgLT4KVXBkYXRlZCBGSElSIHZlcnNpb24gdG8gNC4wLjEKVXBkYXRlZCBGSElSSGVscGVycyB2ZXJzaW9uIHRvIDQuMC4wMDIKVXBkYXRlZCBmb3IgQVUgMjAyMiBDb250ZW50CiovCgpsaWJyYXJ5IFN1cHBsZW1lbnRhbERhdGFFbGVtZW50c1FJQ29yZTQgdmVyc2lvbiAnMy4wLjAwMCcKCnVzaW5nIFFJQ29yZSB2ZXJzaW9uICc0LjEuMScKCmluY2x1ZGUgRkhJUkhlbHBlcnMgdmVyc2lvbiAnNC4wLjAxMycgY2FsbGVkIEZISVJIZWxwZXJzCgp2YWx1ZXNldCAiRXRobmljaXR5IjogJ2h0dHA6Ly9jdHMubmxtLm5paC5nb3YvZmhpci9WYWx1ZVNldC8yLjE2Ljg0MC4xLjExNDIyMi40LjExLjgzNycKdmFsdWVzZXQgIk9OQyBBZG1pbmlzdHJhdGl2ZSBTZXgiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTEzNzYyLjEuNC4xJwp2YWx1ZXNldCAiUGF5ZXIiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTE0MjIyLjQuMTEuMzU5MScKdmFsdWVzZXQgIlJhY2UiOiAnaHR0cDovL2N0cy5ubG0ubmloLmdvdi9maGlyL1ZhbHVlU2V0LzIuMTYuODQwLjEuMTE0MjIyLjQuMTEuODM2JwoKY29udGV4dCBQYXRpZW50CgpkZWZpbmUgIlNERSBFdGhuaWNpdHkiOgogIFBhdGllbnQuZXRobmljaXR5LnRleHQKCmRlZmluZSAiU0RFIFBheWVyIjoKICBbQ292ZXJhZ2U6IHR5cGUgaW4gIlBheWVyIl0gUGF5ZXIKICAgIHJldHVybiB7CiAgICAgIGNvZGU6IFBheWVyLnR5cGUsCiAgICAgIHBlcmlvZDogUGF5ZXIucGVyaW9kCiAgICB9CgpkZWZpbmUgIlNERSBSYWNlIjoKICBQYXRpZW50LnJhY2UudGV4dAoKZGVmaW5lICJTREUgU2V4IjoKICBjYXNlCiAgICAgIHdoZW4gUGF0aWVudC5nZW5kZXIgPSAnbWFsZScgdGhlbiBDb2RlIHsgY29kZTogJ00nLCBzeXN0ZW06ICdodHRwOi8vaGw3Lm9yZy9maGlyL3YzL0FkbWluaXN0cmF0aXZlR2VuZGVyJywgZGlzcGxheTogJ01hbGUnIH0KICAgICAgd2hlbiBQYXRpZW50LmdlbmRlciA9ICdmZW1hbGUnIHRoZW4gQ29kZSB7IGNvZGU6ICdGJywgc3lzdGVtOiAnaHR0cDovL2hsNy5vcmcvZmhpci92My9BZG1pbmlzdHJhdGl2ZUdlbmRlcicsIGRpc3BsYXk6ICdGZW1hbGUnIH0KICAgICAgZWxzZSBudWxsCiAgICBlbmQK"
         } ]
       }
     },
@@ -920,6 +920,25 @@
           "criteria": {
             "language": "text/cql-identifier",
             "expression": "SDE Ethnicity"
+          }
+        }, {
+          "code": {
+            "coding": [ {
+              "code": "race",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-supplemental-data-example",
+              "display": "Race"
+            } ]
+          },
+          "usage": [ {
+            "coding": [ {
+              "code": "supplemental-data",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-data-usage",
+              "display": "Supplemental Data"
+            } ]
+          } ],
+          "criteria": {
+            "language": "text/cql-identifier",
+            "expression": "SDE Race"
           }
         }, {
           "code": {
