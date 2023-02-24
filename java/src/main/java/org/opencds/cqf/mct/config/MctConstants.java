@@ -17,6 +17,7 @@ public class MctConstants {
    public static final String GATHER_PARAM_NULL_PERIOD = "Missing required Period FHIR data type \"period\" parameter that identifies the measurement period for the $gather operation";
    public static final String GATHER_PARAM_NULL_PERIOD_START = "Period FHIR data type \"period\" parameter is missing a start date";
    public static final String GATHER_PARAM_NULL_PERIOD_END = "Period FHIR data type \"period\" parameter is missing an end date";
+   public static final String GATHER_POP_MEASURE_PARAM_NAME = "population-report";
 
    // Facility Registration Constants
    public static final String LIST_ORGANIZATIONS_OPERATION_NAME = "$list-organizations";
@@ -30,6 +31,11 @@ public class MctConstants {
 
    // Receiving System Configuration Constants
    public static final String LIST_REC_SYSTEM_OPERATION_NAME = "$list-receiving-systems";
+
+   // Submit Configuration Constants
+   public static final String SUBMIT_OPERATION_NAME = "$submit";
+   public static final String SUBMIT_REC_SYSTEM_PARAM = "receivingSystemUrl";
+   public static final String SUBMIT_GATHER_RESULT_PARAM = "gatherResult";
 
    // Patient Selector Constants
    public static final String PATIENT_SELECTOR_OPERATION_NAME = "$list-patients";

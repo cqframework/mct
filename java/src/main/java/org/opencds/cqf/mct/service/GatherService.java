@@ -92,7 +92,7 @@ public class GatherService {
          }
       }
       if (patientIds.size() > 1) {
-         parameters.addParameter().setName("population-report").setResource(
+         parameters.addParameter().setName(MctConstants.GATHER_POP_MEASURE_PARAM_NAME).setResource(
                  measureProcessor.evaluateMeasure(measureUrl,
                          DateUtils.convertDateToIso8601String(period.getStart()),
                          DateUtils.convertDateToIso8601String(period.getEnd()), null,

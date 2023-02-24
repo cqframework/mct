@@ -9,6 +9,7 @@ import org.opencds.cqf.mct.api.GeneratePatientDataAPI;
 import org.opencds.cqf.mct.api.MeasureConfigurationAPI;
 import org.opencds.cqf.mct.api.PatientSelectorAPI;
 import org.opencds.cqf.mct.api.ReceivingSystemConfigurationAPI;
+import org.opencds.cqf.mct.api.SubmitAPI;
 import org.opencds.cqf.mct.config.MctProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -64,6 +65,7 @@ public class MctApplication extends SpringBootServletInitializer {
 		fhirServer.registerProvider(new ReceivingSystemConfigurationAPI());
 		fhirServer.registerProvider(new GeneratePatientDataAPI());
 		fhirServer.registerProvider(new PatientSelectorAPI());
+		fhirServer.registerProvider(new SubmitAPI());
 		return fhirServer;
 	}
 

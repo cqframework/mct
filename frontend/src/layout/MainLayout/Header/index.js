@@ -1,12 +1,12 @@
 import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Toolbar, useMediaQuery, Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { MenuFoldOutlined, MenuUnfoldOutlined, SendOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, CloudUploadOutlined } from '@ant-design/icons';
 
 import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
@@ -21,8 +21,7 @@ const Header = ({ open, handleDrawerToggle }) => {
   const [openSubmitPrompt, setOpenSubmitPrompt] = useState(false);
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
-  const { measure, organization } = useSelector((state) => state.filter);
-  const { organizations } = useSelector((state) => state.data);
+  const { measureReport } = useSelector((state) => state.data);
 
   const iconBackColor = 'grey.100';
   const iconBackColorOpen = 'grey.200';
@@ -34,8 +33,6 @@ const Header = ({ open, handleDrawerToggle }) => {
 
     setIsStatusMessageVisible(false);
   };
-
-  const targetedOrganization = organizations.find((i) => i.id === organization);
 
   const mainHeader = (
     <Toolbar>
@@ -60,24 +57,21 @@ const Header = ({ open, handleDrawerToggle }) => {
           Successful Submission of Measure Report
         </Alert>
       </Snackbar>
-      <AlertDialog
-        organizationName={targetedOrganization.name}
-        organizationId={targetedOrganization.id}
-        isVisible={openSubmitPrompt}
-        setVisibility={setOpenSubmitPrompt}
-        setStatusMessage={setIsStatusMessageVisible}
-      />
-      {measure?.length > 0 && (
-        <Button
-          onClick={() => {
-            setOpenSubmitPrompt(true);
-          }}
-          sx={{ lineHeight: '1.85rem' }}
-          variant="contained"
-          endIcon={<SendOutlined />}
-        >
-          Submit
-        </Button>
+
+      {measureReport && measureReport !== 'pending' && (
+        <>
+          <AlertDialog isVisible={openSubmitPrompt} setVisibility={setOpenSubmitPrompt} setStatusMessage={setIsStatusMessageVisible} />
+          <Button
+            onClick={() => {
+              setOpenSubmitPrompt(true);
+            }}
+            sx={{ lineHeight: '1.85rem' }}
+            variant="contained"
+            endIcon={<CloudUploadOutlined />}
+          >
+            Submit
+          </Button>
+        </>
       )}
     </Toolbar>
   );
