@@ -24,13 +24,13 @@ const PopulationMeasureReport = ({ processedMeasureReport }) => {
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Ethnicity</Typography>
+            <Typography variant="h5">Ethnicity and Race</Typography>
           </Grid>
         </Grid>
         <MainCard>
           <Stack spacing={1.5}>
             <Typography variant="h6" color="secondary">
-              {'Ethnicity (CDC Value Set)'}
+              {'Ethnicity and Race (CDC Value Set)'}
             </Typography>
           </Stack>
           <PatientColumnChart

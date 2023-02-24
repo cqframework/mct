@@ -7,7 +7,7 @@ import { TeamOutlined, InfoCircleOutlined } from '@ant-design/icons';
 const PopulationStatistics = ({ color, population = {} }) => {
   const { count, description } = population['denominator'];
   const { count: numeratorCount, description: numeratorDescription } = population['numerator'];
-
+  const totalPopCount = Object.values(population.gender).reduce((acc, cur) => acc + cur, 0);
   return (
     <MainCard sx={{ minWidth: 400 }} contentSX={{ p: 2.25 }}>
       <Stack spacing={0.5}>
@@ -26,10 +26,10 @@ const PopulationStatistics = ({ color, population = {} }) => {
         <Grid container alignItems="center">
           <Grid item xs={4}>
             <Typography variant="h4" color="inherit">
-              {count} Patients
+              {totalPopCount} Patients
             </Typography>
           </Grid>
-          {count && (
+          {totalPopCount && (
             <Grid item xs={8}>
               <Tooltip title={numeratorDescription}>
                 <Chip

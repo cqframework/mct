@@ -6,28 +6,21 @@ import { useTheme } from '@mui/material/styles';
 // third-party
 import ReactApexChart from 'react-apexcharts';
 
-// chart options
-const LOINC_MAP = {
-  '2135-1': 'Hispanic or Latino',
-  '2186-5': 'Non-Hispanic or Latino',
-  '2054-5': 'Black or African American'
-};
-
 const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, denominatorDescription }) => {
   const theme = useTheme();
   // const allEthnicities = Object.keys(stratifier.data);
   // const numeratorDescription = stratifier.data[allEthnicities[0]].denominator.description;
   // const denominatorDescription = stratifier.data[allEthnicities[0]].numerator.description;
-  const LOINC_MAP_KEYS = Object.keys(LOINC_MAP);
+  // const LOINC_MAP_KEYS = Object.keys(LOINC_MAP);
   const allEthnicitiesMap = {};
   measureReport.contained.forEach((i) => {
     //TODO:  There is a bug here that the string is all messed up together instead of being a javascript object
-    if (i?.code?.coding?.[1]?.code === 'ethnicity') {
-      allEthnicitiesMap[i?.code?.coding?.[0]?.code] = i.valueInteger;
+    if (i?.code?.coding?.[1]?.code === 'ethnicity' || i?.code?.coding?.[1]?.code === 'race') {
+      const identity = i?.code?.coding?.[0]?.code;
+      allEthnicitiesMap[identity] = i.valueInteger;
     }
   });
 
-  console.log(allEthnicitiesMap);
   const columnChartOptions = {
     chart: {
       type: 'bar',
@@ -51,8 +44,10 @@ const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, d
       colors: ['transparent']
     },
     xaxis: {
-      // categories: allEthnicities.map((code) => LOINC_MAP[code] || code)
-      categories: Object.keys(allEthnicitiesMap).map((code) => LOINC_MAP[code] || code)
+      labels: {
+        rotate: 0
+      },
+      categories: Object.keys(allEthnicitiesMap).map((code) => (code.includes('or') ? code.split(/(or)/g) : code))
     },
     yaxis: {
       title: {
@@ -113,7 +108,7 @@ const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, d
 
   const [series] = useState([
     {
-      name: 'Ethnicity',
+      name: 'Ethnicity and Race',
       data: Object.values(allEthnicitiesMap)
     }
   ]);
@@ -127,7 +122,7 @@ const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, d
       xaxis: {
         labels: {
           style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary]
+            // colors: Object.keys(allEthnicitiesMap).map((i) => 'secondary')
           }
         }
       },

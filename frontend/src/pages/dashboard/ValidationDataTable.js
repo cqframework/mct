@@ -59,14 +59,14 @@ export default function ValidationDataTable({ resources }) {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        {resources.map((i) => {
+        {resources.map((i, index) => {
           let resourceOperationOutcomes = i?.contained?.filter((i) => i.resourceType === 'OperationOutcome')?.[0];
           if (i.resourceType === 'OperationOutcome') {
             resourceOperationOutcomes = i;
           }
 
           return (
-            <Accordion key={i.id} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
+            <Accordion key={`${i.id}-${index}`} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
               <AccordionSummary
                 aria-controls={`panel${i.id}-content`}
                 id={`panel${i.id}-header`}
