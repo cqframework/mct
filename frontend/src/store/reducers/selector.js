@@ -8,7 +8,7 @@ export const getMeasure = (state) => {
   const { measures } = state.data;
   const { measure } = state.filter;
 
-  return measures.find((measure) => measure.id === measure);
+  return measures.find((i) => i.id === measure);
 };
 
 export const getOrganization = (state) => {
