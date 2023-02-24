@@ -8,16 +8,27 @@ import ReactApexChart from 'react-apexcharts';
 
 // chart options
 const LOINC_MAP = {
-  '2135-2': 'Hispanic or Latino',
+  '2135-1': 'Hispanic or Latino',
   '2186-5': 'Non-Hispanic or Latino',
   '2054-5': 'Black or African American'
 };
 
-const PatientColumnChart = ({ stratifier }) => {
+const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, denominatorDescription }) => {
   const theme = useTheme();
-  const allEthnicities = Object.keys(stratifier.data);
-  const descriptionA = stratifier.data[allEthnicities[0]].denominator.description;
-  const descriptionB = stratifier.data[allEthnicities[0]].numerator.description;
+  // const allEthnicities = Object.keys(stratifier.data);
+  // const numeratorDescription = stratifier.data[allEthnicities[0]].denominator.description;
+  // const denominatorDescription = stratifier.data[allEthnicities[0]].numerator.description;
+  const LOINC_MAP_KEYS = Object.keys(LOINC_MAP);
+  const allEthnicitiesMap = {};
+  measureReport.contained.forEach((i) => {
+    //TODO:  There is a bug here that the string is all messed up together instead of being a javascript object
+    const ethnicity = i.code.coding.find((i) => LOINC_MAP_KEYS.some((v) => i.code.includes(v)));
+    if (ethnicity) {
+      // Now find the key that mapped to the long string
+      const index = LOINC_MAP_KEYS.findIndex((v) => ethnicity.code.includes(v));
+      allEthnicitiesMap[LOINC_MAP_KEYS[index]] = i.valueInteger;
+    }
+  });
   const columnChartOptions = {
     chart: {
       type: 'bar',
@@ -41,7 +52,8 @@ const PatientColumnChart = ({ stratifier }) => {
       colors: ['transparent']
     },
     xaxis: {
-      categories: allEthnicities.map((code) => LOINC_MAP[code] || code)
+      // categories: allEthnicities.map((code) => LOINC_MAP[code] || code)
+      categories: Object.keys(allEthnicitiesMap).map((code) => LOINC_MAP[code] || code)
     },
     yaxis: {
       title: {
@@ -102,12 +114,7 @@ const PatientColumnChart = ({ stratifier }) => {
 
   const [series] = useState([
     {
-      name: descriptionA,
-      data: Object.values(stratifier.data).map((i) => i.denominator.count)
-    },
-    {
-      name: descriptionB,
-      data: Object.values(stratifier.data).map((i) => i.numerator.count)
+      data: Object.values(allEthnicitiesMap)
     }
   ]);
 
@@ -116,7 +123,7 @@ const PatientColumnChart = ({ stratifier }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [warning, primaryMain],
+      colors: [primaryMain],
       xaxis: {
         labels: {
           style: {

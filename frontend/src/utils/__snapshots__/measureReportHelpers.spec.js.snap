@@ -1,0 +1,3179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`measureReportHelpers parseStratifier should parse stratifier 1`] = `
+Object {
+  "30525-0": Object {
+    "code": "30525-0",
+    "data": Object {
+      "P40Y--P49Y": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 0,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 0,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 0,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "P50Y--P9999Y": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 40,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-age-group-stratum-code-p50y--p9999y-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 40,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-age-group-stratum-code-p50y--p9999y-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 19,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-age-group-stratum-code-p50y--p9999y-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+    },
+    "display": "Age",
+    "system": "http://loinc.org",
+    "title": "Age Group",
+  },
+  "32624-9": Object {
+    "code": "32624-9",
+    "data": Object {
+      "1002-5": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 6,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-1002-5-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 6,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-1002-5-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 1,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-1002-5-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2028-9": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 7,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2028-9-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 7,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2028-9-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 1,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2028-9-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2054-5": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 6,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2054-5-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 6,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2054-5-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 2,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2054-5-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2076-8": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 5,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2076-8-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 5,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2076-8-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 4,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2076-8-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2106-3": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 16,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2106-3-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 16,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2106-3-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 11,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2106-3-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+    },
+    "display": "Race",
+    "system": "http://loinc.org",
+    "title": "Race (CDC Value Set)",
+  },
+  "54133-4": Object {
+    "code": "54133-4",
+    "data": Object {
+      "2054-5": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 1,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2054-5-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 1,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2054-5-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 0,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2135-2": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 7,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2135-2-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 7,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2135-2-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 3,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2135-2-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "2186-5": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 32,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2186-5-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 32,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2186-5-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 16,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2186-5-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+    },
+    "display": "Ethnicity",
+    "system": "http://loinc.org",
+    "title": "Ethnicity (CDC Value Set)",
+  },
+  "72143-1": Object {
+    "code": "72143-1",
+    "data": Object {
+      "F": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 10,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-f-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 10,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-f-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 4,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-f-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+      "M": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 30,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-m-denominator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 30,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-m-initial-population",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 15,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-m-numerator",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+    },
+    "display": "Sex [HL7.v3]",
+    "system": "http://loinc.org",
+    "title": "Administrative sex",
+  },
+  "88124-3": Object {
+    "code": "88124-3",
+    "data": Object {
+      "undefined": Object {
+        "denominator": Object {
+          "code": "denominator",
+          "count": 0,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Denominator",
+          "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "denominator-exclusion": Object {
+          "code": "denominator-exclusion",
+          "count": 0,
+          "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+          "display": "Denominator Exclusion",
+          "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "gender": Object {
+          "F": 0,
+          "M": 0,
+          "U": 0,
+        },
+        "initial-population": Object {
+          "code": "initial-population",
+          "count": 0,
+          "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+          "display": "Initial Population",
+          "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+        "numerator": Object {
+          "code": "numerator",
+          "count": 0,
+          "description": "Patients whose most recent HbA1c > 9%",
+          "display": "Numerator",
+          "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+          "reference": undefined,
+          "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+        },
+      },
+    },
+    "display": "Food insecurity risk [HVS]",
+    "system": "http://loinc.org",
+    "title": "Food insecurity risk status",
+  },
+  "plan": Object {
+    "code": "plan",
+    "data": Object {},
+    "display": "Plan",
+    "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+    "title": "Payer",
+  },
+}
+`;
+
+exports[`measureReportHelpers populationGather should gather population data 1`] = `
+Object {
+  "denominator": Object {
+    "code": "denominator",
+    "count": 40,
+    "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+    "display": "Denominator",
+    "id": "7A50CF87-8EC5-4337-953F-F3B29B71BDED",
+    "reference": "#subject-list-group-1-denominator",
+    "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+  },
+  "denominator-exclusion": Object {
+    "code": "denominator-exclusion",
+    "count": 0,
+    "description": "Patients in hospice or long term care, or with advanced illness or frailty",
+    "display": "Denominator Exclusion",
+    "id": "7B66AF76-EF68-464C-A348-15D05F41AB63",
+    "reference": undefined,
+    "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+  },
+  "gender": Object {
+    "F": 0,
+    "M": 0,
+    "U": 0,
+  },
+  "initial-population": Object {
+    "code": "initial-population",
+    "count": 40,
+    "description": "Seen patients between 18 and 75 years of age with an active diabetes diagnosis",
+    "display": "Initial Population",
+    "id": "77E8676A-66BB-497E-8CF5-AE0DC97C4D68",
+    "reference": "#subject-list-group-1-initial-population",
+    "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+  },
+  "numerator": Object {
+    "code": "numerator",
+    "count": 19,
+    "description": "Patients whose most recent HbA1c > 9%",
+    "display": "Numerator",
+    "id": "C9719BEF-E3B2-454B-9D09-8CC677DDD912",
+    "reference": "#subject-list-group-1-numerator",
+    "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+  },
+}
+`;
+
+exports[`measureReportHelpers processMeasureReportPayload should process measure report payload 1`] = `
+Object {
+  "individualLevelData": Array [
+    Object {
+      "measureReport": Object {
+        "date": "2023-02-16T16:31:21+00:00",
+        "evaluatedResource": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+            ],
+            "reference": "Encounter/denom-EXM104-2",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+            "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+            "valueReference": Object {
+              "reference": "Location/local-test",
+            },
+          },
+        ],
+        "group": Array [
+          Object {
+            "population": Array [
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "initial-population",
+                      "display": "Initial Population",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator",
+                      "display": "Denominator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exclusion",
+                      "display": "Denominator Exclusion",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exception",
+                      "display": "Denominator Exception",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "numerator",
+                      "display": "Numerator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+          },
+        ],
+        "improvementNotation": Object {
+          "coding": Array [
+            Object {
+              "code": "increase",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+            },
+          ],
+        },
+        "language": "en",
+        "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+        "period": Object {
+          "end": "2022-03-31T11:00:00+00:00",
+          "start": "2022-01-01T09:00:00+00:00",
+        },
+        "resourceType": "MeasureReport",
+        "status": "complete",
+        "subject": Object {
+          "reference": "Patient/denom-EXM104",
+        },
+        "type": "individual",
+      },
+      "name": "Patient/denom-EXM104",
+      "patient": null,
+      "resources": Array [
+        Object {
+          "class": Object {
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          },
+          "contained": Array [
+            Object {
+              "id": "0b94be0d-76a1-4d78-bb19-950eee159b58",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_5",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                  "location": Array [
+                    "Encounter.class",
+                    "Line 1, Col 480",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                  "location": Array [
+                    "Encounter.type[0]",
+                    "Line 1, Col 535",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_System_Unknown",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                  "location": Array [
+                    "Encounter.diagnosis[0].use.coding[0]",
+                    "Line 1, Col 858",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "diagnosis": Array [
+            Object {
+              "condition": Object {
+                "reference": "Condition/denom-EXM104-1",
+              },
+              "rank": 1,
+              "use": Object {
+                "coding": Array [
+                  Object {
+                    "code": "billing",
+                    "display": "Billing",
+                    "system": "http://hl7.org/fhir/diagnosis-role",
+                  },
+                ],
+              },
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#0b94be0d-76a1-4d78-bb19-950eee159b58",
+              },
+            },
+          ],
+          "id": "denom-EXM104-2",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "period": Object {
+            "end": "2019-12-19T08:15:00-07:00",
+            "start": "2019-08-21T00:00:00-06:00",
+          },
+          "resourceType": "Encounter",
+          "status": "finished",
+          "subject": Object {
+            "reference": "Patient/denom-EXM104",
+          },
+          "type": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)",
+                  "system": "http://snomed.info/sct",
+                },
+              ],
+            },
+          ],
+        },
+        Object {
+          "issue": Array [
+            Object {
+              "code": "informational",
+              "diagnostics": "No MedicationRequest resources found for patient: Patient/denom-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No Procedure resources found for patient: Patient/denom-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No ServiceRequest resources found for patient: Patient/denom-EXM104",
+              "severity": "information",
+            },
+          ],
+          "resourceType": "OperationOutcome",
+        },
+      ],
+    },
+    Object {
+      "measureReport": Object {
+        "date": "2023-02-16T16:31:21+00:00",
+        "evaluatedResource": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+            ],
+            "reference": "Encounter/no-ip-EXM104-2",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+            "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+            "valueReference": Object {
+              "reference": "Location/local-test",
+            },
+          },
+        ],
+        "group": Array [
+          Object {
+            "population": Array [
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "initial-population",
+                      "display": "Initial Population",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator",
+                      "display": "Denominator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exclusion",
+                      "display": "Denominator Exclusion",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exception",
+                      "display": "Denominator Exception",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "numerator",
+                      "display": "Numerator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+          },
+        ],
+        "improvementNotation": Object {
+          "coding": Array [
+            Object {
+              "code": "increase",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+            },
+          ],
+        },
+        "language": "en",
+        "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+        "period": Object {
+          "end": "2022-03-31T11:00:00+00:00",
+          "start": "2022-01-01T09:00:00+00:00",
+        },
+        "resourceType": "MeasureReport",
+        "status": "complete",
+        "subject": Object {
+          "reference": "Patient/no-ip-EXM104",
+        },
+        "type": "individual",
+      },
+      "name": "Patient/no-ip-EXM104",
+      "patient": null,
+      "resources": Array [
+        Object {
+          "class": Object {
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          },
+          "contained": Array [
+            Object {
+              "id": "39958bf6-6820-4c23-b9fc-8910842c2716",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_5",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                  "location": Array [
+                    "Encounter.class",
+                    "Line 1, Col 480",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                  "location": Array [
+                    "Encounter.type[0]",
+                    "Line 1, Col 535",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_System_Unknown",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                  "location": Array [
+                    "Encounter.diagnosis[0].use.coding[0]",
+                    "Line 1, Col 858",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "diagnosis": Array [
+            Object {
+              "condition": Object {
+                "reference": "Condition/no-ip-EXM104-1",
+              },
+              "rank": 1,
+              "use": Object {
+                "coding": Array [
+                  Object {
+                    "code": "billing",
+                    "display": "Billing",
+                    "system": "http://hl7.org/fhir/diagnosis-role",
+                  },
+                ],
+              },
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#39958bf6-6820-4c23-b9fc-8910842c2716",
+              },
+            },
+          ],
+          "id": "no-ip-EXM104-2",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "period": Object {
+            "end": "2019-12-19T08:15:00-07:00",
+            "start": "2019-08-21T00:00:00-06:00",
+          },
+          "resourceType": "Encounter",
+          "status": "finished",
+          "subject": Object {
+            "reference": "Patient/no-ip-EXM104",
+          },
+          "type": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)",
+                  "system": "http://snomed.info/sct",
+                },
+              ],
+            },
+          ],
+        },
+        Object {
+          "issue": Array [
+            Object {
+              "code": "informational",
+              "diagnostics": "No Procedure resources found for patient: Patient/no-ip-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No ServiceRequest resources found for patient: Patient/no-ip-EXM104",
+              "severity": "information",
+            },
+          ],
+          "resourceType": "OperationOutcome",
+        },
+      ],
+    },
+    Object {
+      "measureReport": Object {
+        "date": "2023-02-16T16:31:21+00:00",
+        "evaluatedResource": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+            ],
+            "reference": "Encounter/denomexcl-EXM104-2",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+            "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+            "valueReference": Object {
+              "reference": "Location/local-test",
+            },
+          },
+        ],
+        "group": Array [
+          Object {
+            "population": Array [
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "initial-population",
+                      "display": "Initial Population",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator",
+                      "display": "Denominator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exclusion",
+                      "display": "Denominator Exclusion",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exception",
+                      "display": "Denominator Exception",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "numerator",
+                      "display": "Numerator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+          },
+        ],
+        "improvementNotation": Object {
+          "coding": Array [
+            Object {
+              "code": "increase",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+            },
+          ],
+        },
+        "language": "en",
+        "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+        "period": Object {
+          "end": "2022-03-31T11:00:00+00:00",
+          "start": "2022-01-01T09:00:00+00:00",
+        },
+        "resourceType": "MeasureReport",
+        "status": "complete",
+        "subject": Object {
+          "reference": "Patient/denomexcl-EXM104",
+        },
+        "type": "individual",
+      },
+      "name": "Patient/denomexcl-EXM104",
+      "patient": null,
+      "resources": Array [
+        Object {
+          "class": Object {
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          },
+          "contained": Array [
+            Object {
+              "id": "dc2d06df-f9b2-4b34-ba64-a1540e1a3b5f",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_5",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                  "location": Array [
+                    "Encounter.class",
+                    "Line 1, Col 484",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                  "location": Array [
+                    "Encounter.type[0]",
+                    "Line 1, Col 539",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_System_Unknown",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                  "location": Array [
+                    "Encounter.diagnosis[0].use.coding[0]",
+                    "Line 1, Col 870",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "diagnosis": Array [
+            Object {
+              "condition": Object {
+                "reference": "Condition/denomexcl-EXM104-1",
+              },
+              "rank": 1,
+              "use": Object {
+                "coding": Array [
+                  Object {
+                    "code": "billing",
+                    "display": "Billing",
+                    "system": "http://hl7.org/fhir/diagnosis-role",
+                  },
+                ],
+              },
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#dc2d06df-f9b2-4b34-ba64-a1540e1a3b5f",
+              },
+            },
+          ],
+          "id": "denomexcl-EXM104-2",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "period": Object {
+            "end": "2019-12-19T08:15:00-07:00",
+            "start": "2019-08-21T00:00:00-06:00",
+          },
+          "resourceType": "Encounter",
+          "status": "finished",
+          "subject": Object {
+            "reference": "Patient/denomexcl-EXM104",
+          },
+          "type": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)",
+                  "system": "http://snomed.info/sct",
+                },
+              ],
+            },
+          ],
+        },
+        Object {
+          "issue": Array [
+            Object {
+              "code": "informational",
+              "diagnostics": "No MedicationRequest resources found for patient: Patient/denomexcl-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No Procedure resources found for patient: Patient/denomexcl-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No ServiceRequest resources found for patient: Patient/denomexcl-EXM104",
+              "severity": "information",
+            },
+          ],
+          "resourceType": "OperationOutcome",
+        },
+      ],
+    },
+    Object {
+      "measureReport": Object {
+        "date": "2023-02-16T16:31:01+00:00",
+        "evaluatedResource": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "MedicationRequest/numer-EXM104-5",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Condition/numer-EXM104-1",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Encounter/numer-EXM104-2",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Patient/numer-EXM104",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+            "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+            "valueReference": Object {
+              "reference": "Location/local-test",
+            },
+          },
+        ],
+        "group": Array [
+          Object {
+            "measureScore": Object {
+              "value": 1,
+            },
+            "population": Array [
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "initial-population",
+                      "display": "Initial Population",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator",
+                      "display": "Denominator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exclusion",
+                      "display": "Denominator Exclusion",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exception",
+                      "display": "Denominator Exception",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "numerator",
+                      "display": "Numerator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+          },
+        ],
+        "improvementNotation": Object {
+          "coding": Array [
+            Object {
+              "code": "increase",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+            },
+          ],
+        },
+        "language": "en",
+        "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+        "period": Object {
+          "end": "2022-03-31T11:00:00+00:00",
+          "start": "2022-01-01T09:00:00+00:00",
+        },
+        "resourceType": "MeasureReport",
+        "status": "complete",
+        "subject": Object {
+          "reference": "Patient/numer-EXM104",
+        },
+        "type": "individual",
+      },
+      "name": "Patient/numer-EXM104",
+      "patient": Object {
+        "birthDate": "1971-11-21",
+        "contained": Array [
+          Object {
+            "id": "06c8bce9-17a5-444b-b5b4-7bc941f8e414",
+            "issue": Array [
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Validation_VAL_Profile_Minimum",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)",
+                "location": Array [
+                  "Patient.extension[0]",
+                  "Line 1, Col 716",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Terminology_TX_Confirm_4a",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-race-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2106-3'); The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not valid in the value set 'OmbRaceCategories'",
+                "location": Array [
+                  "Patient.extension[0].extension[0].value.ofType(Coding)",
+                  "Line 1, Col 877",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Validation_VAL_Profile_Minimum",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)",
+                "location": Array [
+                  "Patient.extension[1]",
+                  "Line 1, Col 916",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Terminology_TX_Confirm_4a",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2186-5'); The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not valid in the value set 'OmbEthnicityCategories'",
+                "location": Array [
+                  "Patient.extension[1].extension[0].value.ofType(Coding)",
+                  "Line 1, Col 1082",
+                ],
+                "severity": "error",
+              },
+            ],
+            "resourceType": "OperationOutcome",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "ombCategory",
+                "valueCoding": Object {
+                  "code": "2106-3",
+                  "display": "White",
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                },
+              },
+            ],
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "ombCategory",
+                "valueCoding": Object {
+                  "code": "2186-5",
+                  "display": "Not Hispanic or Latino",
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                },
+              },
+            ],
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+            "valueReference": Object {
+              "reference": "#06c8bce9-17a5-444b-b5b4-7bc941f8e414",
+            },
+          },
+        ],
+        "gender": "female",
+        "id": "numer-EXM104",
+        "identifier": Array [
+          Object {
+            "system": "http://hospital.smarthealthit.org",
+            "type": Object {
+              "coding": Array [
+                Object {
+                  "code": "MR",
+                  "display": "Medical Record Number",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                },
+              ],
+            },
+            "use": "usual",
+            "value": "9999999911",
+          },
+        ],
+        "meta": Object {
+          "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+          "profile": Array [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+            "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient",
+          ],
+          "source": "#YLpjDs57sCrXR1x9",
+          "tag": Array [
+            Object {
+              "display": "Location/local-test",
+              "system": "http://cms.gov/fhir/mct/tags/Location",
+            },
+          ],
+          "versionId": "1",
+        },
+        "name": Array [
+          Object {
+            "family": "Jones",
+            "given": Array [
+              "Louise",
+            ],
+          },
+        ],
+        "resourceType": "Patient",
+        "text": Object {
+          "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Louise <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>9999999911</td></tr><tr><td>Date of birth</td><td><span>21 November 1971</span></td></tr></tbody></table></div>",
+          "status": "generated",
+        },
+      },
+      "resources": Array [
+        Object {
+          "authoredOn": "2021-12-17T08:00:00",
+          "category": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "discharge",
+                  "display": "Discharge",
+                  "system": "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
+                },
+              ],
+            },
+          ],
+          "contained": Array [
+            Object {
+              "id": "bd675ee5-1a79-4dc1-97be-f8c1611a36e5",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "MedicationRequest.requester: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest)",
+                  "location": Array [
+                    "MedicationRequest",
+                    "Line 1, Col 2",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Medication Codes (RxNorm)' (http://hl7.org/fhir/us/core/ValueSet/us-core-medication-codes), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://www.nlm.nih.gov/research/umls/rxnorm#1037045)",
+                  "location": Array [
+                    "MedicationRequest.medication.ofType(CodeableConcept)",
+                    "Line 1, Col 561",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Type_Specific_Checks_DT_DateTime_TZ",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "if a date has a time, it must have a timezone",
+                  "location": Array [
+                    "MedicationRequest.authoredOn",
+                    "Line 1, Col 772",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#bd675ee5-1a79-4dc1-97be-f8c1611a36e5",
+              },
+            },
+          ],
+          "id": "numer-EXM104-5",
+          "intent": "order",
+          "medicationCodeableConcept": Object {
+            "coding": Array [
+              Object {
+                "code": "1037045",
+                "display": "dabigatran etexilate 150 MG Oral Capsule",
+                "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              },
+            ],
+          },
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "resourceType": "MedicationRequest",
+          "status": "completed",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+        },
+        Object {
+          "class": Object {
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          },
+          "contained": Array [
+            Object {
+              "id": "b16b481d-5738-4d67-805b-d30b05553f4f",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_5",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                  "location": Array [
+                    "Encounter.class",
+                    "Line 1, Col 480",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                  "location": Array [
+                    "Encounter.type[0]",
+                    "Line 1, Col 535",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_System_Unknown",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                  "location": Array [
+                    "Encounter.diagnosis[0].use.coding[0]",
+                    "Line 1, Col 858",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "diagnosis": Array [
+            Object {
+              "condition": Object {
+                "reference": "Condition/numer-EXM104-1",
+              },
+              "rank": 1,
+              "use": Object {
+                "coding": Array [
+                  Object {
+                    "code": "billing",
+                    "display": "Billing",
+                    "system": "http://hl7.org/fhir/diagnosis-role",
+                  },
+                ],
+              },
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#b16b481d-5738-4d67-805b-d30b05553f4f",
+              },
+            },
+          ],
+          "id": "numer-EXM104-2",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "period": Object {
+            "end": "2022-01-19T08:15:00-07:00",
+            "start": "2021-10-21T00:00:00-06:00",
+          },
+          "resourceType": "Encounter",
+          "status": "finished",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+          "type": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)",
+                  "system": "http://snomed.info/sct",
+                },
+              ],
+            },
+          ],
+        },
+        Object {
+          "category": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "encounter-diagnosis",
+                  "display": "Encounter Diagnosis",
+                  "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                },
+              ],
+            },
+          ],
+          "code": Object {
+            "coding": Array [
+              Object {
+                "code": "116288000",
+                "display": "Paralytic stroke (disorder)",
+                "system": "http://snomed.info/sct",
+              },
+            ],
+          },
+          "id": "numer-EXM104-1",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "resourceType": "Condition",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+          "verificationStatus": Object {
+            "coding": Array [
+              Object {
+                "code": "confirmed",
+                "display": "Confirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              },
+            ],
+          },
+        },
+        Object {
+          "issue": Array [
+            Object {
+              "code": "informational",
+              "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104",
+              "severity": "information",
+            },
+          ],
+          "resourceType": "OperationOutcome",
+        },
+      ],
+    },
+  ],
+  "measureReport": Object {
+    "date": "2023-02-16T16:31:22+00:00",
+    "extension": Array [
+      Object {
+        "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+        "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+      },
+    ],
+    "group": Array [
+      Object {
+        "measureScore": Object {
+          "value": 1,
+        },
+        "population": Array [
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "initial-population",
+                  "display": "Initial Population",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator",
+                  "display": "Denominator",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator-exclusion",
+                  "display": "Denominator Exclusion",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 0,
+            "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator-exception",
+                  "display": "Denominator Exception",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 0,
+            "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "numerator",
+                  "display": "Numerator",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+      },
+    ],
+    "improvementNotation": Object {
+      "coding": Array [
+        Object {
+          "code": "increase",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+        },
+      ],
+    },
+    "language": "en",
+    "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+    "period": Object {
+      "end": "2022-03-31T11:00:00+00:00",
+      "start": "2022-01-01T09:00:00+00:00",
+    },
+    "resourceType": "MeasureReport",
+    "status": "complete",
+    "type": "summary",
+  },
+  "populationData": Object {
+    "denominator": Object {
+      "code": "denominator",
+      "count": 1,
+      "description": undefined,
+      "display": "Denominator",
+      "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+      "reference": undefined,
+      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+    },
+    "denominator-exception": Object {
+      "code": "denominator-exception",
+      "count": 0,
+      "description": undefined,
+      "display": "Denominator Exception",
+      "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+      "reference": undefined,
+      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+    },
+    "denominator-exclusion": Object {
+      "code": "denominator-exclusion",
+      "count": 0,
+      "description": undefined,
+      "display": "Denominator Exclusion",
+      "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+      "reference": undefined,
+      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+    },
+    "gender": Object {
+      "F": 0,
+      "M": 0,
+      "U": 0,
+    },
+    "initial-population": Object {
+      "code": "initial-population",
+      "count": 1,
+      "description": undefined,
+      "display": "Initial Population",
+      "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+      "reference": undefined,
+      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+    },
+    "numerator": Object {
+      "code": "numerator",
+      "count": 1,
+      "description": undefined,
+      "display": "Numerator",
+      "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+      "reference": undefined,
+      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+    },
+  },
+}
+`;
+
+exports[`measureReportHelpers processMeasureReportPayload should process measure report payload with individual level data 1`] = `
+Object {
+  "individualLevelData": Array [
+    Object {
+      "measureReport": Object {
+        "date": "2023-02-16T18:19:10+00:00",
+        "evaluatedResource": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "MedicationRequest/numer-EXM104-5",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Condition/numer-EXM104-1",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Encounter/numer-EXM104-2",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+                "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+            "reference": "Patient/numer-EXM104",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+            "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+            "valueReference": Object {
+              "reference": "Location/local-test",
+            },
+          },
+        ],
+        "group": Array [
+          Object {
+            "measureScore": Object {
+              "value": 1,
+            },
+            "population": Array [
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "initial-population",
+                      "display": "Initial Population",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator",
+                      "display": "Denominator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exclusion",
+                      "display": "Denominator Exclusion",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "denominator-exception",
+                      "display": "Denominator Exception",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 0,
+                "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+              },
+              Object {
+                "code": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "numerator",
+                      "display": "Numerator",
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                    },
+                  ],
+                },
+                "count": 1,
+                "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+              },
+            ],
+          },
+        ],
+        "improvementNotation": Object {
+          "coding": Array [
+            Object {
+              "code": "increase",
+              "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+            },
+          ],
+        },
+        "language": "en",
+        "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+        "period": Object {
+          "end": "2022-03-31T11:00:00+00:00",
+          "start": "2022-01-01T09:00:00+00:00",
+        },
+        "resourceType": "MeasureReport",
+        "status": "complete",
+        "subject": Object {
+          "reference": "Patient/numer-EXM104",
+        },
+        "type": "individual",
+      },
+      "name": "Patient/numer-EXM104",
+      "patient": Object {
+        "birthDate": "1971-11-21",
+        "contained": Array [
+          Object {
+            "id": "c971a7f4-91f4-45b4-a8bd-c476215dc171",
+            "issue": Array [
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Validation_VAL_Profile_Minimum",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)",
+                "location": Array [
+                  "Patient.extension[0]",
+                  "Line 1, Col 716",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Terminology_TX_Confirm_4a",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-race-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2106-3'); The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not valid in the value set 'OmbRaceCategories'",
+                "location": Array [
+                  "Patient.extension[0].extension[0].value.ofType(Coding)",
+                  "Line 1, Col 877",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Validation_VAL_Profile_Minimum",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)",
+                "location": Array [
+                  "Patient.extension[1]",
+                  "Line 1, Col 916",
+                ],
+                "severity": "error",
+              },
+              Object {
+                "code": "processing",
+                "details": Object {
+                  "coding": Array [
+                    Object {
+                      "code": "Terminology_TX_Confirm_4a",
+                      "system": "http://hl7.org/fhir/java-core-messageId",
+                    },
+                  ],
+                },
+                "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2186-5'); The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not valid in the value set 'OmbEthnicityCategories'",
+                "location": Array [
+                  "Patient.extension[1].extension[0].value.ofType(Coding)",
+                  "Line 1, Col 1082",
+                ],
+                "severity": "error",
+              },
+            ],
+            "resourceType": "OperationOutcome",
+          },
+        ],
+        "extension": Array [
+          Object {
+            "extension": Array [
+              Object {
+                "url": "ombCategory",
+                "valueCoding": Object {
+                  "code": "2106-3",
+                  "display": "White",
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                },
+              },
+            ],
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+          },
+          Object {
+            "extension": Array [
+              Object {
+                "url": "ombCategory",
+                "valueCoding": Object {
+                  "code": "2186-5",
+                  "display": "Not Hispanic or Latino",
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                },
+              },
+            ],
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+          },
+          Object {
+            "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+            "valueReference": Object {
+              "reference": "#c971a7f4-91f4-45b4-a8bd-c476215dc171",
+            },
+          },
+        ],
+        "gender": "female",
+        "id": "numer-EXM104",
+        "identifier": Array [
+          Object {
+            "system": "http://hospital.smarthealthit.org",
+            "type": Object {
+              "coding": Array [
+                Object {
+                  "code": "MR",
+                  "display": "Medical Record Number",
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                },
+              ],
+            },
+            "use": "usual",
+            "value": "9999999911",
+          },
+        ],
+        "meta": Object {
+          "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+          "profile": Array [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+            "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient",
+          ],
+          "source": "#YLpjDs57sCrXR1x9",
+          "tag": Array [
+            Object {
+              "display": "Location/local-test",
+              "system": "http://cms.gov/fhir/mct/tags/Location",
+            },
+          ],
+          "versionId": "1",
+        },
+        "name": Array [
+          Object {
+            "family": "Jones",
+            "given": Array [
+              "Louise",
+            ],
+          },
+        ],
+        "resourceType": "Patient",
+        "text": Object {
+          "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Louise <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>9999999911</td></tr><tr><td>Date of birth</td><td><span>21 November 1971</span></td></tr></tbody></table></div>",
+          "status": "generated",
+        },
+      },
+      "resources": Array [
+        Object {
+          "authoredOn": "2021-12-17T08:00:00",
+          "category": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "discharge",
+                  "display": "Discharge",
+                  "system": "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
+                },
+              ],
+            },
+          ],
+          "contained": Array [
+            Object {
+              "id": "e6a9fad5-2a16-4c8c-9215-99412fc84695",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "MedicationRequest.requester: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest)",
+                  "location": Array [
+                    "MedicationRequest",
+                    "Line 1, Col 2",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Medication Codes (RxNorm)' (http://hl7.org/fhir/us/core/ValueSet/us-core-medication-codes), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://www.nlm.nih.gov/research/umls/rxnorm#1037045)",
+                  "location": Array [
+                    "MedicationRequest.medication.ofType(CodeableConcept)",
+                    "Line 1, Col 561",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Type_Specific_Checks_DT_DateTime_TZ",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "if a date has a time, it must have a timezone",
+                  "location": Array [
+                    "MedicationRequest.authoredOn",
+                    "Line 1, Col 772",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#e6a9fad5-2a16-4c8c-9215-99412fc84695",
+              },
+            },
+          ],
+          "id": "numer-EXM104-5",
+          "intent": "order",
+          "medicationCodeableConcept": Object {
+            "coding": Array [
+              Object {
+                "code": "1037045",
+                "display": "dabigatran etexilate 150 MG Oral Capsule",
+                "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              },
+            ],
+          },
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "resourceType": "MedicationRequest",
+          "status": "completed",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+        },
+        Object {
+          "class": Object {
+            "code": "IMP",
+            "display": "inpatient encounter",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          },
+          "contained": Array [
+            Object {
+              "id": "75da596d-8e40-4d40-be64-08943ca0f0ec",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_5",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Could not confirm that the codes provided are in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)",
+                  "location": Array [
+                    "Encounter.class",
+                    "Line 1, Col 480",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_NoValid_2_CC",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "None of the codings provided are in the value set 'US Core Encounter Type' (http://hl7.org/fhir/us/core/ValueSet/us-core-encounter-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#32485007)",
+                  "location": Array [
+                    "Encounter.type[0]",
+                    "Line 1, Col 535",
+                  ],
+                  "severity": "warning",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_System_Unknown",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Unknown Code System 'http://hl7.org/fhir/diagnosis-role'",
+                  "location": Array [
+                    "Encounter.diagnosis[0].use.coding[0]",
+                    "Line 1, Col 858",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "diagnosis": Array [
+            Object {
+              "condition": Object {
+                "reference": "Condition/numer-EXM104-1",
+              },
+              "rank": 1,
+              "use": Object {
+                "coding": Array [
+                  Object {
+                    "code": "billing",
+                    "display": "Billing",
+                    "system": "http://hl7.org/fhir/diagnosis-role",
+                  },
+                ],
+              },
+            },
+          ],
+          "extension": Array [
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#75da596d-8e40-4d40-be64-08943ca0f0ec",
+              },
+            },
+          ],
+          "id": "numer-EXM104-2",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "period": Object {
+            "end": "2022-01-19T08:15:00-07:00",
+            "start": "2021-10-21T00:00:00-06:00",
+          },
+          "resourceType": "Encounter",
+          "status": "finished",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+          "type": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "32485007",
+                  "display": "Hospital admission (procedure)",
+                  "system": "http://snomed.info/sct",
+                },
+              ],
+            },
+          ],
+        },
+        Object {
+          "category": Array [
+            Object {
+              "coding": Array [
+                Object {
+                  "code": "encounter-diagnosis",
+                  "display": "Encounter Diagnosis",
+                  "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                },
+              ],
+            },
+          ],
+          "code": Object {
+            "coding": Array [
+              Object {
+                "code": "116288000",
+                "display": "Paralytic stroke (disorder)",
+                "system": "http://snomed.info/sct",
+              },
+            ],
+          },
+          "id": "numer-EXM104-1",
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "resourceType": "Condition",
+          "subject": Object {
+            "reference": "Patient/numer-EXM104",
+          },
+          "verificationStatus": Object {
+            "coding": Array [
+              Object {
+                "code": "confirmed",
+                "display": "Confirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              },
+            ],
+          },
+        },
+        Object {
+          "issue": Array [
+            Object {
+              "code": "informational",
+              "diagnostics": "No Procedure resources found for patient: Patient/numer-EXM104",
+              "severity": "information",
+            },
+            Object {
+              "code": "informational",
+              "diagnostics": "No ServiceRequest resources found for patient: Patient/numer-EXM104",
+              "severity": "information",
+            },
+          ],
+          "resourceType": "OperationOutcome",
+        },
+      ],
+    },
+  ],
+  "measureReport": Object {
+    "date": "2023-02-16T18:19:10+00:00",
+    "evaluatedResource": Array [
+      Object {
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+        "reference": "MedicationRequest/numer-EXM104-5",
+      },
+      Object {
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+        "reference": "Condition/numer-EXM104-1",
+      },
+      Object {
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+        "reference": "Encounter/numer-EXM104-2",
+      },
+      Object {
+        "extension": Array [
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "874052F5-D503-4C5C-A436-05900B0967E3",
+          },
+          Object {
+            "url": "http://hl7.org/fhir/us/davinci-deqm/StructureDefinition/extension-criteriaReference",
+            "valueString": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+        "reference": "Patient/numer-EXM104",
+      },
+    ],
+    "extension": Array [
+      Object {
+        "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-MeasureReport.population.description",
+        "valueString": "Ischemic stroke patients prescribed or continuing to take antithrombotic therapy at hospital discharge",
+      },
+      Object {
+        "url": "http://cms.gov/fhir/mct/StructureDefinition/measurereport-location",
+        "valueReference": Object {
+          "reference": "Location/local-test",
+        },
+      },
+    ],
+    "group": Array [
+      Object {
+        "measureScore": Object {
+          "value": 1,
+        },
+        "population": Array [
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "initial-population",
+                  "display": "Initial Population",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "3461E500-1396-4E0C-B6C7-5B5C7B024765",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator",
+                  "display": "Denominator",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "D8C1DE16-6CC9-4B90-B1A9-E635665B36CA",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator-exclusion",
+                  "display": "Denominator Exclusion",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 0,
+            "id": "874052F5-D503-4C5C-A436-05900B0967E3",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "denominator-exception",
+                  "display": "Denominator Exception",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 0,
+            "id": "0BFADF64-121B-47BA-A02F-EE5F433B8C7D",
+          },
+          Object {
+            "code": Object {
+              "coding": Array [
+                Object {
+                  "code": "numerator",
+                  "display": "Numerator",
+                  "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                },
+              ],
+            },
+            "count": 1,
+            "id": "1AA9F20D-3A56-400C-A53E-0D8CE2BC6C83",
+          },
+        ],
+      },
+    ],
+    "improvementNotation": Object {
+      "coding": Array [
+        Object {
+          "code": "increase",
+          "system": "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+        },
+      ],
+    },
+    "language": "en",
+    "measure": "http://ecqi.healthit.gov/ecqms/Measure/DischargedonAntithromboticTherapyQICore4",
+    "period": Object {
+      "end": "2022-03-31T11:00:00+00:00",
+      "start": "2022-01-01T09:00:00+00:00",
+    },
+    "resourceType": "MeasureReport",
+    "status": "complete",
+    "subject": Object {
+      "reference": "Patient/numer-EXM104",
+    },
+    "type": "individual",
+  },
+  "populationData": null,
+}
+`;
+
+exports[`measureReportHelpers summarizeMeasureReport should summarize measure report 1`] = `
+Object {
+  "patientCount": 4,
+  "resources": Object {
+    "Condition": Object {
+      "count": 1,
+      "error": 0,
+      "information": 0,
+      "warning": 0,
+    },
+    "Encounter": Object {
+      "count": 4,
+      "error": 4,
+      "information": 0,
+      "warning": 8,
+    },
+    "MedicationRequest": Object {
+      "count": 1,
+      "error": 2,
+      "information": 0,
+      "warning": 1,
+    },
+    "OperationOutcome": Object {
+      "count": 4,
+      "error": 0,
+      "information": 10,
+      "warning": 0,
+    },
+  },
+}
+`;
+
+exports[`measureReportHelpers summarizeMeasureReport should summarize measure report with individual level data 1`] = `
+Object {
+  "patientCount": 1,
+  "resources": Object {
+    "Condition": Object {
+      "count": 1,
+      "error": 0,
+      "information": 0,
+      "warning": 0,
+    },
+    "Encounter": Object {
+      "count": 1,
+      "error": 1,
+      "information": 0,
+      "warning": 2,
+    },
+    "MedicationRequest": Object {
+      "count": 1,
+      "error": 2,
+      "information": 0,
+      "warning": 1,
+    },
+    "OperationOutcome": Object {
+      "count": 1,
+      "error": 0,
+      "information": 2,
+      "warning": 0,
+    },
+  },
+}
+`;

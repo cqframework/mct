@@ -4,11 +4,13 @@ import { summarizeMeasureReport } from 'utils/measureReportHelpers';
 import { Typography, Grid, Stack, Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { getFacility, getMeasure, getOrganization } from 'store/reducers/selector';
 import SeverityIcon from './SeverityIcon';
-import { baseUrl } from 'config';
+import { baseUrl, cqfServerUrl } from 'config';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 export default function AlertDialog({ isVisible, setVisibility, setStatusMessage }) {
+  const [loading, setLoading] = React.useState(false);
   const { measureReport } = useSelector((state) => state.data);
   const facility = useSelector((state) => getFacility(state));
-  const measure = useSelector((state) => getMeasure(state));
   const organization = useSelector((state) => getOrganization(state));
   const summaryStats = summarizeMeasureReport(measureReport);
 
@@ -20,17 +22,27 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
   };
 
   const handleSubmit = async () => {
-    //TODO Re-enable when implementation complete on backend.
-    // await fetch(`${baseUrl}/mct/$submit?organization=${organization?.id}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     receivingSystemUrl: 'http://localhost:8080/fhir',
-    //     gatherResult: measureReport
-    //   })
-    // });
+    setLoading(true);
+    await fetch(`${baseUrl}/mct/$submit?organization=${organization?.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        resourceType: 'Parameters',
+        parameter: [
+          {
+            name: 'receivingSystemUrl',
+            valueString: `${cqfServerUrl}/fhir`
+          },
+          {
+            name: 'gatherResult',
+            resource: measureReport
+          }
+        ]
+      })
+    });
+    setLoading(false);
     handleClose({ isSubmit: true });
   };
 
@@ -71,8 +83,19 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button
+            sx={{
+              '&:hover': {
+                border: '1px solid #0462BC'
+              }
+            }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <LoadingButton sx={{ border: 'none' }} loading={loading} onClick={handleSubmit} variant="outlined">
+            Submit
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </div>

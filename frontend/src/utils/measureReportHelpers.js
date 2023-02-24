@@ -119,8 +119,24 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
   return individualLevelData;
 };
 
-const populationGather = (measureReportGroup) => {
-  const population = {};
+const populationGather = (measureReport) => {
+  const population = {
+    gender: {
+      M: 0,
+      F: 0,
+      U: 0
+    }
+  };
+
+  // Parse for gender
+  measureReport?.contained?.forEach((data) => {
+    const code = data.code.coding.find((i) => i.code);
+    if (population.gender[code?.code] !== undefined) {
+      population.gender[code?.code] = data.valueInteger;
+    }
+  });
+
+  const measureReportGroup = measureReport?.group?.[0] || measureReport; // Also used by parseStratifier which has a different structure
 
   measureReportGroup?.population?.forEach((data) => {
     const key = data.code.coding?.[0]?.code;
@@ -133,6 +149,10 @@ const populationGather = (measureReportGroup) => {
       description: data.extension?.[0]?.valueString
     };
   });
+  const remainingPopulationGender = population.gender['M'] + population.gender['F'] - population['initial-population']?.count;
+  if (Math.sqrt(remainingPopulationGender) > 0) {
+    population.gender['U'] = remainingPopulationGender;
+  }
 
   return population;
 };
