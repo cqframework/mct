@@ -106,7 +106,7 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://cqf-ruler:8080/fhir"
+          "address": "http://localhost:8080/fhir"
         }],
         "identifier": [{
           "use": "usual",
