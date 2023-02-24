@@ -99,6 +99,12 @@ define InpatientEncounterDischargeCodes:
 define MedicationRequestStatusCodes:
     { 'active', 'completed' }
 
+define ComfortMeasureCodes:
+    Tuple {
+        system: 'http://snomed.info/sct',
+        codes: { '133918004', '182964004', '385736008', '385763009' }
+    }
+
 define RaceCategoryCodes:
     {
         Tuple { raceCategoryCode: '1002-5', raceCategoryDisplay: 'American Indian or Alaska Native' },
@@ -141,19 +147,20 @@ define function GetRandomDateInPeriod(startDate DateTime, endDate DateTime):
         hour from startDate, minute from startDate, second from startDate, millisecond from startDate, EvaluationTimezone
     )
 
-define function BuildRandomTestCase(TestCaseId String, PatientReference String, IsMale Boolean, HasInpatientEncounterWithDischarge Boolean, HasStroke Boolean, HasAntithromboticMedReq Boolean, AntithromboticMedReqNotPerformed Boolean):
+define function BuildRandomTestCase(TestCaseId String, count Integer, PatientReference String, IsMale Boolean, HasInpatientEncounterWithDischarge Boolean, HasStroke Boolean, HasAntithromboticMedReq Boolean, AntithromboticMedReqNotPerformed Boolean):
     TestCaseId ID
         let PatientFirstName: if IsMale then RandomMaleFirstName else RandomFemaleFirstName,
             PatientLastName: RandomLastName,
             PatientGender: if IsMale then 'male' else 'female',
             PatientBirthDate: Date(RandomNumberInRange(1950, 2000), RandomMonth, RandomDay),
-            AdultPatient: BuildPatient(TestCaseId, PatientFirstName, PatientLastName, PatientGender, PatientBirthDate),
+            AdultPatient: BuildPatient(TestCaseId, PatientFirstName, PatientLastName, PatientGender, PatientBirthDate, Addresses[count]),
             ConditionReference: 'Condition/' + TestCaseId,
+            EncounterReference: 'Encounter/' + TestCaseId,
             IschemicStrokeCodeSets: { ICD10IschemicStrokeCodes, SnomedIschemicStrokeCodes },
             RandomIschemicCodeSet: IschemicStrokeCodeSets[RandomNumberInRange(0, 1)],
             IschemicCodeSystem: RandomIschemicCodeSet.system,
             IschemicCodeCode: RandomIschemicCodeSet.codes[RandomNumberInRange(0, Length(RandomIschemicCodeSet.codes) - 1)],
-            IschemicCondition: BuildCondition(TestCaseId, IschemicCodeSystem, IschemicCodeCode, PatientReference),
+            IschemicCondition: BuildCondition(TestCaseId, IschemicCodeSystem, IschemicCodeCode, PatientReference, EncounterReference),
             RandomInpatientEncounterCode: InpatientEncounterCodes[RandomNumberInRange(0, 1)],
             EncounterPeriodEnd: GetRandomDateTimeDuringMeasurementPeriod,
             EncounterPeriodStart: EncounterPeriodEnd - ToQuantity(ToString(RandomNumberInRange(0, 120)) + ' days'),
@@ -167,7 +174,7 @@ define function BuildRandomTestCase(TestCaseId String, PatientReference String, 
             AntithromboticMedReqDoNotPerform: if AntithromboticMedReqNotPerformed then true else false,
             AntithromboticMedReqReasonSystem: if AntithromboticMedReqNotPerformed then MedicationRequestReasonCodes.system else null,
             AntithromboticMedReqReasonCode: if AntithromboticMedReqNotPerformed then MedicationRequestReasonCodes.codes[RandomNumberInRange(0, 12)] else null,
-            AntithromboticMedReq: BuildMedicationRequest(TestCaseId, AntithromboticMedReqStatus, 'order', true, false, AntithromboticMedReqDoNotPerform, AntithromboticMedReqMedicationConcept, PatientReference, AntithromboticMedReqAuthoredOn, null, AntithromboticMedReqReasonSystem, AntithromboticMedReqReasonCode)
+            AntithromboticMedReq: BuildMedicationRequest(TestCaseId, AntithromboticMedReqStatus, 'order', true, false, AntithromboticMedReqDoNotPerform, AntithromboticMedReqMedicationConcept, PatientReference, EncounterReference, AntithromboticMedReqAuthoredOn, null, AntithromboticMedReqReasonSystem, AntithromboticMedReqReasonCode)
             return
                 Tuple {
                     ThePatient: AdultPatient,
@@ -181,7 +188,7 @@ define BuildIneligibleTestCases:
         let TestCaseId: 'ineligible-' + ToString(C),
             PatientReference: 'Patient/' + TestCaseId,
             IsMale: C <= (Last(OtherPopulationsCount) / 2),
-            Result: BuildRandomTestCase(TestCaseId, PatientReference, IsMale, false, false, false, false)
+            Result: BuildRandomTestCase(TestCaseId, C, PatientReference, IsMale, false, false, false, false)
             return { Result.ThePatient }
 
 define BuildInInitialPopulationTestCases:
@@ -189,7 +196,7 @@ define BuildInInitialPopulationTestCases:
         let TestCaseId: 'in-initial-population-' + ToString(C),
             PatientReference: 'Patient/' + TestCaseId,
             IsMale: C <= (Last(OtherPopulationsCount) / 2),
-            Result: BuildRandomTestCase(TestCaseId, PatientReference, IsMale, false, true, false, false)
+            Result: BuildRandomTestCase(TestCaseId, C, PatientReference, IsMale, false, true, false, false)
             return { Result.ThePatient } union { Result.TheCondition } union { Result.TheEncounter }
 
 define BuildInNumeratorTestCases:
@@ -197,7 +204,7 @@ define BuildInNumeratorTestCases:
         let TestCaseId: 'in-numerator-' + ToString(C),
             PatientReference: 'Patient/' + TestCaseId,
             IsMale: C <= (Last(InNumeratorCount) / 2),
-            Result: BuildRandomTestCase(TestCaseId, PatientReference, IsMale, false, true, true, false)
+            Result: BuildRandomTestCase(TestCaseId, C, PatientReference, IsMale, false, true, true, false)
             return { Result.ThePatient } union { Result.TheCondition } union { Result.TheEncounter } union { Result.TheMedicationRequest }
 
 define BuildDenominatorExclusionsTestCases:
@@ -205,7 +212,7 @@ define BuildDenominatorExclusionsTestCases:
         let TestCaseId: 'denominator-exclusion-' + ToString(C),
             PatientReference: 'Patient/' + TestCaseId,
             IsMale: C <= (Last(OtherPopulationsCount) / 2),
-            Result: BuildRandomTestCase(TestCaseId, PatientReference, IsMale, true, true, true, false)
+            Result: BuildRandomTestCase(TestCaseId, C, PatientReference, IsMale, true, true, true, false)
             return { Result.ThePatient } union { Result.TheCondition } union { Result.TheEncounter } union { Result.TheMedicationRequest }
 
 define BuildDenominatorExceptionsTestCases:
@@ -213,7 +220,7 @@ define BuildDenominatorExceptionsTestCases:
         let TestCaseId: 'denominator-exception-' + ToString(C),
             PatientReference: 'Patient/' + TestCaseId,
             IsMale: C <= (Last(OtherPopulationsCount) / 2),
-            Result: BuildRandomTestCase(TestCaseId, PatientReference, IsMale, false, true, true, true)
+            Result: BuildRandomTestCase(TestCaseId, C, PatientReference, IsMale, false, true, true, true)
             return { Result.ThePatient } union { Result.TheCondition } union { Result.TheEncounter } union { Result.TheMedicationRequest }
 
 define BuildTestCases:
@@ -315,7 +322,7 @@ define function BuildPatientRaceAndEthnicityExtensions(raceTuple Tuple{raceCateg
         }
     }
 
-define function BuildPatient(id String, firstName String, lastName String, gender String, birthDate Date):
+define function BuildPatient(id String, firstName String, lastName String, gender String, birthDate Date, address List<String>):
     FHIR.Patient {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient'),
@@ -335,20 +342,49 @@ define function BuildPatient(id String, firstName String, lastName String, gende
                 }
             }
         },
+        telecom: List<FHIR.ContactPoint> {
+            FHIR.ContactPoint {
+                system: FHIR.ContactPointSystem { value: 'email' },
+                value: FHIR.string { value: firstName + '.' + lastName + '@gmail.com' },
+                use: FHIR.ContactPointUse { value: 'home' }
+            }
+        },
         gender: FHIR.AdministrativeGender { value: gender },
-        birthDate: FHIR.date { value: birthDate }
+        birthDate: FHIR.date { value: birthDate },
+        deceased: FHIR.boolean { value: false },
+        address: List<FHIR.Address> {
+            FHIR.Address {
+                line: List<FHIR.string> {
+                    FHIR.string { value: address[0] }
+                },
+                city: FHIR.string { value: address[2] },
+                state: FHIR.string { value: address[3] },
+                postalCode: FHIR.string { value: address[1] },
+                period: FHIR.Period {
+                    start: FHIR.dateTime { value: start of MeasurementPeriod },
+                    end: FHIR.dateTime { value: end of MeasurementPeriod }
+                }
+            }
+        },
+        communication: List<FHIR.Patient.Communication> {
+            FHIR.Patient.Communication {
+                language: BuildCodeableConcept('urn:ietf:bcp:47', 'en-US')
+            }
+        }
     }
 
-define function BuildCondition(id String, codeSystem String, codeCode String, subject String):
+define function BuildCondition(id String, codeSystem String, codeCode String, subject String, encounterReference String):
     FHIR.Condition {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition'),
-        verificationStatus: BuildCodeableConcept('http://terminology.hl7.org/CodeSystem/condition-ver-status', 'confirmed') ,
+        clinicalStatus: BuildCodeableConcept('http://terminology.hl7.org/CodeSystem/condition-clinical', 'active'),
+        verificationStatus: BuildCodeableConcept('http://terminology.hl7.org/CodeSystem/condition-ver-status', 'confirmed'),
         category: List<FHIR.CodeableConcept> {
             BuildCodeableConcept('http://terminology.hl7.org/CodeSystem/condition-category', 'encounter-diagnosis')
         },
         code: BuildCodeableConcept(codeSystem, codeCode),
-        subject: FHIR.Reference { reference: FHIR.string { value: subject } }
+        subject: FHIR.Reference { reference: FHIR.string { value: subject } },
+        encounter: FHIR.Reference { reference: FHIR.string { value: encounterReference } }
     }
 
 define function BuildEncounter(id String, status String, type String, subject String, periodStart DateTime, periodEnd DateTime, condition String, dischargeSystem String, dischargeCode String):
@@ -375,17 +411,19 @@ define function BuildEncounter(id String, status String, type String, subject St
             else null
     }
 
-define function BuildServiceRequest(id String, status String, intent String, subject String, authoredOn DateTime):
+define function BuildServiceRequest(id String, status String, intent String, subject String, authoredOn DateTime, codeSystem String, codeCode String, encounterReference String):
     FHIR.ServiceRequest {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-servicerequest'),
         status: FHIR.ServiceRequestStatus { value: status },
         intent: FHIR.ServiceRequestIntent { value: intent },
+        code: BuildCodeableConcept(codeSystem, codeCode),
         subject: FHIR.Reference { reference: FHIR.string { value: subject } },
+        encounter: FHIR.Reference { reference: FHIR.string { value: encounterReference } },
         authoredOn: FHIR.dateTime { value: authoredOn }
     }
 
-define function BuildProcedure(id String, recorded DateTime, status String, codeSystem String, codeCode String, subject String, performed Choice<DateTime, Interval<DateTime>>):
+define function BuildProcedure(id String, recorded DateTime, status String, codeSystem String, codeCode String, subject String, encounterReference String, performed Choice<DateTime, Interval<DateTime>>):
     FHIR.Procedure {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-procedure'),
@@ -395,12 +433,13 @@ define function BuildProcedure(id String, recorded DateTime, status String, code
         status: FHIR.ProcedureStatus { value: status },
         code: BuildCodeableConcept(codeSystem, codeCode),
         subject: FHIR.Reference { reference: FHIR.string { value: subject } },
+        encounter: FHIR.Reference { reference: FHIR.string { value: encounterReference } },
         performed:
             if performed is DateTime then FHIR.dateTime { value: performed }
             else FHIR.Period { start: FHIR.dateTime { value: start of performed }, end: FHIR.dateTime { value: end of performed } }
     }
 
-define function BuildMedicationRequest(id String, status String, intent String, isCommunity Boolean, isDischarge Boolean, doNotPerform Boolean, medication Choice<String, FHIR.CodeableConcept>, subject String, authoredOn DateTime, requester String, reasonCodeSystem String, reasonCodeCode String):
+define function BuildMedicationRequest(id String, status String, intent String, isCommunity Boolean, isDischarge Boolean, doNotPerform Boolean, medication Choice<String, FHIR.CodeableConcept>, subject String, encounterReference String, authoredOn DateTime, requester String, reasonCodeSystem String, reasonCodeCode String):
     FHIR.MedicationRequest {
         id: FHIR.id { value: id },
         meta: BuildMeta('http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest'),
@@ -413,10 +452,215 @@ define function BuildMedicationRequest(id String, status String, intent String, 
         doNotPerform: FHIR.boolean { value: doNotPerform },
         medication: if medication is String then FHIR.Reference { reference: FHIR.string { value: medication } } else medication,
         subject: FHIR.Reference { reference: FHIR.string { value: subject } },
+        encounter: FHIR.Reference { reference: FHIR.string { value: encounterReference } },
         authoredOn: FHIR.dateTime { value: authoredOn },
         requester:
             if requester is not null then FHIR.Reference { reference: FHIR.string { value: requester } } else null,
         reasonCode: if reasonCodeSystem is not null and reasonCodeCode is not null
             then List<FHIR.CodeableConcept> { BuildCodeableConcept(reasonCodeSystem, reasonCodeCode) }
             else null
+    }
+
+define Addresses:
+    {
+        { '10 Ninth Ramp', '77490', 'Glenarden', 'ID' },
+        { '406 Silent Field Knoll', '19889', 'Brush Creek', 'MO' },
+        { '982 Lagoon Gardens', '81128', 'Craigmont', 'MO' },
+        { '728 Gentle Zephyr Landing', '46677', 'German', 'AK' },
+        { '604 Middle Road', '56975', 'Niles village', 'TX' },
+        { '513 S Oak', '65758', 'Central Islip', 'AL' },
+        { '687 Iron Pony', '94664', 'Lawai', 'RI' },
+        { '443 Fort Cove', '92886', 'Ogdensburg borough', 'WV' },
+        { 'P.O. Box 69252', '42156', 'Darby ship', 'CT' },
+        { '910 Thunder Oak Woods', '46682', 'Somerset', 'ND' },
+        { '922 Emerald Forest', '53564', 'Oak Point', 'AZ' },
+        { '349 Heather Manor', '41897', 'Portage village', 'IN' },
+        { '309 Honey Lane', '68080', 'Westview', 'NY' },
+        { '919 Rocky Vista', '94487', 'Sibley village', 'MN' },
+        { '962 Quiet Cider Way', '40043', 'Ladera Heights', 'FL' },
+        { '802 Treasure Drive', '08692', 'Mount Sinai', 'MA' },
+        { '749 Rustic Treasure Underpass', '38716', 'Piney', 'AZ' },
+        { '222 Rocky Port', '19570', 'Deerwood', 'OH' },
+        { '727 Thunder Lake', '85271', 'Etna Green', 'VT' },
+        { 'P.O. Box 96929', '26154', 'Mount Erie village', 'AR' },
+        { 'P.O. Box 93558', '32655', 'McMullen', 'NC' },
+        { '600 Cotton Fork', '86805', 'Roslyn', 'LA' },
+        { 'P.O. Box 17703', '63506', 'Gentry village', 'WA' },
+        { '54 Wishing Loaf', '44970', 'Cassville', 'DE' },
+        { '972 Light Crossing', '88490', 'Westside', 'CO' },
+        { '454 Club Viaduct', '08725', 'Lime Ridge village', 'CA' },
+        { 'P.O. Box 71295', '27929', 'Cavour', 'AK' },
+        { '88 Cinder Robin', '11508', 'Halls', 'SD' },
+        { '470 Pine Path', '53055', 'Gardner village', 'RI' },
+        { '851 Misty Blossom Landing', '13158', 'Tremontvillage', 'AZ' },
+        { '354 Lake Fair', '38882', 'Lyford', 'CO' },
+        { 'P.O. Box 36822', '36319', 'Montezuma village', 'SD' },
+        { '620 Harvest Bear', '65730', 'Ackworth', 'WV' },
+        { '431 Iron Hill Arcade', '03858', 'Holden Beach', 'OR' },
+        { 'P.O. Box 34881', '28440', 'Oxoboxo River', 'MS' },
+        { '204 Seventh Turnpike', '63938', 'Lava Hot Springs', 'AK' },
+        { '296 Harvest Blossom Point', '73750', 'Cressona borough', 'OR' },
+        { 'P.O. Box 47729', '30588', 'Clarksville borough', 'CT' },
+        { '914 Cozy Camp Curve', '83363', 'Twain Harte', 'MA' },
+        { '171 Heather Branch Mount', '28077', 'Okemos', 'TN' },
+        { '599 Barn Valley', '03009', 'Muskegon Heights', 'IA' },
+        { '461 Grand Approach', '23736', 'Wilkinson Heights', 'FL' },
+        { '983 Goose Oval', '83996', 'Popponesset Island', 'IN' },
+        { '19 SW Brook', '08977', 'Huguley', 'MS' },
+        { 'P.O. Box 55789', '38127', 'Stockham village', 'SD' },
+        { '170 Branch Crest', '00145', 'Mercer borough', 'NM' },
+        { '312 Kennedy Bay', '50765', 'Heart Butte', 'OH' },
+        { '257 Heather Crossing', '46813', 'Aromas', 'MO' },
+        { '717 NE Walk', '17059', 'Williams', 'IA' },
+        { '922 Blue Meadow', '44976', 'Loyalton', 'OR' },
+        { '53 Pioneer Union', '13400', 'Wallace', 'WV' },
+        { 'P.O. Box 57612', '47325', 'Huachuca', 'IA' },
+        { '902 Cinder Bluff Glen', '60176', 'Zebulon', 'ME' },
+        { '662 Middle Light', '19082', 'Bluffdale', 'NM' },
+        { '886 Essex Landing', '04362', 'La Center', 'NC' },
+        { '141 NW Freeway', '10332', 'Bryn Mawr-Skyway', 'IN' },
+        { '728 Crystal Stream', '77410', 'Kaltag', 'WV' },
+        { '617 Emerald Lawn', '34426', 'Wolsey', 'WY' },
+        { '90 Quiet Spur', '39930', 'Aberdeen', 'MI' },
+        { '814 Burning Stream Road', '66695', 'Fall River', 'WA' },
+        { '199 Flat Knoll', '62160', 'Montreal', 'SC' },
+        { '619 Elm Row', '88875', 'Othello', 'WY' },
+        { 'P.O. Box 99303', '16478', 'Dalzell', 'VT' },
+        { '782 Golden Sixth', '34905', 'Naknek', 'OR' },
+        { '390 Panda Plaza', '52878', 'South Alamo', 'ME' },
+        { '578 Cliff Dam', '05993', 'New Eucha', 'MT' },
+        { '559 Easy Berry', '61967', 'Maybee village', 'NM' },
+        { '483 Cozy Gardens', '28783', 'Rico', 'WY' },
+        { '878 Noble Road', '88716', 'East Canton village', 'WA' },
+        { 'P.O. Box 25512', '29384', 'North', 'MN' },
+        { 'P.O. Box 96634', '09707', 'Hallam borough', 'TN' },
+        { '170 Flat Bank', '70371', 'Mascot', 'NE' },
+        { '400 Quaking Bluff', '95244', 'Bowdle', 'NJ' },
+        { '504 Cozy Pond', '13446', 'Lake Isabella', 'AR' },
+        { '44 Rocky Fillmore', '47121', 'Tornado', 'AR' },
+        { 'P.O. Box 61088', '78671', 'Berea', 'OR' },
+        { '295 Thunder Prairie', '31340', 'West Springfield', 'CT' },
+        { '391 Rocky Goose Estate', '45762', 'Wynnewood', 'NM' },
+        { '297 Jagged River Drive', '53279', 'Tajique', 'MS' },
+        { '547 SW Ramp', '13003', 'Lake Waccamaw', 'WY' },
+        { '549 Rustic Fort', '66814', 'Theodosia village', 'KY' },
+        { 'P.O. Box 30055', '88191', 'Bon Air', 'UT' },
+        { '526 Flat Cove', '52144', 'Bushnell', 'OK' },
+        { '12 SE Pioneer', '22788', 'Seldovia Village', 'IL' },
+        { '708 Mall Gardens', '11859', 'Centralborough', 'UT' },
+        { '933 Quaking Cider', '94533', 'Oak Creek', 'MT' },
+        { '156 Bluff Swale', '11707', 'Roy village', 'IN' },
+        { '852 Cotton Estate', '53661', 'North Bethesda', 'TN' },
+        { 'P.O. Box 47134', '95345', 'Zuni Pueblo', 'NY' },
+        { '72 Quaking Cider', '54957', 'Mount Jackson', 'AZ' },
+        { '46 Middle Skyway', '19408', 'Watterson Park', 'NC' },
+        { '280 Fallen Fork', '41151', 'Mexia', 'ME' },
+        { '75 Honey Pathway', '60072', 'Richwood village', 'WY' },
+        { '404 Silver Landing', '10009', 'Flomaton', 'AL' },
+        { '148 Club Hollow', '60791', 'Sunbury', 'MA' },
+        { '731 Round Prairie', '67636', 'Gu-Win', 'MN' },
+        { '398 Umber Log Bayoo', '83844', 'Victor', 'NJ' },
+        { '791 Panda Falls', '92151', 'Cayuga', 'CA' },
+        { '704 Jagged Beacon Bridge', '96647', 'New Buffalo', 'LA' },
+        { '835 Island Overpass', '47947', 'Silsbee', 'VA' },
+        { '81 Cedar Key', '34985', 'Dillsboro', 'ND' },
+        { 'P.O. Box 61407', '37225', 'Maple Plain', 'AL' },
+        { '38 Shady Bank', '46682', 'Towanda borough', 'OH' },
+        { 'P.O. Box 15520', '00032', 'Fort Hunt', 'SD' },
+        { '263 Misty Mountain', '52806', 'Ferron', 'MN' },
+        { '448 Round Seventh Pass', '13284', 'New Rome village', 'PA' },
+        { 'P.O. Box 50027', '75567', 'Eleanor', 'NE' },
+        { '781 Blue Union', '96705', 'Spreckels', 'ID' },
+        { 'P.O. Box 82415', '41579', 'Seaside', 'CA' },
+        { '741 NW Station', '63100', 'Rothsay', 'WY' },
+        { '78 Misty Fawn', '36961', 'Rocklake', 'KY' },
+        { 'P.O. Box 76320', '43234', 'Cross Roads', 'OR' },
+        { '942 Foggy Ninth', '99679', 'Cleora', 'NM' },
+        { '289 Berry Row', '55729', 'Landover Hills', 'VA' },
+        { '570 N Rest Plaza', '99001', 'Walnut Hill village', 'OR' },
+        { '628 Cozy Creek', '68272', 'Lincoln Beach', 'KS' },
+        { 'P.O. Box 59513', '88024', 'Fall Branch', 'MA' },
+        { 'P.O. Box 14529', '87075', 'Orange Cove', 'UT' },
+        { '334 Lock Track', '71610', 'McCune', 'NY' },
+        { '831 Stony Point', '06774', 'Mansfield Center', 'ND' },
+        { '966 Crystal Cove', '61205', 'Spotswood borough', 'CO' },
+        { '938 Wishing Shore', '23458', 'Simsbury Center', 'SC' },
+        { '373 Rise Crest', '03348', 'Brush Creek', 'SC' },
+        { 'P.O. Box 88541', '22144', 'Menominee', 'OH' },
+        { '961 Shady First', '71812', 'Kiryas Joel village', 'TN' },
+        { 'P.O. Box 20276', '90636', 'Sodus village', 'NH' },
+        { '89 Goose Passage', '18701', 'Detroit Beach', 'OK' },
+        { 'P.O. Box 79973', '18960', 'Bloomsbury borough', 'AK' },
+        { '744 Shady Butterfly', '24136', 'Retreat', 'VA' },
+        { '716 Island Corner', '03290', 'Ansonville', 'MO' },
+        { 'P.O. Box 41502', '82065', 'Iola village', 'MS' },
+        { '806 Rustic Branch Bridge', '41431', 'Skokie village', 'ND' },
+        { 'P.O. Box 27363', '37242', 'Dover', 'NE' },
+        { '742 Elm Corner', '59636', 'Pahokee', 'WV' },
+        { '923 Merry Fawn', '42404', 'Country Club', 'AL' },
+        { '802 Fourth Hollow', '29438', 'TN Ridge', 'CA' },
+        { '671 Tawny Oak Divide', '99036', 'Pewaukee village', 'PA' },
+        { '790 Richmond Street', '55316', 'Northwest Harwinton', 'MS' },
+        { '912 Silver Fillmore Curve', '02220', 'Oak Lawn village', 'WY' },
+        { 'P.O. Box 86939', '06022', 'Ackworth', 'VT' },
+        { '361 Apple Terrace', '08761', 'Homeland', 'ND' },
+        { '469 Heather Spur Estate', '64767', 'Fisk', 'ND' },
+        { '52 Rapid Edge', '37165', 'Miller village', 'FL' },
+        { '404 Crescent Track', '83282', 'Platinum', 'ID' },
+        { '620 Ninth Bayoo', '68504', 'Flora', 'MN' },
+        { '796 Grand Panda Lawn', '34379', 'Greenhorn', 'VA' },
+        { '264 Colonial Summit', '99959', 'Bluefield', 'TN' },
+        { '539 Sunny Lock Meadow', '13191', 'Kilbourne village', 'NC' },
+        { '87 Eighth Crossroad', '15278', 'Kechi', 'NE' },
+        { '772 Wishing Squaw Dam', '68506', 'Guion', 'WI' },
+        { '587 Cedar Highway', '47470', 'Merrill village', 'UT' },
+        { '895 Bright Zephyr Swale', '00601', 'Chilchinbito', 'MI' },
+        { '729 Little Court', '78523', 'Depew village', 'MT' },
+        { '353 Fallen Bluff', '91404', 'Tonkawa', 'WV' },
+        { 'P.O. Box 84279', '30823', 'McClusky', 'AZ' },
+        { '350 Island Quay', '02701', 'Sandusky', 'CT' },
+        { '88 Tawny Bear', '57972', 'Blooming Grove', 'AK' },
+        { 'P.O. Box 82675', '00467', 'Almena village', 'AL' },
+        { '728 SW Radial', '66807', 'Grandview Plaza', 'TN' },
+        { '930 Cinder Oak Pike', '46375', 'North Yelm', 'HI' },
+        { '124 Indian Ledge', '29511', 'Hidalgo', 'NH' },
+        { '118 Colonial Run', '13642', 'Exline', 'NY' },
+        { '71 Park Arcade', '47100', 'Elaine', 'NM' },
+        { '810 Indian Spur Isle', '00216', 'Moscow borough', 'CT' },
+        { '100 Noble Pine', '79561', 'Orleans', 'NY' },
+        { '901 Tawny Overpass', '63155', 'Terre Hill borough', 'LA' },
+        { '824 Quaking Trail', '79102', 'Miles', 'PA' },
+        { '950 Leaf Gardens', '69435', 'Nehalem', 'RI' },
+        { '743 Silent Grove Parade', '17511', 'Crosslake', 'NC' },
+        { '110 Hidden Manor', '26643', 'Seth Ward', 'NM' },
+        { '900 E Boulevard', '15432', 'McNab', 'NM' },
+        { '690 Dewy Apple Road', '42493', 'Shipshewana', 'MD' },
+        { 'P.O. Box 23589', '58979', 'Bentonvillage', 'SC' },
+        { '616 Circle Ramp', '72835', 'Collinston village', 'SC' },
+        { '416 Old Expressway', '61209', 'Blythe', 'GA' },
+        { '474 Rocky Well', '69976', 'Arcade', 'LA' },
+        { '397 Gate Knoll', '86700', 'Stover', 'PA' },
+        { 'P.O. Box 85743', '94972', 'West Ocean', 'IL' },
+        { 'P.O. Box 73534', '67250', 'East Aurora village', 'KY' },
+        { '197 Noble Way', '64428', 'Twin Lakes', 'OK' },
+        { '981 View Driveway', '56509', 'Satsop', 'NJ' },
+        { '794 Tawny Log', '42050', 'Absecon', 'SD' },
+        { '964 Red Quay', '59199', 'Webster village', 'NE' },
+        { 'P.O. Box 32097', '10316', 'Cheboygan', 'ME' },
+        { '444 Silver Beacon', '57229', 'Millington village', 'MD' },
+        { '71 Sleepy Fillmore Road', '90588', 'Edcouch', 'DE' },
+        { '368 High Spur', '60856', 'Martinton village', 'CO' },
+        { '623 SE Ranch', '26055', 'Butler', 'OH' },
+        { '528 Cedar Kennedy', '80550', 'Dundee village', 'NC' },
+        { 'P.O. Box 39961', '87617', 'Kerman', 'ME' },
+        { '565 Blossom Path', '38132', 'Seldovia Village', 'WV' },
+        { '234 Wishing Wall Row', '03420', 'Security-Widefield', 'WI' },
+        { '654 Stony Fort', '77573', 'Ephrata', 'WI' },
+        { '101 High Place', '72056', 'Wardner', 'LA' },
+        { '849 SE Motorway', '96123', 'Bally borough', 'SD' },
+        { 'P.O. Box 81810', '83871', 'Ames village', 'NM' },
+        { 'P.O. Box 83963', '44660', 'Ambler borough', 'LA' },
+        { '50 Little Quail Plain', '07681', 'Chupadero', 'ID' },
+        { 'P.O. Box 41085', '89926', 'Weedpatch', 'NC' },
+        { '598 Golden Woods', '75126', 'Arcadia village', 'OR' }
     }
