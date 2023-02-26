@@ -9,16 +9,14 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
   const { individualLevelData, measureReport } = processedMeasureReport;
   const description = extractDescription(measureReport);
   const [targetedPatient, setTargetedPatient] = useState(individualLevelData?.[0]);
-
   const handlePatientChange = (patientId) => {
-    setTargetedPatient(individualLevelData.find((i, index) => i?.patient?.id === patientId || index === patientId)); //TODO: We should not use index but data is not available
+    setTargetedPatient(individualLevelData.find((i, index) => i?.patient?.id === patientId));
   };
-
   const patientNameIdArr = individualLevelData.map((i, index) => {
     const given = i?.patient?.name?.[0]?.given?.[0] || 'Unknown';
     const family = i?.patient?.name?.[0]?.family || 'Unknown';
     return {
-      id: i?.patient?.id || index, //TODO: We should not use index but data is not available
+      id: i?.patient?.id,
       name: given + ' ' + family
     };
   });
@@ -40,7 +38,7 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
       )}
       <Grid item xs={10}>
         <Stack spacing={2}>
-          <PatientInfoCard patient={targetedPatient?.patient} />
+          <PatientInfoCard patient={targetedPatient?.patient} groups={targetedPatient?.groups} ethnicity={targetedPatient?.ethnicity} />
           <ValidationDataTable resources={targetedPatient?.resources} />
         </Stack>
       </Grid>

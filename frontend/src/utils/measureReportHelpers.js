@@ -95,8 +95,10 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
   const individualLevelData = {
     name,
     patient: null,
+    ethnicity: [],
     resources: [],
-    measureReport: null
+    measureReport: null,
+    groups: []
   };
   // we will add this at the end
   let operationOutcome = null;
@@ -116,15 +118,27 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
   individualLevelData.resources = individualLevelData.resources.sort((a, b) => b?.contained?.length || 0 - a?.contained?.length || 0);
   if (operationOutcome) individualLevelData.resources.push(operationOutcome);
 
+  // Gather patient ethnicity
+  individualLevelData.patient?.extension?.forEach((extension) => {
+    individualLevelData.ethnicity.push(extension.extension?.find((i) => i.url === 'ombCategory')?.valueCoding?.display);
+  });
+
+  // Calculate groups patient are part of
+  individualLevelData.measureReport?.group?.[0]?.population.forEach((groupData) => {
+    if (groupData.count > 0) {
+      individualLevelData.groups.push(groupData?.code?.coding?.[0]?.display);
+    }
+  });
   return individualLevelData;
 };
 
 const populationGather = (measureReport) => {
+  // TODO: Refactor this because in some instances measureScore and gender are not required for ui component
   const population = {
+    measureScore: 0,
     gender: {
       M: 0,
-      F: 0,
-      U: 0
+      F: 0
     }
   };
 

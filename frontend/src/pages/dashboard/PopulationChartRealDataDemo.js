@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 
 const PopulationChartRealDataDemo = ({ populationData }) => {
   const theme = useTheme();
-  const categories = Object.keys(populationData);
+  const categories = Object.keys(populationData).filter((i) => i !== 'gender' && i !== 'measureScore');
 
   const columnChartOptions = {
     chart: {
@@ -91,7 +91,7 @@ const PopulationChartRealDataDemo = ({ populationData }) => {
   const [series] = useState([
     {
       name: 'MR Data',
-      data: categories.map((i) => populationData[i].count)
+      data: categories.map((i) => populationData[i].count).filter((i) => i)
     }
   ]);
 

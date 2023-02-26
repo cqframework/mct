@@ -1,14 +1,16 @@
-import { Grid, Typography, Stack } from '@mui/material';
+import { Grid, Typography, Stack, Tooltip, IconButton } from '@mui/material';
 import { parseStratifier, populationGather } from 'utils/measureReportHelpers';
+import { TeamOutlined, InfoCircleOutlined } from '@ant-design/icons';
+
 import { useSelector } from 'react-redux';
 import { getMeasure } from 'store/reducers/selector';
 import PopulationStatistics from './PopulationStatistics';
 import PatientColumnChart from './PatientColumnChart';
 import MainCard from 'components/MainCard';
-
+import PopulationChartRealDataDemo from './PopulationChartRealDataDemo';
 const PopulationMeasureReport = ({ processedMeasureReport }) => {
   const measureResource = useSelector((state) => getMeasure(state));
-  const { measureReport } = processedMeasureReport;
+  const { measureReport, populationData } = processedMeasureReport;
   const population = populationGather(measureReport);
   return (
     <>
@@ -28,17 +30,32 @@ const PopulationMeasureReport = ({ processedMeasureReport }) => {
           </Grid>
         </Grid>
         <MainCard>
-          <Stack spacing={1.5}>
-            <Typography variant="h6" color="secondary">
-              {'Ethnicity and Race (CDC Value Set)'}
-            </Typography>
-          </Stack>
+          <Typography variant="h6" color="secondary">
+            {'Ethnicity and Race (CDC Value Set)'}
+          </Typography>
           <PatientColumnChart
-            // stratifier={stratifier['54133-4']}
             measureReport={measureReport}
             numeratorDescription={population['numerator'].description}
             denominatorDescription={population['denominator'].description}
           />
+        </MainCard>
+        <Grid item xs={4}>
+          <MainCard sx={{ minWidth: 400 }} contentSX={{ p: 2.25 }}>
+            <Stack spacing={0.5}>
+              <Typography variant="h6" color="textPrimary">
+                MeasureScore
+                <Tooltip title={'Score this group achieved'}>
+                  <IconButton>
+                    <InfoCircleOutlined />
+                  </IconButton>
+                </Tooltip>
+              </Typography>
+              <Typography variant="h5">{populationData.measureScore}</Typography>
+            </Stack>
+          </MainCard>
+        </Grid>
+        <MainCard>
+          <PopulationChartRealDataDemo populationData={populationData} />
         </MainCard>
       </Grid>
     </>

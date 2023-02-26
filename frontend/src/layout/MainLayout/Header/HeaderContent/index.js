@@ -27,7 +27,7 @@ const dateOptions = [
 ];
 
 const HeaderContent = () => {
-  const { date, facility, selectedPatients } = useSelector((state) => state.filter);
+  const { date, facility } = useSelector((state) => state.filter);
   const { facilities, patients } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
@@ -41,11 +41,7 @@ const HeaderContent = () => {
           minWidth: 200
         }}
       >
-        <PatientMultiSelect
-          patients={patients}
-          selectedPatients={selectedPatients}
-          handleChange={(value) => dispatch(inputSelection({ type: 'patient', value }))}
-        />
+        <PatientMultiSelect patients={patients} />
       </FormControl>
       <FormControl
         required

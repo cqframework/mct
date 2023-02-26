@@ -1,5 +1,18 @@
 import React from 'react';
-import { Typography, Card, Box, CardContent, List, ListItemIcon, ListItem, ListItemText, IconButton, Divider, Badge } from '@mui/material';
+import {
+  Typography,
+  Card,
+  Box,
+  Chip,
+  CardContent,
+  List,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Divider,
+  Badge
+} from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import { LeftOutlined, AuditOutlined } from '@ant-design/icons';
 import { styled } from '@mui/material/styles';
@@ -18,7 +31,7 @@ const ExpandMore = styled((props) => {
   })
 }));
 
-const PatientInfoCard = ({ patient }) => {
+const PatientInfoCard = ({ patient, groups, ethnicity }) => {
   const patientInfo = gatherPatientDisplayData(patient);
   const { name = 'Unknown', birthDate = 'Unknown', gender = 'Unknown', mrn = 'Unknown' } = patientInfo;
   const [expanded, setExpanded] = React.useState(false);
@@ -32,8 +45,13 @@ const PatientInfoCard = ({ patient }) => {
       <Typography variant={'h4'}>Patient Information</Typography>
       <Card sx={{ minWidth: 275, mt: 3 }}>
         <CardContent>
-          <Typography sx={{ fontSize: 20 }} color="primary.main" gutterBottom>
+          <Typography sx={{ fontSize: 20, display: 'flex', justifyContent: 'space-between' }} color="primary.main" gutterBottom>
             {name}
+            <Box sx={{ display: 'flex', gap: '10px' }}>
+              {groups.map((i) => (
+                <Chip sx={{ borderRadius: '30px' }} label={i} color="warning" />
+              ))}
+            </Box>
           </Typography>
           <Typography variant="h5" component="div">
             {birthDate}
@@ -42,7 +60,11 @@ const PatientInfoCard = ({ patient }) => {
             {gender}
           </Typography>
           <Typography variant="body2">MRN: {mrn}</Typography>
-
+          <Box sx={{ display: 'flex', gap: '10px' }}>
+            {ethnicity.map((i) => (
+              <Chip sx={{ borderRadius: '30px' }} label={i} color="primary" />
+            ))}
+          </Box>
           {patient?.contained?.[0]?.issue && (
             <Box sx={{ float: 'right', display: 'flex' }} onClick={handleExpandClick}>
               <Typography sx={{ mr: 1 }}> Issues</Typography>
