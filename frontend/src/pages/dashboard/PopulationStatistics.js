@@ -55,9 +55,6 @@ const PopulationStatistics = ({ color, population = {} }) => {
           <Grid item xs={12}>
             Female: {population.gender['F']}
           </Grid>
-          <Grid item xs={12}>
-            Unspecified: {population.gender['U']}
-          </Grid>
         </Grid>
       </Stack>
     </MainCard>

@@ -149,11 +149,6 @@ const populationGather = (measureReport) => {
       description: data.extension?.[0]?.valueString
     };
   });
-  const remainingPopulationGender = population.gender['M'] + population.gender['F'] - population['initial-population']?.count;
-  if (Math.sqrt(remainingPopulationGender) > 0) {
-    population.gender['U'] = remainingPopulationGender;
-  }
-
   return population;
 };
 
