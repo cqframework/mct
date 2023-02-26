@@ -45,9 +45,8 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
     setCurrentFilter(evt.target.value);
   };
 
-  const handleDelete = (evt) => {
-    debugger;
-    setCurrentFilter(currentFilter.filter((i) => i !== evt.target.innerText));
+  const handleDelete = (value) => (evt) => {
+    setCurrentFilter(currentFilter.filter((i) => i !== value));
   };
   return (
     <>
@@ -74,7 +73,16 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
             renderValue={(selected) => (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 {selected.map((value) => (
-                  <Chip sx={{ borderRadius: '30px', zIndex: 99999 }} onDelete={handleDelete} color="warning" key={value} label={value} />
+                  <Chip
+                    sx={{ borderRadius: '30px' }}
+                    onMouseDown={(event) => {
+                      event.stopPropagation();
+                    }}
+                    onDelete={handleDelete(value)}
+                    color="warning"
+                    key={value}
+                    label={value}
+                  />
                 ))}
               </Box>
             )}
