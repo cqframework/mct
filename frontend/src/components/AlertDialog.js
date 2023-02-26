@@ -106,7 +106,7 @@ const DisplayBox = ({ count, resourceType, sx, severityCountMap = null, bgColor,
   return (
     <Box sx={{ maxWidth: 250, minHeight: 100, padding: 1, mt: 2, backgroundColor: bgColor, ...sx }}>
       <Grid container>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Typography variant="h2" color={primaryColor}>
             {count}
           </Typography>

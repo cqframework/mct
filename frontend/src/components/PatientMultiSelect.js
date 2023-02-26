@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,23 +20,16 @@ const MenuProps = {
   }
 };
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight: personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium
-  };
-}
-
 const PatientMultiSelect = ({ patients }) => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { selectedPatients } = useSelector((state) => state.filter);
-
   const handleChange = (event) => {
-    const {
-      target: { value }
-    } = event;
-
-    dispatch(inputSelection({ type: 'selectedPatients', value }));
+    const { value } = event.target;
+    if (value.includes('select-all')) {
+      dispatch(inputSelection({ type: 'selectedPatients', value: patientIds }));
+    } else {
+      dispatch(inputSelection({ type: 'selectedPatients', value }));
+    }
   };
   const patientIds = patients?.member?.map(({ entity }) => entity.reference);
   return (
@@ -53,9 +44,13 @@ const PatientMultiSelect = ({ patients }) => {
           value={selectedPatients}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Patients" />}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => `${selected.length} patients selected`}
           MenuProps={MenuProps}
         >
+          <MenuItem value={'select-all'}>
+            <Checkbox checked={selectedPatients.length === patientIds.length} />
+            <ListItemText primary={'Select All'} />
+          </MenuItem>
           {patientIds?.map((patientId) => (
             <MenuItem key={patientId} value={patientId}>
               <Checkbox checked={selectedPatients.indexOf(patientId) > -1} />
