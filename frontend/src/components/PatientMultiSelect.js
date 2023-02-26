@@ -51,8 +51,8 @@ const PatientMultiSelect = ({ patients }) => {
             <Checkbox checked={selectedPatients.length === patientIds.length} />
             <ListItemText primary={'Select All'} />
           </MenuItem>
-          {patientIds?.map((patientId) => (
-            <MenuItem key={patientId} value={patientId}>
+          {patientIds?.map((patientId, index) => (
+            <MenuItem key={patientId + '_' + index} value={patientId}>
               <Checkbox checked={selectedPatients.indexOf(patientId) > -1} />
               <ListItemText primary={patientId} />
             </MenuItem>

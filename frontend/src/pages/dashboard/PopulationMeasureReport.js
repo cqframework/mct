@@ -12,6 +12,7 @@ const PopulationMeasureReport = ({ processedMeasureReport }) => {
   const measureResource = useSelector((state) => getMeasure(state));
   const { measureReport, populationData } = processedMeasureReport;
   const population = populationGather(measureReport);
+
   return (
     <>
       <Grid item xs={12} sx={{ mb: -2.25 }}>
@@ -43,7 +44,7 @@ const PopulationMeasureReport = ({ processedMeasureReport }) => {
           <MainCard sx={{ minWidth: 400 }} contentSX={{ p: 2.25 }}>
             <Stack spacing={0.5}>
               <Typography variant="h6" color="textPrimary">
-                MeasureScore
+                Measure Score
                 <Tooltip title={'Score this group achieved'}>
                   <IconButton>
                     <InfoCircleOutlined />

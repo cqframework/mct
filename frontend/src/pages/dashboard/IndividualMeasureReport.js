@@ -1,26 +1,54 @@
 import { useState } from 'react';
-import { Grid, Typography, Stack } from '@mui/material';
+import { Grid, Typography, Box, Chip, InputLabel, Stack, FormControl, OutlinedInput, Select, MenuItem } from '@mui/material';
 import PatientInfoCard from './PatientInfoCard';
 import ValidationDataTable from './ValidationDataTable';
 import { extractDescription } from 'utils/measureReportHelpers';
 import PatientsList from './PatientsList';
 
+const FILTER_OPTIONS = ['Initial Population', 'Denominator', 'Numerator', 'Denominator Exclusion', 'Denominator Exception'];
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
+    }
+  }
+};
+
 const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
   const { individualLevelData, measureReport } = processedMeasureReport;
   const description = extractDescription(measureReport);
+  const [currentFilter, setCurrentFilter] = useState([]);
   const [targetedPatient, setTargetedPatient] = useState(individualLevelData?.[0]);
   const handlePatientChange = (patientId) => {
     setTargetedPatient(individualLevelData.find((i, index) => i?.patient?.id === patientId));
   };
-  const patientNameIdArr = individualLevelData.map((i, index) => {
-    const given = i?.patient?.name?.[0]?.given?.[0] || 'Unknown';
-    const family = i?.patient?.name?.[0]?.family || 'Unknown';
-    return {
-      id: i?.patient?.id,
-      name: given + ' ' + family
-    };
-  });
 
+  const patientNameIdArr = individualLevelData
+    .map(({ patient, groups }) => {
+      const isIncludedWithFilter = groups.filter((i) => currentFilter.includes(i));
+      if (currentFilter.length === 0 || isIncludedWithFilter.length > 0) {
+        const given = patient?.name?.[0]?.given?.[0] || 'Unknown';
+        const family = patient?.name?.[0]?.family || 'Unknown';
+        return {
+          id: patient?.id,
+          name: given + ' ' + family
+        };
+      }
+    })
+    .filter((i) => i);
+
+  const handleFilterChange = (evt) => {
+    setCurrentFilter(evt.target.value);
+  };
+
+  const handleDelete = (evt) => {
+    debugger;
+    setCurrentFilter(currentFilter.filter((i) => i !== evt.target.innerText));
+  };
   return (
     <>
       <Grid item xs={12}>
@@ -30,6 +58,34 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
         <Typography variant="caption" color="textSecondary">
           {description}
         </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="group-filter-label">Filter By Group</InputLabel>
+          <Select
+            labelId="group-filter-label"
+            id="group-filter-label-name"
+            multiple
+            placeholder="Filter by Group"
+            value={currentFilter}
+            onChange={handleFilterChange}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+            renderValue={(selected) => (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip sx={{ borderRadius: '30px', zIndex: 99999 }} onDelete={handleDelete} color="warning" key={value} label={value} />
+                ))}
+              </Box>
+            )}
+          >
+            {FILTER_OPTIONS.map((name) => (
+              <MenuItem key={name} value={name}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Grid>
       {individualLevelData?.length > 1 && (
         <Grid item xs={2}>

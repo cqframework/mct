@@ -115,7 +115,7 @@ const DashboardDefault = () => {
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <>
         <Grid item xs={12} sx={{ mb: -2.25 }}>
-          <Tabs value={value} fixed onChange={(event, newValue) => setValue(newValue)}>
+          <Tabs value={value} fixed="true" onChange={(event, newValue) => setValue(newValue)}>
             {tabs}
           </Tabs>
         </Grid>

@@ -49,7 +49,7 @@ const PatientInfoCard = ({ patient, groups, ethnicity }) => {
             {name}
             <Box sx={{ display: 'flex', gap: '10px' }}>
               {groups.map((i) => (
-                <Chip sx={{ borderRadius: '30px' }} label={i} color="warning" />
+                <Chip key={i} sx={{ borderRadius: '30px' }} label={i} color="warning" />
               ))}
             </Box>
           </Typography>
@@ -62,7 +62,7 @@ const PatientInfoCard = ({ patient, groups, ethnicity }) => {
           <Typography variant="body2">MRN: {mrn}</Typography>
           <Box sx={{ display: 'flex', gap: '10px' }}>
             {ethnicity.map((i) => (
-              <Chip sx={{ borderRadius: '30px' }} label={i} color="primary" />
+              <Chip key={i} sx={{ borderRadius: '30px' }} label={i} color="primary" />
             ))}
           </Box>
           {patient?.contained?.[0]?.issue && (

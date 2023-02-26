@@ -37,7 +37,7 @@ Object {
           "reference": undefined,
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": undefined,
         "numerator": Object {
           "code": "numerator",
           "count": 0,
@@ -80,7 +80,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-age-group-stratum-code-p50y--p9999y-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.475,
         "numerator": Object {
           "code": "numerator",
           "count": 19,
@@ -131,7 +131,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-1002-5-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.16666666666666666,
         "numerator": Object {
           "code": "numerator",
           "count": 1,
@@ -174,7 +174,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2028-9-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.14285714285714285,
         "numerator": Object {
           "code": "numerator",
           "count": 1,
@@ -217,7 +217,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2054-5-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.3333333333333333,
         "numerator": Object {
           "code": "numerator",
           "count": 2,
@@ -260,7 +260,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2076-8-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.8,
         "numerator": Object {
           "code": "numerator",
           "count": 4,
@@ -303,7 +303,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-race-stratum-coding-2106-3-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.6875,
         "numerator": Object {
           "code": "numerator",
           "count": 11,
@@ -397,7 +397,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2135-2-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.42857142857142855,
         "numerator": Object {
           "code": "numerator",
           "count": 3,
@@ -440,7 +440,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-ethnicity-stratum-coding-2186-5-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.5,
         "numerator": Object {
           "code": "numerator",
           "count": 16,
@@ -491,7 +491,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-f-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.4,
         "numerator": Object {
           "code": "numerator",
           "count": 4,
@@ -534,7 +534,7 @@ Object {
           "reference": "#subject-list-group-1-stratifier-stratifier-sex-stratum-code-m-initial-population",
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": 0.5,
         "numerator": Object {
           "code": "numerator",
           "count": 15,
@@ -585,7 +585,7 @@ Object {
           "reference": undefined,
           "system": "http://terminology.hl7.org/CodeSystem/measure-population",
         },
-        "measureScore": 0,
+        "measureScore": undefined,
         "numerator": Object {
           "code": "numerator",
           "count": 0,
@@ -644,7 +644,7 @@ Object {
     "reference": "#subject-list-group-1-initial-population",
     "system": "http://terminology.hl7.org/CodeSystem/measure-population",
   },
-  "measureScore": 0,
+  "measureScore": 0.475,
   "numerator": Object {
     "code": "numerator",
     "count": 19,
@@ -1475,7 +1475,6 @@ Object {
       "ethnicity": Array [
         "White",
         "Not Hispanic or Latino",
-        undefined,
       ],
       "groups": Array [
         "Initial Population",
@@ -2274,7 +2273,7 @@ Object {
       "reference": undefined,
       "system": "http://terminology.hl7.org/CodeSystem/measure-population",
     },
-    "measureScore": 0,
+    "measureScore": 1,
     "numerator": Object {
       "code": "numerator",
       "count": 1,
@@ -2295,7 +2294,6 @@ Object {
       "ethnicity": Array [
         "White",
         "Not Hispanic or Latino",
-        undefined,
       ],
       "groups": Array [
         "Initial Population",

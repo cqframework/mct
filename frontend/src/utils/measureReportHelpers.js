@@ -120,7 +120,8 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
 
   // Gather patient ethnicity
   individualLevelData.patient?.extension?.forEach((extension) => {
-    individualLevelData.ethnicity.push(extension.extension?.find((i) => i.url === 'ombCategory')?.valueCoding?.display);
+    const ethnicity = extension.extension?.find((i) => i.url === 'ombCategory')?.valueCoding?.display;
+    if (ethnicity) individualLevelData.ethnicity.push(ethnicity);
   });
 
   // Calculate groups patient are part of
@@ -163,6 +164,8 @@ const populationGather = (measureReport) => {
       description: data.extension?.[0]?.valueString
     };
   });
+
+  population.measureScore = measureReport?.measureScore?.value;
   return population;
 };
 

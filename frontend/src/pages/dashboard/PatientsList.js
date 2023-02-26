@@ -24,6 +24,11 @@ const PatientsList = ({ patients, handlePatientChange }) => {
     setSelectedIndex(index);
   };
 
+  useEffect(() => {
+    setOriginalPatientsList(patients);
+    setFilteredPatientsList(patients);
+  }, [patients]);
+
   const textSearchPatientName = (event) => {
     setSearchPatient(event.target.value);
     const targetedPts = originalPatientsList.filter((patient) => {
@@ -35,7 +40,7 @@ const PatientsList = ({ patients, handlePatientChange }) => {
   return (
     <Box>
       <Typography variant={'h4'} sx={{ mb: 2 }}>
-        Patient List
+        Patient List ({filteredPatientsList.length})
       </Typography>
       <Card>
         <CardContent>
@@ -58,7 +63,7 @@ const PatientsList = ({ patients, handlePatientChange }) => {
               {filteredPatientsList.map((patient, index) => {
                 return (
                   <ListItemButton
-                    key={patient?.id + index}
+                    key={patient?.id + '_' + index}
                     sx={{
                       '&.Mui-selected': {
                         backgroundColor: 'primary.main',
