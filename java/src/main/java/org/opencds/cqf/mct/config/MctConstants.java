@@ -38,7 +38,8 @@ public class MctConstants {
    public static final String SUBMIT_GATHER_RESULT_PARAM = "gatherResult";
 
    // Patient Selector Constants
-   public static final String PATIENT_SELECTOR_OPERATION_NAME = "$list-patients";
+   public static final String PATIENT_SELECTOR_ORG_OPERATION_NAME = "$list-org-patients";
+   public static final String PATIENT_SELECTOR_FACILITY_OPERATION_NAME = "$list-facility-patients";
    public static final String PATIENT_SELECTOR_ORG_ID_PARAM = "organizationId";
    public static final String PATIENT_SELECTOR_FACILITY_IDS_PARAM = "facilityIds";
 

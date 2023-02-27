@@ -44,7 +44,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PatientData {
-   private Bundle patients;
    private Bundle patientDataBundle;
    private final FhirContext fhirContext;
    private final DataRequirementsProvider dataRequirementsProvider;
@@ -61,8 +60,7 @@ public class PatientData {
 
    public Bundle getPatientsFromFacility(String facilityUrl) {
       IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
-      patients = (Bundle) client.search().forResource(Patient.class).count(500).execute();
-      return patients;
+      return (Bundle) client.search().forResource(Patient.class).count(500).execute();
    }
 
    public Bundle getPatientDataBundle(String facilityUrl, String facility, String patientId) {

@@ -11,12 +11,12 @@ import java.util.List;
 
 public class PatientSelectorAPI {
 
-   @Operation(name = MctConstants.PATIENT_SELECTOR_OPERATION_NAME, idempotent = true)
+   @Operation(name = MctConstants.PATIENT_SELECTOR_ORG_OPERATION_NAME, idempotent = true)
    public Group listPatientsByOrganization(@OperationParam(name = MctConstants.PATIENT_SELECTOR_ORG_ID_PARAM) String organizationId) {
       return new PatientSelectorService().getPatientsForOrganization(organizationId);
    }
 
-   @Operation(name = MctConstants.PATIENT_SELECTOR_OPERATION_NAME, idempotent = true)
+   @Operation(name = MctConstants.PATIENT_SELECTOR_FACILITY_OPERATION_NAME, idempotent = true)
    public Group listPatientsByFacility(@OperationParam(name = MctConstants.PATIENT_SELECTOR_FACILITY_IDS_PARAM) List<String> facilityIds) {
       return new PatientSelectorService().getPatientsForFacilities(facilityIds);
    }
