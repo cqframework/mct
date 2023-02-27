@@ -10,8 +10,6 @@ public class MctConstants {
    public static final String GATHER_PARAM_FACILITIES = "facilities";
    public static final String GATHER_PARAM_MEASURE = "measure";
    public static final String GATHER_PARAM_PERIOD = "period";
-   public static final String GATHER_PARAM_NULL_PATIENTS = "Missing required Group FHIR resource \"patients\" parameter that identifies the patients for the $gather operation";
-   public static final String GATHER_PARAM_NULL_MEMBERS = "Group FHIR resource \"patients\" parameter has no members";
    public static final String GATHER_PARAM_NULL_FACILITIES = "Missing required List<String> \"facilities\" parameter that identifies the facilities for the $gather operation";
    public static final String GATHER_PARAM_NULL_MEASURE = "Missing required Measure FHIR resource identifier \"measure\" parameter that identifies the measure for the $gather operation";
    public static final String GATHER_PARAM_NULL_PERIOD = "Missing required Period FHIR data type \"period\" parameter that identifies the measurement period for the $gather operation";

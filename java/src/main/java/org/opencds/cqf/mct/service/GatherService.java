@@ -66,15 +66,19 @@ public class GatherService {
               terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
               fileFhirDalFactory, endpointConverter);
       Bundle populationData = new Bundle();
+      if (patients == null) {
+         patients = new PatientSelectorService().getPatientsForFacilities(facilities);
+      }
       List<String> patientIds = getPatientIds(patients);
       Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
       String measureUrl = getMeasureUrl(measureIdentifier);
       Map<String, Bundle> patientBundles = new HashMap<>();
       for (String facility: facilities) {
          String facilityUrl = getFacilityUrl(facility);
+         List<String> facilityPatientIds = getPatientIds(new PatientSelectorService().getPatientsForFacilities(Collections.singletonList(facility)));
          Bundle patientData;
          MeasureReport report;
-         for (String patientId : patientIds) {
+         for (String patientId : facilityPatientIds) {
             PatientData patientDataService = new PatientData();
             patientData = patientDataService.getPatientDataBundle(facilityUrl, facility, patientId);
             populationData.getEntry().addAll(patientData.getEntry());

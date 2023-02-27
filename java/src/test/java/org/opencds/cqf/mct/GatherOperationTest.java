@@ -55,20 +55,6 @@ class GatherOperationTest {
    }
 
    @Test
-   void missingPatients() {
-      Parameters allButPatients = parameters(facilities, measure, period);
-      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButPatients).execute();
-      validateResponse(response, MctConstants.GATHER_PARAM_NULL_PATIENTS);
-   }
-
-   @Test
-   void missingPatientsInGroup() {
-      Parameters noPatients = parameters(noPatientEntity, facilities, measure, period);
-      Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(noPatients).execute();
-      validateResponse(response, MctConstants.GATHER_PARAM_NULL_MEMBERS);
-   }
-
-   @Test
    void missingFacilities() {
       Parameters allButFacilities = parameters(patients, measure, period);
       Parameters response = client.operation().onServer().named(MctConstants.GATHER_OPERATION_NAME).withParameters(allButFacilities).execute();

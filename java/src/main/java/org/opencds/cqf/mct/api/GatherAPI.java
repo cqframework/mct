@@ -11,12 +11,10 @@ import org.hl7.fhir.r4.model.Period;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
 import org.opencds.cqf.mct.service.GatherService;
-import org.opencds.cqf.mct.service.PatientSelectorService;
 
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkArgument;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.part;
 
@@ -24,12 +22,10 @@ public class GatherAPI {
 
    private final FhirContext fhirContext;
    private final GatherService gatherService;
-   private final PatientSelectorService patientSelectorService;
 
    public GatherAPI() {
       fhirContext = SpringContext.getBean(FhirContext.class);
       gatherService = SpringContext.getBean(GatherService.class);
-      patientSelectorService = SpringContext.getBean(PatientSelectorService.class);
    }
 
    @Operation(name = MctConstants.GATHER_OPERATION_NAME)
@@ -37,11 +33,8 @@ public class GatherAPI {
                         @OperationParam(name = MctConstants.GATHER_PARAM_FACILITIES) List<String> facilities,
                         @OperationParam(name = MctConstants.GATHER_PARAM_MEASURE) String measureIdentifier,
                         @OperationParam(name = MctConstants.GATHER_PARAM_PERIOD) Period period) {
-      if (patients == null) {
-         patients = patientSelectorService.getPatientsForFacilities(facilities);
-      }
       try {
-         validateParameters(patients, facilities, measureIdentifier, period);
+         validateParameters(facilities, measureIdentifier, period);
       } catch (Exception e) {
          return parameters(
                  part(MctConstants.SEVERITY_ERROR, generateOutcome(MctConstants.SEVERITY_ERROR, e.getMessage(), MctConstants.CODE_PROCESSING))
@@ -50,9 +43,7 @@ public class GatherAPI {
       return gatherService.gatherOperation(patients, facilities, measureIdentifier, period);
    }
 
-   public void validateParameters(Group patients, List<String> facilities, String measureIdentifier, Period period) {
-      checkNotNull(patients, MctConstants.GATHER_PARAM_NULL_PATIENTS);
-      checkArgument(patients.hasMember(), MctConstants.GATHER_PARAM_NULL_MEMBERS);
+   public void validateParameters(List<String> facilities, String measureIdentifier, Period period) {
       checkNotNull(facilities, MctConstants.GATHER_PARAM_NULL_FACILITIES);
       checkNotNull(measureIdentifier, MctConstants.GATHER_PARAM_NULL_MEASURE);
       checkNotNull(period, MctConstants.GATHER_PARAM_NULL_PERIOD);
