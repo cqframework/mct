@@ -76,6 +76,7 @@ public class GatherService {
       for (String facility: facilities) {
          String facilityUrl = getFacilityUrl(facility);
          List<String> facilityPatientIds = getPatientIds(new PatientSelectorService().getPatientsForFacilities(Collections.singletonList(facility)));
+         facilityPatientIds = resolveFacilityIds(patientIds, facilityPatientIds);
          Bundle patientData;
          MeasureReport report;
          for (String patientId : facilityPatientIds) {
@@ -119,6 +120,10 @@ public class GatherService {
 
    public List<String> getPatientIds(Group patients) {
       return patients.getMember().stream().map(x -> x.getEntity().getReference()).collect(Collectors.toList());
+   }
+
+   public List<String> resolveFacilityIds(List<String> selectedIds, List<String> facilityIds) {
+      return selectedIds.stream().filter(facilityIds::contains).collect(Collectors.toList());
    }
 
    private Extension getLocationExtension(String locationReference) {
