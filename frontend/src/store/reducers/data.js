@@ -23,7 +23,7 @@ export const fetchMeasures = createAsyncThunk('data/fetchMeasures', async (facil
 });
 
 export const fetchPatients = createAsyncThunk('data/fetchPatients', async (organizationId) => {
-  const patientGroup = await fetch(`${baseUrl}/mct/$list-patients?organizationId=${organizationId}`).then((res) => res.json());
+  const patientGroup = await fetch(`${baseUrl}/mct/$list-org-patients?organizationId=${organizationId}`).then((res) => res.json());
   return patientGroup;
 });
 
