@@ -59,11 +59,9 @@ public class PatientData {
       dataProvider = SpringContext.getBean(DataProvider.class);
    }
 
-   public Bundle getPatients(String facilityUrl) {
-      if (patients == null) {
-         IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
-         patients = (Bundle) client.search().forResource(Patient.class).count(500).execute();
-      }
+   public Bundle getPatientsFromFacility(String facilityUrl) {
+      IGenericClient client = fhirContext.newRestfulGenericClient(facilityUrl);
+      patients = (Bundle) client.search().forResource(Patient.class).count(500).execute();
       return patients;
    }
 

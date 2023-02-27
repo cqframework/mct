@@ -31,7 +31,7 @@
           "value": "ACME-EIN"
         }],
         "active": true,
-        "name": "ACME Provider Organization",
+        "name": "Multiple Facility Organization",
         "telecom": [{
           "system": "url",
           "value": "https://acme.org",
@@ -68,7 +68,7 @@
           "value": "ACME-CCN"
         }],
         "active": true,
-        "name": "ACME Provider Organization",
+        "name": "Single Facility Organization",
         "telecom": [{
           "system": "url",
           "value": "https://acme.org",
@@ -111,10 +111,10 @@
         "identifier": [{
           "use": "usual",
           "system": "http://acme.org/location-identifiers",
-          "value": "LOCAL_TEST"
+          "value": "Facility_A"
         }],
         "status": "active",
-        "name": "Local Test",
+        "name": "Facility A",
         "mode": "instance",
         "managingOrganization": {
           "reference": "Organization/acme-local-test-org"
@@ -146,15 +146,15 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://acme.org/north/fhir"
+          "address": "http://localhost:8080/fhir"
         }],
         "identifier": [{
           "use": "usual",
           "system": "http://acme.org/location-identifiers",
-          "value": "ACME-NORTH"
+          "value": "Facility_A"
         }],
         "status": "active",
-        "name": "ACME North",
+        "name": "Facility A",
         "mode": "instance",
         "managingOrganization": {
           "reference": "Organization/acme"
@@ -186,15 +186,15 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://acme.org/south/fhir"
+          "address": "http://localhost:8082/fhir"
         }],
         "identifier": [{
           "use": "usual",
           "system": "http://acme.org/location-identifiers",
-          "value": "ACME-SOUTH"
+          "value": "Facility_B"
         }],
         "status": "active",
-        "name": "ACME South",
+        "name": "Facility B",
         "mode": "instance",
         "managingOrganization": {
           "reference": "Organization/acme"
