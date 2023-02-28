@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mct-cqf-ruler-a
+  namespace: mct
+  labels:
+    tag: { { .Values.tag } }
+spec:
+  type: ClusterIP
+  selector:
+    app: mct-cqf-ruler-a
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mct-cqf-ruler-a
+  labels:
+    app: mct-cqf-ruler-a
+    tag: { { .Values.tag } }
+  namespace: mct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mct-cqf-ruler-a
+  template:
+    metadata:
+      labels:
+        app: mct-cqf-ruler-a
+    spec:
+      containers:
+        - image: alphora/cqf-ruler:latest
+          name: mct-cqf-ruler-a
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
