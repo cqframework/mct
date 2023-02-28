@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import PatientMultiSelect from 'components/PatientMultiSelect';
 import { executeGatherOperation } from 'store/reducers/data';
 import { SendOutlined } from '@ant-design/icons';
-
+import FacilitiesMultiSelect from 'components/FacilitiesMultiSelect';
 const dateOptions = [
   {
     id: 'q1',
@@ -50,12 +50,7 @@ const HeaderContent = () => {
           minWidth: 200
         }}
       >
-        <Selection
-          options={facilities}
-          label="Facilities"
-          currentSelection={facility}
-          handleChange={(value) => dispatch(inputSelection({ type: 'facility', value }))}
-        />
+        <FacilitiesMultiSelect facilities={facilities} />
       </FormControl>
       <FormControl
         required

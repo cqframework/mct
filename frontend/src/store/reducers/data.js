@@ -13,7 +13,8 @@ export const fetchFacilities = createAsyncThunk('data/fetchFacilities', async (o
   await new Promise((r) => setTimeout(r, 1000));
   const mappedFacilities = facilityBundle.entry.map((i) => i.resource);
   const firstFacility = mappedFacilities?.[0]?.id; // set first one as default
-  dispatch(inputSelection({ type: 'facility', value: firstFacility }));
+  dispatch(inputSelection({ type: 'selectedFacilities', value: [firstFacility] }));
+  dispatch(fetchFacilityPatients());
   return mappedFacilities;
 });
 
@@ -27,11 +28,21 @@ export const fetchPatients = createAsyncThunk('data/fetchPatients', async (organ
   return patientGroup;
 });
 
+export const fetchFacilityPatients = createAsyncThunk('data/fetchFacilityPatients', async (_, { getState }) => {
+  const {
+    filter: { selectedFacilities }
+  } = getState();
+  if (!selectedFacilities?.length) return [];
+  const facilityParams = selectedFacilities.map((i) => `facilityIds=${i}`).join('&');
+  const patientGroup = await fetch(`${baseUrl}/mct/$list-facility-patients?${facilityParams}`).then((res) => res.json());
+  return patientGroup;
+});
+
 export const executeGatherOperation = createAsyncThunk('data/gatherOperation', async (_, { getState }) => {
   const {
-    filter: { selectedPatients, facility, measure, date }
+    filter: { selectedPatients, selectedFacilities, measure, date }
   } = getState();
-  const parametersPayload = buildMeasurePayload(facility, measure, date, selectedPatients);
+  const parametersPayload = buildMeasurePayload(selectedFacilities, measure, date, selectedPatients);
   const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
     method: 'POST',
     headers: {
@@ -42,19 +53,17 @@ export const executeGatherOperation = createAsyncThunk('data/gatherOperation', a
   return measureReportJson;
 });
 
-const buildMeasurePayload = (facilityId, measureId, quarter, patients) => {
+const buildMeasurePayload = (facilityIds, measureId, quarter, patients) => {
   const period = createPeriodFromQuarter(quarter);
   const groupPatientResource = {
     resourceType: 'Group',
     member: patients.map((i) => ({ entity: { reference: i } }))
   };
+  const parameterLocations = facilityIds.map((id) => ({ name: 'facilities', valueString: `Location/${id}` }));
   return {
     resourceType: 'Parameters',
     parameter: [
-      {
-        name: 'facilities',
-        valueString: `Location/${facilityId}`
-      },
+      ...parameterLocations,
       {
         name: 'period',
         valuePeriod: period
@@ -137,6 +146,20 @@ const data = createSlice({
         state.measures = action.payload;
       })
       .addCase(fetchMeasures.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchFacilityPatients.pending, (state, action) => {
+        state.patients = [];
+        state.status = 'loading';
+      })
+      .addCase(fetchFacilityPatients.fulfilled, (state, action) => {
+        state.status = 'finalized';
+        state.patients = action.payload;
+      })
+      .addCase(fetchFacilityPatients.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

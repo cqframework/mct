@@ -72,7 +72,7 @@ export default function ValidationDataTable({ resources }) {
                 id={`panel${i.id}-header`}
                 isOperationOutcome={resourceOperationOutcomes != null}
               >
-                <Typography>{i.resourceType === 'OperationOutcome' ? 'Unspecified' : `${i.resourceType}/${i.id}`}</Typography>
+                <Typography>{i.resourceType === 'OperationOutcome' ? 'Missing Data Requirements' : `${i.resourceType}/${i.id}`}</Typography>
                 {resourceOperationOutcomes && (
                   <Typography
                     sx={{ color: 'red', ml: 1.5, fontWeight: 'bold' }}

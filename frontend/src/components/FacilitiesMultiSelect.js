@@ -73,7 +73,7 @@ const FacilitiesMultiSelect = ({ facilities }) => {
           onClose={refreshPatientList}
           input={<OutlinedInput id="select-multiple-chip" label="Facilities" />}
           renderValue={(selected) =>
-            selected.length > 1 ? `${selected.length} facilities selected` : facilityEntries.find((i) => i.id === selected?.[0])?.name
+            selected.length > 1 ? `${selected.length} Facilities selected` : facilityEntries.find((i) => i.id === selected?.[0])?.name
           }
           MenuProps={MenuProps}
         >

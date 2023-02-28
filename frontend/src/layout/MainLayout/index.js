@@ -44,7 +44,6 @@ const MainLayout = () => {
       dispatch(fetchOrganizations());
     } else if (organization.length !== 0 && status === 'succeeded') {
       dispatch(fetchMeasures());
-      dispatch(fetchPatients(organization));
       dispatch(fetchFacilities(organization));
     }
   }, [dispatch, organization, organizations, status]);

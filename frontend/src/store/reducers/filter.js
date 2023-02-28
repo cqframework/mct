@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   organization: '',
-  facility: '',
+  selectedFacilities: [],
   selectedPatients: [],
   date: 'q1',
   measure: '',
