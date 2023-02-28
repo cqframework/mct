@@ -4,7 +4,7 @@ metadata:
   name: mct-cqf-ruler-b
   namespace: mct
   labels:
-    tag: { { .Values.tag } }
+    tag: {{ .Values.tag }}
 spec:
   type: ClusterIP
   selector:
@@ -20,7 +20,7 @@ metadata:
   name: mct-cqf-ruler-b
   labels:
     app: mct-cqf-ruler-b
-    tag: { { .Values.tag } }
+    tag: {{ .Values.tag }}
   namespace: mct
 spec:
   replicas: 1
