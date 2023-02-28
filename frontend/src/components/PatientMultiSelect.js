@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,22 +23,47 @@ const MenuProps = {
 
 const PatientMultiSelect = ({ patients = [] }) => {
   const dispatch = useDispatch();
+  const [didSelectAll, setDidSelectAll] = useState(false);
   const { selectedPatients } = useSelector((state) => state.filter);
+
+  useEffect(() => {
+    if (didSelectAll && patients?.member?.length !== selectedPatients.length) {
+      setDidSelectAll(false);
+    }
+  }, [selectedPatients]);
+
   const handleChange = (event) => {
     const { value } = event.target;
     if (value.includes('select-all')) {
-      dispatch(inputSelection({ type: 'selectedPatients', value: patientIds }));
+      if (didSelectAll) {
+        // handles deselect all
+        dispatch(inputSelection({ type: 'selectedPatients', value: [] }));
+      } else {
+        // handles select all
+        dispatch(inputSelection({ type: 'selectedPatients', value: patientIds }));
+      }
+
+      setDidSelectAll(!didSelectAll);
     } else {
       dispatch(inputSelection({ type: 'selectedPatients', value }));
     }
   };
-  const patientIds = patients?.member?.map(({ entity }) => entity.reference);
+  const patientIds = patients?.member?.map(({ entity }) => entity.reference) || [];
+
+  // Cut to first patient after filtering
+  // Deselect all - done
+  // Use issue type for user friendly messages
+  // tag in location data
+  // Measure Report Data for chart
+  // use meta tag to get report
+  // Push pt operation outcome to validation table
+
   return (
     <div>
       <FormControl sx={{ width: 300 }}>
         {patients.length === 0 ? (
-          <LoadingButton loading sx={{ height: '41.13px' }} loadingPosition="start" variant="outlined">
-            Loading Patients...
+          <LoadingButton loading sx={{ height: '41.13px' }} variant="outlined">
+            Fetching Patients...
           </LoadingButton>
         ) : (
           <>
@@ -56,7 +81,7 @@ const PatientMultiSelect = ({ patients = [] }) => {
               MenuProps={MenuProps}
             >
               <MenuItem value={'select-all'}>
-                <Checkbox checked={selectedPatients.length === patientIds.length} />
+                <Checkbox checked={didSelectAll} />
                 <ListItemText primary={'Select All'} />
               </MenuItem>
               {patientIds?.map((patientId, index) => (
