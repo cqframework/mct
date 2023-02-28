@@ -31,7 +31,7 @@ const DashboardDefault = () => {
   const measureResource = measures.find((i) => i.id === measure);
 
   useEffect(() => {
-    console.log('Resetting Tabs back to first tab');
+    // Reset tabs back to first tab when population changes
     setValue(0);
   }, [measureReport]);
 

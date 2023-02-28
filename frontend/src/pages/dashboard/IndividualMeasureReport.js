@@ -46,8 +46,27 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
   };
 
   const handleDelete = (value) => (evt) => {
-    setCurrentFilter(currentFilter.filter((i) => i !== value));
+    const filterAfterDeletion = currentFilter.filter((i) => i !== value);
+    setCurrentFilter(filterAfterDeletion);
+    updateCurrentPatientSelection(filterAfterDeletion);
   };
+
+  const handleOnClose = (_evt) => {
+    updateCurrentPatientSelection(currentFilter);
+  };
+
+  const updateCurrentPatientSelection = (filter) => {
+    if (filter.length === 0) {
+      setTargetedPatient(individualLevelData?.[0]);
+    } else {
+      const filteredPatients = individualLevelData.filter((i) => {
+        const isIncludedWithFilter = i.groups.filter((j) => filter.includes(j));
+        return isIncludedWithFilter.length > 0;
+      });
+      setTargetedPatient(filteredPatients[0]);
+    }
+  };
+
   return (
     <>
       <Grid item xs={12}>
@@ -67,6 +86,7 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
             multiple
             placeholder="Filter by Group"
             value={currentFilter}
+            onClose={handleOnClose}
             onChange={handleFilterChange}
             input={<OutlinedInput label="Name" />}
             MenuProps={MenuProps}
@@ -97,7 +117,11 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
       </Grid>
       {individualLevelData?.length > 1 && (
         <Grid item xs={2}>
-          <PatientsList handlePatientChange={handlePatientChange} patients={patientNameIdArr} />
+          <PatientsList
+            currentSelection={targetedPatient?.patient?.id}
+            handlePatientChange={handlePatientChange}
+            patients={patientNameIdArr}
+          />
         </Grid>
       )}
       <Grid item xs={10}>

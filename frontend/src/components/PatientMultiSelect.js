@@ -77,7 +77,7 @@ const PatientMultiSelect = ({ patients = [] }) => {
               value={selectedPatients}
               onChange={handleChange}
               input={<OutlinedInput id="select-multiple-chip" label="Patients" />}
-              renderValue={(selected) => `${selected.length} patients selected`}
+              renderValue={(selected) => `${selected.length} Patients selected`}
               MenuProps={MenuProps}
             >
               <MenuItem value={'select-all'}>

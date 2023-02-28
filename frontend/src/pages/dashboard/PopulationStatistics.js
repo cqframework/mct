@@ -9,7 +9,7 @@ const PopulationStatistics = ({ color, population = {} }) => {
   const { count: numeratorCount, description: numeratorDescription } = population['numerator'];
   const totalPopCount = Object.values(population.gender).reduce((acc, cur) => acc + cur, 0);
   return (
-    <MainCard sx={{ minWidth: 400 }} contentSX={{ p: 2.25 }}>
+    <MainCard sx={{ maxWidth: 400 }} contentSX={{ p: 2.25 }}>
       <Stack spacing={0.5}>
         <Typography variant="h6" color="textPrimary">
           Population Statistics

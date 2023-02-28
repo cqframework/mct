@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { SearchOutlined } from '@ant-design/icons';
 
-const PatientsList = ({ patients, handlePatientChange }) => {
+const PatientsList = ({ patients, handlePatientChange, currentSelection }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(patients?.[0]?.id);
   const [originalPatientsList, setOriginalPatientsList] = useState(patients);
   const [filteredPatientsList, setFilteredPatientsList] = useState(patients);
@@ -28,6 +28,10 @@ const PatientsList = ({ patients, handlePatientChange }) => {
     setOriginalPatientsList(patients);
     setFilteredPatientsList(patients);
   }, [patients]);
+
+  useEffect(() => {
+    setSelectedIndex(currentSelection);
+  }, [currentSelection]);
 
   const textSearchPatientName = (event) => {
     setSearchPatient(event.target.value);

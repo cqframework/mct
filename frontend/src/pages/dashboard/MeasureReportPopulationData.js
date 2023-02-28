@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
 
-const PopulationChartRealDataDemo = ({ populationData }) => {
+const MeasureReportPopulationData = ({ populationData }) => {
   const theme = useTheme();
   const categories = Object.keys(populationData).filter((i) => i !== 'gender' && i !== 'measureScore');
 
@@ -137,4 +137,4 @@ const PopulationChartRealDataDemo = ({ populationData }) => {
     </div>
   );
 };
-export default PopulationChartRealDataDemo;
+export default MeasureReportPopulationData;
