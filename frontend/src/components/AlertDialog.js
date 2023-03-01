@@ -45,7 +45,7 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
     handleClose({ isSubmit: true });
   };
 
-  const facilityNames = facilities.map(i => i.name).join(', ')
+  const facilityNames = facilities.map((i) => i.name).join(', ');
 
   return (
     <div>
@@ -68,12 +68,19 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <DisplayBox bgColor={'#DCEBF8'} primaryColor={'#0462BC'} count={summaryStats.patientCount} resourceType={'Patients'} />
+              <DisplayBox
+                bgColor={'#DCEBF8'}
+                sx={{ borderRadius: '20px', minHeight: '120px'  }}
+                primaryColor={'#0462BC'}
+                count={summaryStats.patientCount}
+                resourceType={'Patients'}
+              />
             </Grid>
             {Object.keys(summaryStats?.resources).map((resourceType) => (
               <Grid item xs={6}>
                 <DisplayBox
                   bgColor={'#FEF3DF'}
+                  sx={{ borderRadius: '20px', maxHeight: '120px' }}
                   primaryColor={'#C66A10'}
                   count={summaryStats.resources[resourceType].count}
                   resourceType={resourceType}
