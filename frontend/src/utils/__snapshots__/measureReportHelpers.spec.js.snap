@@ -2129,6 +2129,165 @@ Object {
           ],
           "resourceType": "OperationOutcome",
         },
+        Object {
+          "birthDate": "1971-11-21",
+          "contained": Array [
+            Object {
+              "id": "06c8bce9-17a5-444b-b5b4-7bc941f8e414",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)",
+                  "location": Array [
+                    "Patient.extension[0]",
+                    "Line 1, Col 716",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_4a",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-race-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2106-3'); The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not valid in the value set 'OmbRaceCategories'",
+                  "location": Array [
+                    "Patient.extension[0].extension[0].value.ofType(Coding)",
+                    "Line 1, Col 877",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)",
+                  "location": Array [
+                    "Patient.extension[1]",
+                    "Line 1, Col 916",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_4a",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2186-5'); The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not valid in the value set 'OmbEthnicityCategories'",
+                  "location": Array [
+                    "Patient.extension[1].extension[0].value.ofType(Coding)",
+                    "Line 1, Col 1082",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "extension": Array [
+            Object {
+              "extension": Array [
+                Object {
+                  "url": "ombCategory",
+                  "valueCoding": Object {
+                    "code": "2106-3",
+                    "display": "White",
+                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                  },
+                },
+              ],
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            },
+            Object {
+              "extension": Array [
+                Object {
+                  "url": "ombCategory",
+                  "valueCoding": Object {
+                    "code": "2186-5",
+                    "display": "Not Hispanic or Latino",
+                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                  },
+                },
+              ],
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            },
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#06c8bce9-17a5-444b-b5b4-7bc941f8e414",
+              },
+            },
+          ],
+          "gender": "female",
+          "id": "numer-EXM104",
+          "identifier": Array [
+            Object {
+              "system": "http://hospital.smarthealthit.org",
+              "type": Object {
+                "coding": Array [
+                  Object {
+                    "code": "MR",
+                    "display": "Medical Record Number",
+                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  },
+                ],
+              },
+              "use": "usual",
+              "value": "9999999911",
+            },
+          ],
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "name": Array [
+            Object {
+              "family": "Jones",
+              "given": Array [
+                "Louise",
+              ],
+            },
+          ],
+          "resourceType": "Patient",
+          "text": Object {
+            "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Louise <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>9999999911</td></tr><tr><td>Date of birth</td><td><span>21 November 1971</span></td></tr></tbody></table></div>",
+            "status": "generated",
+          },
+        },
       ],
     },
   ],
@@ -2948,6 +3107,165 @@ Object {
           ],
           "resourceType": "OperationOutcome",
         },
+        Object {
+          "birthDate": "1971-11-21",
+          "contained": Array [
+            Object {
+              "id": "c971a7f4-91f4-45b4-a8bd-c476215dc171",
+              "issue": Array [
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)",
+                  "location": Array [
+                    "Patient.extension[0]",
+                    "Line 1, Col 716",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_4a",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-race-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2106-3'); The code provided (urn:oid:2.16.840.1.113883.6.238#2106-3) is not valid in the value set 'OmbRaceCategories'",
+                  "location": Array [
+                    "Patient.extension[0].extension[0].value.ofType(Coding)",
+                    "Line 1, Col 877",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Validation_VAL_Profile_Minimum",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "Extension.extension:text: minimum required = 1, but only found 0 (from http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)",
+                  "location": Array [
+                    "Patient.extension[1]",
+                    "Line 1, Col 916",
+                  ],
+                  "severity": "error",
+                },
+                Object {
+                  "code": "processing",
+                  "details": Object {
+                    "coding": Array [
+                      Object {
+                        "code": "Terminology_TX_Confirm_4a",
+                        "system": "http://hl7.org/fhir/java-core-messageId",
+                      },
+                    ],
+                  },
+                  "diagnostics": "The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not in the value set http://hl7.org/fhir/us/core/ValueSet/omb-ethnicity-category, and a code from this value set is required: The code system \\"urn:oid:2.16.840.1.113883.6.238\\" in the include in \\"http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837\\" is not known; The code system 'urn:oid:2.16.840.1.113883.6.238' is not known (encountered paired with code = '2186-5'); The code provided (urn:oid:2.16.840.1.113883.6.238#2186-5) is not valid in the value set 'OmbEthnicityCategories'",
+                  "location": Array [
+                    "Patient.extension[1].extension[0].value.ofType(Coding)",
+                    "Line 1, Col 1082",
+                  ],
+                  "severity": "error",
+                },
+              ],
+              "resourceType": "OperationOutcome",
+            },
+          ],
+          "extension": Array [
+            Object {
+              "extension": Array [
+                Object {
+                  "url": "ombCategory",
+                  "valueCoding": Object {
+                    "code": "2106-3",
+                    "display": "White",
+                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                  },
+                },
+              ],
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            },
+            Object {
+              "extension": Array [
+                Object {
+                  "url": "ombCategory",
+                  "valueCoding": Object {
+                    "code": "2186-5",
+                    "display": "Not Hispanic or Latino",
+                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                  },
+                },
+              ],
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            },
+            Object {
+              "url": "http://cms.gov/fhir/mct/StructureDefinition/validation-result",
+              "valueReference": Object {
+                "reference": "#c971a7f4-91f4-45b4-a8bd-c476215dc171",
+              },
+            },
+          ],
+          "gender": "female",
+          "id": "numer-EXM104",
+          "identifier": Array [
+            Object {
+              "system": "http://hospital.smarthealthit.org",
+              "type": Object {
+                "coding": Array [
+                  Object {
+                    "code": "MR",
+                    "display": "Medical Record Number",
+                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  },
+                ],
+              },
+              "use": "usual",
+              "value": "9999999911",
+            },
+          ],
+          "meta": Object {
+            "lastUpdated": "2023-02-16T05:14:28.690+00:00",
+            "profile": Array [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+              "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient",
+            ],
+            "source": "#YLpjDs57sCrXR1x9",
+            "tag": Array [
+              Object {
+                "display": "Location/local-test",
+                "system": "http://cms.gov/fhir/mct/tags/Location",
+              },
+            ],
+            "versionId": "1",
+          },
+          "name": Array [
+            Object {
+              "family": "Jones",
+              "given": Array [
+                "Louise",
+              ],
+            },
+          ],
+          "resourceType": "Patient",
+          "text": Object {
+            "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Louise <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>9999999911</td></tr><tr><td>Date of birth</td><td><span>21 November 1971</span></td></tr></tbody></table></div>",
+            "status": "generated",
+          },
+        },
       ],
     },
   ],
@@ -3166,6 +3484,12 @@ Object {
       "information": 10,
       "warning": 0,
     },
+    "Patient": Object {
+      "count": 1,
+      "error": 4,
+      "information": 0,
+      "warning": 0,
+    },
   },
 }
 `;
@@ -3196,6 +3520,12 @@ Object {
       "count": 1,
       "error": 0,
       "information": 2,
+      "warning": 0,
+    },
+    "Patient": Object {
+      "count": 1,
+      "error": 4,
+      "information": 0,
       "warning": 0,
     },
   },
