@@ -10,7 +10,7 @@ export const issueTypesMap = {
   expired	: "Session Expired	User session expired; a login may be required.", 
   forbidden	: "Forbidden	The user does not have the rights to perform this action.", 
   suppressed	: "Information Suppressed	Some information was not or might not have been returned due to business rules, consent or privacy rules, or access permission constraints. This information may be accessible through alternate processes.", 
-  processing	: "Processing Failure	Processing issues. These are expected to be final e.g. there is no point resubmitting the same content unchanged.", 
+  processing	: "Processing Failure", 
   "not-supported": "Content not supported	The interaction, operation, resource or profile is not supported.", 
   duplicate	: "Duplicate	An attempt was made to create a duplicate record.", 
   "multiple-matches": "Multiple Matches	Multiple matching records were found when the operation required only one match.", 
@@ -29,7 +29,7 @@ export const issueTypesMap = {
   timeout	: "Timeout	An internal timeout has occurred.", 
   incomplete	: "Incomplete Results	Not all data sources typically accessed could be reached or responded in time, so the returned information might not be complete (applies to search interactions and some operations).", 
   throttled	: "Throttled	The system is not prepared to handle this request due to load management.", 
-  informational	: "Informational Note	A message unrelated to the processing success of the completed operation (examples of the latter include things like reminders of password expiry, system maintenance times, etc.).", 
+  informational	: "Informational Note", 
 }
 
 

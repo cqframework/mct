@@ -42,10 +42,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function ValidationDataTable({ resources }) {
   const [showDetailedMessages, setShowDetailedMessages] = useState(true);
 
-  const handleChange = (panel) => (_event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
-
   return (
     <Grid container>
       <Grid item xs={9}>
@@ -68,9 +64,9 @@ export default function ValidationDataTable({ resources }) {
           if (i.resourceType === 'OperationOutcome') {
             resourceOperationOutcomes = i;
           }
-
+          console.log(resourceOperationOutcomes)
           return (
-            <Accordion key={`${i.id}-${index}`} defaultExpanded={resourceOperationOutcomes != null} onChange={handleChange(i.id)}>
+            <Accordion key={`${i.id}-${index}`} >
               <AccordionSummary
                 aria-controls={`panel${i.id}-content`}
                 id={`panel${i.id}-header`}
@@ -89,6 +85,7 @@ export default function ValidationDataTable({ resources }) {
                     <SeverityIcon severity={issue.severity} />
                     {'  '}
                     {issueTypesMap[issue.code] || issue.code}
+                    {issue?.location?.[0]?.length > 0 && ` - (${issue?.location?.[0]})`}
                   </Typography>
                   {showDetailedMessages && <Typography sx={{ ml: 1.5 }}>{issue.diagnostics}</Typography>}
                 </AccordionDetails>
