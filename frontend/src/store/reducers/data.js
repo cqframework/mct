@@ -3,6 +3,17 @@ import { inputSelection } from './filter';
 import { baseUrl } from 'config';
 import { createPeriodFromQuarter } from 'utils/queryHelper';
 
+const initialState = {
+  facilities: [],
+  patients: [],
+  organizations: [],
+  measures: [],
+
+  measureReport: null,
+  status: 'idle',
+  error: null
+};
+
 export const fetchOrganizations = createAsyncThunk('data/fetchOrganizations', async () => {
   const organizationBundle = await fetch(`${baseUrl}/mct/$list-organizations`).then((res) => res.json());
   return organizationBundle.entry.map((i) => i.resource);
@@ -78,17 +89,6 @@ const buildMeasurePayload = (facilityIds, measureId, quarter, patients) => {
       }
     ]
   };
-};
-
-const initialState = {
-  facilities: [],
-  patients: [],
-  organizations: [],
-  measures: [],
-
-  measureReport: null,
-  status: 'idle',
-  error: null
 };
 
 const data = createSlice({

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { LeftOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { IconButton, Tooltip, Typography, Grid } from '@mui/material';
+import { IconButton, Tooltip, Typography, FormLabel, Switch, Grid } from '@mui/material';
 
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import SeverityIcon from 'components/SeverityIcon';
-
+import { issueTypesMap } from 'constants/issueTypesMap';
 const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
@@ -40,7 +40,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function ValidationDataTable({ resources }) {
-  const [expanded, setExpanded] = useState('panel1');
+  const [showDetailedMessages, setShowDetailedMessages] = useState(true);
 
   const handleChange = (panel) => (_event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -48,7 +48,7 @@ export default function ValidationDataTable({ resources }) {
 
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={9}>
         <Typography sx={{ mb: 2 }} variant={'h4'}>
           Validation Messages
           <Tooltip title={'Issues discovered from measure calculation'}>
@@ -57,6 +57,10 @@ export default function ValidationDataTable({ resources }) {
             </IconButton>
           </Tooltip>
         </Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <FormLabel> Show Detailed Messaging</FormLabel>
+        <Switch checked={showDetailedMessages} onChange={() => setShowDetailedMessages(!showDetailedMessages)} />
       </Grid>
       <Grid item xs={12}>
         {resources.map((i, index) => {
@@ -81,11 +85,12 @@ export default function ValidationDataTable({ resources }) {
               </AccordionSummary>
               {resourceOperationOutcomes?.issue?.map((issue, index) => (
                 <AccordionDetails key={`${i.id}-${index}`}>
-                  <Typography>
+                  <Typography sx={{ fontWeight: 'bold' }}>
                     <SeverityIcon severity={issue.severity} />
                     {'  '}
-                    {issue.diagnostics}
+                    {issueTypesMap[issue.code] || issue.code}
                   </Typography>
+                  {showDetailedMessages && <Typography sx={{ ml: 1.5 }}>{issue.diagnostics}</Typography>}
                 </AccordionDetails>
               ))}
             </Accordion>
