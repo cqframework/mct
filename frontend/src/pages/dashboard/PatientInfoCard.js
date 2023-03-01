@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Typography, Card, Box, Chip, CardContent, IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Typography, Card, Box, Chip, CardContent } from '@mui/material';
 
 import { gatherPatientDisplayData } from 'utils/patientHelper';
 import { useSelector } from 'react-redux';
@@ -21,7 +20,7 @@ const PatientInfoCard = ({ patient, groups, ethnicity }) => {
           <Typography sx={{ fontSize: 20, display: 'flex', justifyContent: 'space-between' }} color="primary.main" gutterBottom>
             {name}
             <Box sx={{ display: 'flex', gap: '10px' }}>
-              {groups.map((i) => (
+              {groups?.map((i) => (
                 <Chip key={i} sx={{ borderRadius: '20px' }} label={i} color="warning" />
               ))}
             </Box>
@@ -34,7 +33,7 @@ const PatientInfoCard = ({ patient, groups, ethnicity }) => {
           </Typography>
           <Typography variant="span">MRN: {mrn}</Typography>
           <Box sx={{ display: 'flex', gap: '10px' }}>
-            {ethnicity.map((i) => (
+            {ethnicity?.map((i) => (
               <Chip key={i} sx={{ borderRadius: '20px' }} label={i} color="primary" />
             ))}
           </Box>

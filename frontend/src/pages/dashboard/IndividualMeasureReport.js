@@ -77,7 +77,7 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
           {description}
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      {individualLevelData.length > 1 && <Grid item xs={12}>
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="group-filter-label">Filter By Group</InputLabel>
           <Select
@@ -115,6 +115,7 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
           </Select>
         </FormControl>
       </Grid>
+      }   
       {individualLevelData?.length > 1 && (
         <Grid item xs={2}>
           <PatientsList
@@ -125,10 +126,16 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
         </Grid>
       )}
       <Grid item xs={10}>
+        {targetedPatient?.patient != null ? (
         <Stack spacing={2}>
           <PatientInfoCard patient={targetedPatient?.patient} groups={targetedPatient?.groups} ethnicity={targetedPatient?.ethnicity} />
           <ValidationDataTable resources={targetedPatient?.resources} />
         </Stack>
+        ) : (
+          <Typography variant="h6" color="textSecondary">
+            No patient data matches the filter criteria
+          </Typography>
+        )}
       </Grid>
     </>
   );
