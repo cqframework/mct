@@ -130,6 +130,11 @@ const gatherIndividualLevelData = (measureReportEntries, name) => {
       individualLevelData.groups.push(groupData?.code?.coding?.[0]?.display);
     }
   });
+
+  if (individualLevelData?.patient?.contained) {
+    individualLevelData.resources.push(individualLevelData.patient)
+  }
+
   return individualLevelData;
 };
 

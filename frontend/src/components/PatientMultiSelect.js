@@ -50,13 +50,6 @@ const PatientMultiSelect = ({ patients = [] }) => {
   };
   const patientIds = patients?.member?.map(({ entity }) => entity.reference) || [];
 
-  // Cut to first patient after filtering
-  // Deselect all - done
-  // Use issue type for user friendly messages
-  // tag in location data
-  // Measure Report Data for chart
-  // use meta tag to get report
-  // Push pt operation outcome to validation table
 
   return (
     <div>
