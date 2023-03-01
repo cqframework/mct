@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { summarizeMeasureReport } from 'utils/measureReportHelpers';
 import { Typography, Grid, Stack, Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { getFacility, getMeasure, getOrganization } from 'store/reducers/selector';
+import { getFacility, getOrganization } from 'store/reducers/selector';
 import SeverityIcon from './SeverityIcon';
 import { baseUrl, cqfServerUrl } from 'config';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -10,7 +10,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 export default function AlertDialog({ isVisible, setVisibility, setStatusMessage }) {
   const [loading, setLoading] = React.useState(false);
   const { measureReport } = useSelector((state) => state.data);
-  const facility = useSelector((state) => getFacility(state));
+  const facilities = useSelector((state) => getFacility(state));
   const organization = useSelector((state) => getOrganization(state));
   const summaryStats = summarizeMeasureReport(measureReport);
 
@@ -20,7 +20,6 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
       setStatusMessage(true);
     }
   };
-
   const handleSubmit = async () => {
     setLoading(true);
     await fetch(`${baseUrl}/mct/$submit?organization=${organization?.id}`, {
@@ -46,6 +45,8 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
     handleClose({ isSubmit: true });
   };
 
+  const facilityNames = facilities.map(i => i.name).join(', ')
+
   return (
     <div>
       <Dialog open={isVisible} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
@@ -63,7 +64,7 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
             <Grid sx={{ display: 'flex', justifyContent: 'center' }} item xs={12}>
               <Typography variant="h4">Stats for facility:</Typography>
               <Typography sx={{ ml: 0.25 }} variant="h4" color="primary.main">
-                {facility?.name}
+                {facilityNames}
               </Typography>
             </Grid>
             <Grid item xs={6}>

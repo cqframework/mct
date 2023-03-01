@@ -1,7 +1,7 @@
 export const getFacility = (state) => {
   const { facilities } = state.data;
   const { selectedFacilities } = state.filter;
-  return facilities.find((facility) => selectedFacilities.includes(facility.id));
+  return facilities.filter((facility) => selectedFacilities.includes(facility.id));
 };
 
 export const getMeasure = (state) => {
