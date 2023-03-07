@@ -70,24 +70,29 @@ export default function AlertDialog({ isVisible, setVisibility, setStatusMessage
             <Grid item xs={6}>
               <DisplayBox
                 bgColor={'#DCEBF8'}
-                sx={{ borderRadius: '20px', minHeight: '120px'  }}
+                sx={{ borderRadius: '20px', border: '1px solid #0462BC', minHeight: '120px'  }}
                 primaryColor={'#0462BC'}
                 count={summaryStats.patientCount}
                 resourceType={'Patients'}
               />
             </Grid>
-            {Object.keys(summaryStats?.resources).map((resourceType) => (
+            {Object.keys(summaryStats?.resources).map((resourceType) => {
+              const hasIssues = Object.entries(summaryStats.resources[resourceType]).reduce((acc, [k, v]) => {
+                return k !== 'count' ? v + acc : acc
+              }, 0);
+              return (
               <Grid item xs={6}>
                 <DisplayBox
-                  bgColor={'#FEF3DF'}
-                  sx={{ borderRadius: '20px', maxHeight: '120px' }}
-                  primaryColor={'#C66A10'}
+                  bgColor={hasIssues ? '#FEF3DF': '#E9FDF3'}
+                  sx={{ borderRadius: '20px', border: `1px solid ${hasIssues ? '#C66A10': '#308367'}`,  maxHeight: '120px' }}
+                  primaryColor={hasIssues ? '#C66A10': '#308367'}
                   count={summaryStats.resources[resourceType].count}
                   resourceType={resourceType}
                   severityCountMap={summaryStats.resources[resourceType]}
                 />
               </Grid>
-            ))}
+            )}
+            )}
           </Grid>
         </DialogContent>
         <DialogActions>
