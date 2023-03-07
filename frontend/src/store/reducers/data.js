@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { inputSelection } from './filter';
 import { baseUrl } from 'config';
-import { createPeriodFromQuarter } from 'utils/queryHelper';
+import { createPeriodFromQuarter, timeout } from 'utils/queryHelper';
 
 const initialState = {
   facilities: [],
@@ -49,18 +49,27 @@ export const fetchFacilityPatients = createAsyncThunk('data/fetchFacilityPatient
   return patientGroup;
 });
 
+const TIMEOUT_THRESHOLD = 60 * 1000 * 3; // 3 minutes
 export const executeGatherOperation = createAsyncThunk('data/gatherOperation', async (_, { getState }) => {
   const {
     filter: { selectedPatients, selectedFacilities, measure, date }
   } = getState();
   const parametersPayload = buildMeasurePayload(selectedFacilities, measure, date, selectedPatients);
-  const measureReportJson = await fetch(`${baseUrl}/mct/$gather`, {
+
+  const measureReportJson = await timeout(TIMEOUT_THRESHOLD, fetch(`${baseUrl}/mct/$gather`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(parametersPayload)
-  }).then((response) => response?.json());
+  })).then(function(response) {
+    return response?.json();
+  }).catch(function(error) {
+    console.error(error)
+    // might be a timeout error
+    return null
+  })
+  
   return measureReportJson;
 });
 
