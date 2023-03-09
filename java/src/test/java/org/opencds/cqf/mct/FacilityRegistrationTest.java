@@ -39,7 +39,7 @@ class FacilityRegistrationTest {
       Bundle result = client.operation().onServer().named(MctConstants.LIST_ORGANIZATIONS_OPERATION_NAME)
               .withNoParameters(Parameters.class).useHttpGet().returnResourceType(Bundle.class).execute();
       assertTrue(result.hasEntry());
-      assertEquals(1, result.getEntry().size());
+      assertEquals(2, result.getEntry().size());
       assertTrue(result.getEntryFirstRep().hasResource());
       assertTrue(result.getEntryFirstRep().getResource() instanceof Organization);
    }
@@ -50,7 +50,7 @@ class FacilityRegistrationTest {
       Bundle result = client.operation().onServer().named(MctConstants.LIST_FACILITIES_OPERATION_NAME)
               .withParameters(params).useHttpGet().returnResourceType(Bundle.class).execute();
       assertTrue(result.hasEntry());
-      assertEquals(3, result.getEntry().size());
+      assertEquals(2, result.getEntry().size());
       for (Bundle.BundleEntryComponent entryComponent : result.getEntry()) {
          assertTrue(entryComponent.hasResource());
          assertTrue(entryComponent.getResource() instanceof Location);

@@ -43,13 +43,10 @@ import org.opencds.cqf.cql.evaluator.cql2elm.util.LibraryVersionSelector;
 import org.opencds.cqf.cql.evaluator.fhir.ClientFactory;
 import org.opencds.cqf.cql.evaluator.fhir.DirectoryBundler;
 import org.opencds.cqf.cql.evaluator.fhir.adapter.r4.AdapterFactory;
-import org.opencds.cqf.mct.service.DataRequirementsService;
 import org.opencds.cqf.mct.service.FacilityRegistrationService;
-import org.opencds.cqf.mct.service.GatherService;
 import org.opencds.cqf.mct.service.MeasureConfigurationService;
 import org.opencds.cqf.mct.service.PatientSelectorService;
 import org.opencds.cqf.mct.service.ReceivingSystemConfigurationService;
-import org.opencds.cqf.mct.service.ValidationService;
 import org.opencds.cqf.mct.validation.MctNpmPackageValidationSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -224,13 +221,11 @@ public class MctConfig {
 
    @Bean
    public ValidationSupportChain validationSupportChain(
-           MctNpmPackageValidationSupport mctNpmPackageValidationSupport,
-           FhirContext fhirContext, MctProperties properties) {
+           MctNpmPackageValidationSupport mctNpmPackageValidationSupport, FhirContext fhirContext) {
       return new ValidationSupportChain(
               mctNpmPackageValidationSupport,
               new CommonCodeSystemsTerminologyService(fhirContext),
               new DefaultProfileValidationSupport(fhirContext),
-//              new RemoteTerminologyServiceValidationSupport(fhirContext, properties.getTerminologyServerUrl()),
               new InMemoryTerminologyServerValidationSupport(fhirContext),
               new SnapshotGeneratingValidationSupport(fhirContext)
       );
@@ -246,18 +241,8 @@ public class MctConfig {
    }
 
    @Bean
-   public ValidationService validationService(FhirContext fhirContext, FhirValidator fhirValidator, MctProperties properties) {
-      return new ValidationService(fhirContext, fhirValidator, properties.getRequireProfileForValidation());
-   }
-
-   @Bean
    public FacilityRegistrationService facilityRegistrationService() {
       return new FacilityRegistrationService();
-   }
-
-   @Bean
-   public GatherService gatherService() {
-      return new GatherService();
    }
 
    @Bean
@@ -273,11 +258,6 @@ public class MctConfig {
    @Bean
    public PatientSelectorService patientSelectorService() {
       return new PatientSelectorService();
-   }
-
-   @Bean
-   public DataRequirementsService dataRequirementsService() {
-      return new DataRequirementsService();
    }
 
    @Bean
