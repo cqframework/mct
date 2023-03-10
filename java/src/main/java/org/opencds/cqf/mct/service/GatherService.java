@@ -1,155 +1,145 @@
 package org.opencds.cqf.mct.service;
 
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.util.DateUtils;
-import ca.uhn.fhir.validation.ValidationResult;
-import org.hl7.fhir.instance.model.api.IBaseOperationOutcome;
+import ca.uhn.fhir.util.OperationOutcomeUtil;
 import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.DomainResource;
-import org.hl7.fhir.r4.model.Endpoint;
-import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Group;
-import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.MeasureReport;
+import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.Parameters;
 import org.hl7.fhir.r4.model.Period;
-import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.Resource;
-import org.opencds.cqf.cql.evaluator.builder.DataProviderFactory;
-import org.opencds.cqf.cql.evaluator.builder.EndpointConverter;
-import org.opencds.cqf.cql.evaluator.builder.FhirDalFactory;
-import org.opencds.cqf.cql.evaluator.builder.LibrarySourceProviderFactory;
-import org.opencds.cqf.cql.evaluator.builder.TerminologyProviderFactory;
-import org.opencds.cqf.cql.evaluator.fhir.dal.BundleFhirDal;
-import org.opencds.cqf.cql.evaluator.measure.r4.R4MeasureProcessor;
+import org.opencds.cqf.cql.engine.terminology.ValueSetInfo;
 import org.opencds.cqf.mct.SpringContext;
 import org.opencds.cqf.mct.config.MctConstants;
-import org.opencds.cqf.mct.data.DataRequirementsReport;
-import org.opencds.cqf.mct.data.PatientData;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
+import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.part;
+
+/**
+ * The Gather service logic for the {@link org.opencds.cqf.mct.api.GatherAPI}.
+ */
 public class GatherService {
-   private final FhirContext fhirContext;
-   private final TerminologyProviderFactory terminologyProviderFactory;
-   private final DataProviderFactory dataProviderFactory;
-   private final LibrarySourceProviderFactory librarySourceProviderFactory;
-   private final FhirDalFactory fileFhirDalFactory;
-   private final EndpointConverter endpointConverter;
-   private final ValidationService validationService;
-   private final FacilityRegistrationService facilityRegistrationService;
-   private final MeasureConfigurationService measureConfigurationService;
-   private final String pathToConfigurationResource;
+   private static final FhirContext fhirContext = SpringContext.getBean(FhirContext.class);
 
-   public GatherService() {
-      fhirContext = SpringContext.getBean(FhirContext.class);
-      terminologyProviderFactory = SpringContext.getBean(TerminologyProviderFactory.class);
-      dataProviderFactory = SpringContext.getBean(DataProviderFactory.class);
-      librarySourceProviderFactory = SpringContext.getBean(LibrarySourceProviderFactory.class);
-      fileFhirDalFactory = SpringContext.getBean("fileFhirDalFactory", FhirDalFactory.class);
-      endpointConverter = SpringContext.getBean(EndpointConverter.class);
-      validationService = SpringContext.getBean(ValidationService.class);
-      facilityRegistrationService = SpringContext.getBean(FacilityRegistrationService.class);
-      measureConfigurationService = SpringContext.getBean(MeasureConfigurationService.class);
-      pathToConfigurationResource = SpringContext.getBean("pathToConfigurationResources", String.class);
+   /**
+    * The $gather operation logic.
+    *
+    * @see org.opencds.cqf.mct.api.GatherAPI#gather(Group, List, String, Period)
+    * @param patients          the patients
+    * @param facilities        the facilities
+    * @param measureIdentifier the measure identifier
+    * @param period            the period
+    * @return the population-level and patient-level reports, evaluated resources and validation messages populated
+    * in a <a href="http://hl7.org/fhir/parameters.html">Parameters</a> resource
+    */
+   public Parameters gather(Group patients, List<String> facilities, String measureIdentifier, Period period) {
+      PatientDataService patientDataService = new PatientDataService(patients, facilities);
+      MeasureEvaluationService measureEvaluationService = new MeasureEvaluationService(measureIdentifier, period);
+
+      GatherResult result = new GatherResult();
+      result.patientBundles = patientDataService.resolvePatientBundles(measureEvaluationService);
+      result.populationReport = measureEvaluationService.getPopulationReport(patientDataService.getPatientReferences(), result.patientBundles);
+      List<Parameters.ParametersParameterComponent> components = new ArrayList<>();
+      components.add(part("population-report", result.populationReport));
+      components.addAll(result.getReturnFormat());
+      return parameters().setParameter(components);
    }
 
-   public Parameters gatherOperation(Group patients, List<String> facilities, String measureIdentifier, Period period) {
-      Parameters parameters = new Parameters();
-      R4MeasureProcessor measureProcessor = new R4MeasureProcessor(
-              terminologyProviderFactory, dataProviderFactory, librarySourceProviderFactory,
-              fileFhirDalFactory, endpointConverter);
-      Bundle populationData = new Bundle();
-      if (patients == null) {
-         patients = new PatientSelectorService().getPatientsForFacilities(facilities);
+   private static class GatherResult {
+      private MeasureReport populationReport;
+      private List<PatientBundle> patientBundles;
+
+      /**
+       * Formats the result for the $gather operation.
+       *
+       * @return List of <a href="http://hl7.org/fhir/parameters.html">Parameters</a> resource components for the result
+       */
+      public List<Parameters.ParametersParameterComponent> getReturnFormat() {
+         return patientBundles.stream().map(x -> {
+            Bundle returnBundle = new Bundle();
+            returnBundle.addEntry(new Bundle.BundleEntryComponent().setResource(x.patientReport));
+            x.patientData.getEntry().forEach(returnBundle::addEntry);
+            returnBundle.addEntry(new Bundle.BundleEntryComponent().setResource(x.missingPatientData));
+            return part(x.patientId, returnBundle);
+         }).collect(Collectors.toList());
       }
-      List<String> patientIds = getPatientIds(patients);
-      Endpoint configurationResourcesEndpoint = new Endpoint().setAddress(pathToConfigurationResource);
-      String measureUrl = getMeasureUrl(measureIdentifier);
-      Map<String, Bundle> patientBundles = new HashMap<>();
-      for (String facility: facilities) {
-         String facilityUrl = getFacilityUrl(facility);
-         List<String> facilityPatientIds = getPatientIds(new PatientSelectorService().getPatientsForFacilities(Collections.singletonList(facility)));
-         facilityPatientIds = resolveFacilityIds(patientIds, facilityPatientIds);
-         Bundle patientData;
-         MeasureReport report;
-         for (String patientId : facilityPatientIds) {
-            PatientData patientDataService = new PatientData();
-            patientData = patientDataService.getPatientDataBundle(facilityUrl, facility, patientId);
-            populationData.getEntry().addAll(patientData.getEntry());
-            report = measureProcessor.evaluateMeasure(measureUrl,
-                    DateUtils.convertDateToIso8601String(period.getStart()),
-                    DateUtils.convertDateToIso8601String(period.getEnd()), null,
-                    Collections.singletonList(patientId), null, configurationResourcesEndpoint,
-                    configurationResourcesEndpoint, null, patientData);
-            report.addExtension(getLocationExtension(facility));
-            Bundle returnBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);
-            returnBundle.addEntry().setResource(report);
-            List<DomainResource> validationResults = validation(patientData, report, patientDataService.getDataRequirementsReport());
-            validationResults.forEach(x -> returnBundle.addEntry().setResource(x));
-            patientBundles.put(patientId, returnBundle);
+   }
+
+   /**
+    * The Patient bundle.
+    */
+   public static class PatientBundle {
+      private String patientId;
+      private MeasureReport patientReport;
+      private Bundle patientData;
+      private OperationOutcome missingPatientData;
+
+      /**
+       * Sets patient id.
+       *
+       * @param patientId the patient id
+       */
+      public void setPatientId(String patientId) {
+         this.patientId = patientId;
+      }
+
+      /**
+       * Sets patient report.
+       *
+       * @param patientReport the patient report
+       */
+      public void setPatientReport(MeasureReport patientReport) {
+         this.patientReport = patientReport;
+      }
+
+      /**
+       * Gets patient id.
+       *
+       * @return the patient id
+       */
+      public String getPatientId() {
+         return patientId;
+      }
+
+      /**
+       * Gets patient data.
+       *
+       * @return the patient data
+       */
+      public Bundle getPatientData() {
+         if (patientData == null) {
+            patientData = new Bundle();
          }
+         return patientData;
       }
-      if (patientIds.size() > 1) {
-         parameters.addParameter().setName(MctConstants.GATHER_POP_MEASURE_PARAM_NAME).setResource(
-                 measureProcessor.evaluateMeasure(measureUrl,
-                         DateUtils.convertDateToIso8601String(period.getStart()),
-                         DateUtils.convertDateToIso8601String(period.getEnd()), null,
-                         patientIds, null, configurationResourcesEndpoint,
-                         configurationResourcesEndpoint, null, populationData));
-      }
-      for (Map.Entry<String, Bundle> entry : patientBundles.entrySet()) {
-         parameters.addParameter().setName(entry.getKey()).setResource(entry.getValue());
-      }
-      return parameters;
-   }
 
-   public String getMeasureUrl(String measureIdentifier) {
-      return measureConfigurationService.getMeasure(measureIdentifier).getUrl();
-   }
-
-   public String getFacilityUrl(String facilityId) {
-      return facilityRegistrationService.getFacilityUrl(facilityId);
-   }
-
-   public List<String> getPatientIds(Group patients) {
-      return patients.getMember().stream().map(x -> x.getEntity().getReference()).collect(Collectors.toList());
-   }
-
-   public List<String> resolveFacilityIds(List<String> selectedIds, List<String> facilityIds) {
-      return selectedIds.stream().filter(facilityIds::contains).collect(Collectors.toList());
-   }
-
-   private Extension getLocationExtension(String locationReference) {
-      return new Extension().setUrl(MctConstants.LOCATION_EXTENSION_URL).setValue(new Reference(locationReference));
-   }
-
-   private Extension getValidationExtension(String reference) {
-      return new Extension().setUrl(MctConstants.VALIDATION_EXTENSION_URL).setValue(new Reference(reference));
-   }
-
-   private List<DomainResource> validation(Bundle bundle, MeasureReport report, DataRequirementsReport dataRequirementsReport) {
-      List<DomainResource> resources = new ArrayList<>();
-      BundleFhirDal bundleFhirDal = new BundleFhirDal(fhirContext, bundle);
-      for (Reference reference : report.getEvaluatedResource()) {
-         DomainResource resource = (DomainResource) bundleFhirDal.read(new IdType(reference.getReference()));
-         ValidationResult result = validationService.validate(resource);
-         if (!result.isSuccessful()) {
-            String id = UUID.randomUUID().toString();
-            IBaseOperationOutcome validationResult = result.toOperationOutcome();
-            validationResult.setId(id);
-            resource.addExtension(getValidationExtension("#" + id));
-            resource.addContained((Resource) validationResult);
+      /**
+       * Add missing patient data.
+       *
+       * @param resourceType    the resource type
+       * @param valueSetInfoMap the value set info map
+       */
+      public void addMissingPatientData(String resourceType, Map<String, List<ValueSetInfo>> valueSetInfoMap) {
+         if (missingPatientData == null) {
+            missingPatientData = new OperationOutcome();
          }
-         resources.add(resource);
+         Set<String> paths = new HashSet<>();
+         List<ValueSetInfo> valueSetInfos = new ArrayList<>();
+         if (valueSetInfoMap != null) {
+            paths = valueSetInfoMap.keySet();
+            valueSetInfos = valueSetInfoMap.values().stream().flatMap(List::stream).collect(Collectors.toList());
+         }
+         String details = String.format(
+                 "The patient: %s does not satisfy the data requirement for resource: %s with path(s): %s in the following valueset(s): %s",
+                 patientId, resourceType, paths, valueSetInfos.stream().map(ValueSetInfo::getId).collect(Collectors.toList()));
+         OperationOutcomeUtil.addIssue(fhirContext, missingPatientData, MctConstants.SEVERITY_INFORMATION, details, null, MctConstants.CODE_INFORMATIONAL);
       }
-      resources.add(dataRequirementsReport.getReport());
-      return resources;
    }
 }

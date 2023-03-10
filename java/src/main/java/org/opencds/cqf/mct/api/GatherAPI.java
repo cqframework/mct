@@ -14,47 +14,61 @@ import org.opencds.cqf.mct.service.GatherService;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.part;
 
+/**
+ * The Gather API.
+ */
 public class GatherAPI {
 
-   private final FhirContext fhirContext;
-   private final GatherService gatherService;
-
-   public GatherAPI() {
-      fhirContext = SpringContext.getBean(FhirContext.class);
-      gatherService = SpringContext.getBean(GatherService.class);
-   }
-
+   /**
+    * The $gather operation.
+    *
+    * @param patients          the <a href="http://hl7.org/fhir/group.html">Group</a> of <a href="http://hl7.org/fhir/patient.html">Patient</a> resource references
+    * @param facilities        the facilities
+    * @param measureIdentifier the measure identifier
+    * @param period            the measurement <a href="http://hl7.org/fhir/datatypes.html#Period">Period</a>
+    * @return the population-level and patient-level reports, evaluated resources and validation messages populated
+    * in a <a href="http://hl7.org/fhir/parameters.html">Parameters</a> resource
+    */
    @Operation(name = MctConstants.GATHER_OPERATION_NAME)
    public Parameters gather(@OperationParam(name = MctConstants.GATHER_PARAM_PATIENTS) Group patients,
                         @OperationParam(name = MctConstants.GATHER_PARAM_FACILITIES) List<String> facilities,
                         @OperationParam(name = MctConstants.GATHER_PARAM_MEASURE) String measureIdentifier,
                         @OperationParam(name = MctConstants.GATHER_PARAM_PERIOD) Period period) {
       try {
-         validateParameters(facilities, measureIdentifier, period);
+         validateParameters(patients, facilities, measureIdentifier, period);
       } catch (Exception e) {
+         OperationOutcome outcome = new OperationOutcome();
+         OperationOutcomeUtil.addIssue(SpringContext.getBean(FhirContext.class), outcome,
+                 MctConstants.SEVERITY_ERROR, e.getMessage(), null, MctConstants.CODE_PROCESSING);
          return parameters(
-                 part(MctConstants.SEVERITY_ERROR, generateOutcome(MctConstants.SEVERITY_ERROR, e.getMessage(), MctConstants.CODE_PROCESSING))
+                 part(MctConstants.SEVERITY_ERROR, outcome)
          );
       }
-      return gatherService.gatherOperation(patients, facilities, measureIdentifier, period);
+      return new GatherService().gather(patients, facilities, measureIdentifier, period);
    }
 
-   public void validateParameters(List<String> facilities, String measureIdentifier, Period period) {
+   /**
+    * Validates input parameters.
+    *
+    * @param patients               the patients
+    * @param facilities             the facilities
+    * @param measureIdentifier      the measure identifier
+    * @param period                 the measurement period
+    * @throws NullPointerException  missing parameter values are present - transformed into an <a href="http://hl7.org/fhir/operationoutcome.html">OperationOutcome</a> resource
+    */
+   public void validateParameters(Group patients, List<String> facilities, String measureIdentifier, Period period) {
+      checkNotNull(patients, MctConstants.GATHER_PARAM_NULL_PATIENTS);
+      checkArgument(patients.hasMember(), MctConstants.GATHER_PARAM_NULL_MEMBERS);
       checkNotNull(facilities, MctConstants.GATHER_PARAM_NULL_FACILITIES);
       checkNotNull(measureIdentifier, MctConstants.GATHER_PARAM_NULL_MEASURE);
       checkNotNull(period, MctConstants.GATHER_PARAM_NULL_PERIOD);
       checkNotNull(period.getStart(), MctConstants.GATHER_PARAM_NULL_PERIOD_START);
       checkNotNull(period.getEnd(), MctConstants.GATHER_PARAM_NULL_PERIOD_END);
-   }
-
-   public OperationOutcome generateOutcome(String severity, String details, String code) {
-      OperationOutcome outcome = new OperationOutcome();
-      OperationOutcomeUtil.addIssue(fhirContext, outcome, severity, details, null, code);
-      return outcome;
    }
 
 }

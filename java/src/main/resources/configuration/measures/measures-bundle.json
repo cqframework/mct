@@ -677,7 +677,7 @@
           } ],
           "dataRequirement": [ {
             "type": "Encounter",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter" ],
             "mustSupport": [ "type", "period" ],
             "codeFilter": [ {
               "path": "type",
@@ -685,7 +685,7 @@
             } ]
           }, {
             "type": "Encounter",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter" ],
             "mustSupport": [ "type", "period" ],
             "codeFilter": [ {
               "path": "type",
@@ -693,7 +693,7 @@
             } ]
           }, {
             "type": "Encounter",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Encounter" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter" ],
             "mustSupport": [ "type", "period" ],
             "codeFilter": [ {
               "path": "type",
@@ -701,14 +701,14 @@
             } ]
           }, {
             "type": "Condition",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Condition" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-condition" ],
             "mustSupport": [ "id" ]
           }, {
             "type": "Patient",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Patient" ]
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient" ]
           }, {
             "type": "MedicationRequest",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/MedicationRequest" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest" ],
             "mustSupport": [ "medication", "doNotPerform", "category", "status", "intent", "authoredOn", "reasonCode" ],
             "codeFilter": [ {
               "path": "medication",
@@ -716,7 +716,7 @@
             } ]
           }, {
             "type": "MedicationRequest",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/MedicationRequest" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-medicationrequest" ],
             "mustSupport": [ "medication", "doNotPerform", "category", "status", "intent", "authoredOn" ],
             "codeFilter": [ {
               "path": "medication",
@@ -724,7 +724,7 @@
             } ]
           }, {
             "type": "ServiceRequest",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/ServiceRequest" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-servicerequest" ],
             "mustSupport": [ "code", "intent" ],
             "codeFilter": [ {
               "path": "code",
@@ -732,7 +732,7 @@
             } ]
           }, {
             "type": "Procedure",
-            "profile": [ "http://hl7.org/fhir/StructureDefinition/Procedure" ],
+            "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-procedure" ],
             "mustSupport": [ "code", "status" ],
             "codeFilter": [ {
               "path": "code",

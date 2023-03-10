@@ -12,11 +12,27 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The MCT NPM package validation support.
+ */
 public class MctNpmPackageValidationSupport extends PrePopulatedValidationSupport {
+
+   /**
+    * Instantiates a new MCT NPM package validation support.
+    *
+    * @param theFhirContext the FHIR context
+    */
    public MctNpmPackageValidationSupport(@NotNull FhirContext theFhirContext) {
       super(theFhirContext);
    }
 
+   /**
+    * Overloaded from HAPI to load the provided package.
+    *
+    * @see org.hl7.fhir.common.hapi.validation.support.NpmPackageValidationSupport#loadPackageFromClasspath(String)
+    * @param npmPackage the NPM package
+    * @throws IOException could not find the package
+    */
    public void loadPackage(NpmPackage npmPackage) throws IOException {
       if (npmPackage.getFolders().containsKey("package")) {
          loadResourcesFromPackage(npmPackage);

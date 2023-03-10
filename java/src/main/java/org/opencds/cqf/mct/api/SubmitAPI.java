@@ -19,18 +19,31 @@ import java.util.List;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.parameters;
 import static org.opencds.cqf.cql.evaluator.fhir.util.r4.Parameters.part;
 
+/**
+ * The Submit API.
+ */
 public class SubmitAPI {
 
    private final FhirContext fhirContext;
    private MeasureReport populationMeasureReport;
    private final List<SubmitDataParameters> submitDataParameters;
 
+   /**
+    * Instantiates a new Submit API.
+    */
    public SubmitAPI() {
       fhirContext = SpringContext.getBean(FhirContext.class);
       populationMeasureReport = null;
       submitDataParameters = new ArrayList<>();
    }
 
+   /**
+    * The $submit operation.
+    *
+    * @param recSystemUrl the receiving system url
+    * @param gatherResult the result of the $gather operation ({@link GatherAPI})
+    * @return an <a href="http://hl7.org/fhir/operationoutcome.html">OperationOutcome</a> resource detailing the outcome of the operation
+    */
    @Operation(name = MctConstants.SUBMIT_OPERATION_NAME, global = true)
    public OperationOutcome submit(
            @OperationParam(name = MctConstants.SUBMIT_REC_SYSTEM_PARAM) String recSystemUrl,
@@ -67,6 +80,11 @@ public class SubmitAPI {
 
       private final Parameters parameters;
 
+      /**
+       * Instantiates a new Submit data parameters.
+       *
+       * @param patientBundle the patient bundle
+       */
       public SubmitDataParameters(Bundle patientBundle) {
          patientResources = new ArrayList<>();
          parameters = parameters();
@@ -87,18 +105,38 @@ public class SubmitAPI {
          }
       }
 
+      /**
+       * Gets the measure id.
+       *
+       * @return the measure id
+       */
       public IdDt getMeasureId() {
          return measureId;
       }
 
+      /**
+       * Gets the patient report.
+       *
+       * @return the patient report
+       */
       public MeasureReport getPatientReport() {
          return patientReport;
       }
 
+      /**
+       * Gets the patient resources.
+       *
+       * @return the patient resources
+       */
       public List<Resource> getPatientResources() {
          return patientResources;
       }
 
+      /**
+       * Gets the parameters.
+       *
+       * @return the parameters
+       */
       public Parameters getParameters() {
          return parameters;
       }
