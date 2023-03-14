@@ -8,13 +8,9 @@ import ReactApexChart from 'react-apexcharts';
 
 const PatientColumnChart = ({ stratifier, measureReport, numeratorDescription, denominatorDescription }) => {
   const theme = useTheme();
-  // const allEthnicities = Object.keys(stratifier.data);
-  // const numeratorDescription = stratifier.data[allEthnicities[0]].denominator.description;
-  // const denominatorDescription = stratifier.data[allEthnicities[0]].numerator.description;
-  // const LOINC_MAP_KEYS = Object.keys(LOINC_MAP);
   const allEthnicitiesMap = {};
+
   measureReport.contained.forEach((i) => {
-    //TODO:  There is a bug here that the string is all messed up together instead of being a javascript object
     if (i?.code?.coding?.[1]?.code === 'ethnicity' || i?.code?.coding?.[1]?.code === 'race') {
       const identity = i?.code?.coding?.[0]?.code;
       allEthnicitiesMap[identity] = i.valueInteger;
