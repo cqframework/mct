@@ -64,9 +64,9 @@ export default function ValidationDataTable({ resources }) {
           if (i.resourceType === 'OperationOutcome') {
             resourceOperationOutcomes = i;
           }
-          console.log(resourceOperationOutcomes)
+
           return (
-            <Accordion key={`${i.id}-${index}`} >
+            <Accordion key={`${i.id}-${index}`}>
               <AccordionSummary
                 aria-controls={`panel${i.id}-content`}
                 id={`panel${i.id}-header`}

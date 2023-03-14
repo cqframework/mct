@@ -77,45 +77,48 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
           {description}
         </Typography>
       </Grid>
-      {individualLevelData.length > 1 && <Grid item xs={12}>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="group-filter-label">Filter By Group</InputLabel>
-          <Select
-            labelId="group-filter-label"
-            id="group-filter-label-name"
-            multiple
-            placeholder="Filter by Group"
-            value={currentFilter}
-            onClose={handleOnClose}
-            onChange={handleFilterChange}
-            input={<OutlinedInput label="Name" />}
-            MenuProps={MenuProps}
-            renderValue={(selected) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip
-                    sx={{ borderRadius: '30px' }}
-                    onMouseDown={(event) => {
-                      event.stopPropagation();
-                    }}
-                    onDelete={handleDelete(value)}
-                    color="warning"
-                    key={value}
-                    label={value}
-                  />
-                ))}
-              </Box>
-            )}
-          >
-            {FILTER_OPTIONS.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
-      }   
+      {individualLevelData.length > 1 && (
+        <Grid item xs={12}>
+          <FormControl sx={{ m: 1, float: 'right', width: 300 }}>
+            <InputLabel sx={{ p: '1px' }} id="group-filter-label">
+              Filter By Group
+            </InputLabel>
+            <Select
+              labelId="group-filter-label"
+              id="group-filter-label-name"
+              multiple
+              placeholder="Filter by Group"
+              value={currentFilter}
+              onClose={handleOnClose}
+              onChange={handleFilterChange}
+              input={<OutlinedInput label="Name" />}
+              MenuProps={MenuProps}
+              renderValue={(selected) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip
+                      sx={{ borderRadius: '30px' }}
+                      onMouseDown={(event) => {
+                        event.stopPropagation();
+                      }}
+                      onDelete={handleDelete(value)}
+                      color="warning"
+                      key={value}
+                      label={value}
+                    />
+                  ))}
+                </Box>
+              )}
+            >
+              {FILTER_OPTIONS.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      )}
       {individualLevelData?.length > 1 && (
         <Grid item xs={2}>
           <PatientsList
@@ -127,10 +130,10 @@ const IndividualMeasureReport = ({ processedMeasureReport, measureName }) => {
       )}
       <Grid item xs={10}>
         {targetedPatient?.patient != null ? (
-        <Stack spacing={2}>
-          <PatientInfoCard patient={targetedPatient?.patient} groups={targetedPatient?.groups} ethnicity={targetedPatient?.ethnicity} />
-          <ValidationDataTable resources={targetedPatient?.resources} />
-        </Stack>
+          <Stack spacing={2}>
+            <PatientInfoCard patient={targetedPatient?.patient} groups={targetedPatient?.groups} ethnicity={targetedPatient?.ethnicity} />
+            <ValidationDataTable resources={targetedPatient?.resources} />
+          </Stack>
         ) : (
           <Typography variant="h6" color="textSecondary">
             No patient data matches the filter criteria

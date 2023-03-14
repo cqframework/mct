@@ -3,7 +3,9 @@ import { InputLabel, Select, MenuItem } from '@mui/material';
 const Selection = ({ currentSelection, targetDisplayField = 'name', handleChange, options, label }) => {
   return (
     <>
-      <InputLabel id={`${label}-select-label`}>{label}</InputLabel>
+      <InputLabel sx={{ p: '1px' }} id={`${label}-select-label`}>
+        {label}
+      </InputLabel>
       <Select
         labelId={`${label}-select-label`}
         sx={{ minWidth: 200 }}
