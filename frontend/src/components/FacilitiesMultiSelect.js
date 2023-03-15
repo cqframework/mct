@@ -63,7 +63,9 @@ const FacilitiesMultiSelect = ({ facilities }) => {
   return (
     <div>
       <FormControl required sx={{ width: 300 }}>
-        <InputLabel id="facility-multiple-chip-label">Facilities</InputLabel>
+        <InputLabel sx={{ p: '1px' }} id="facility-multiple-chip-label">
+          Facilities
+        </InputLabel>
         <Select
           labelId="facility-multiple-chip-label"
           id="facility-multiple-chip"

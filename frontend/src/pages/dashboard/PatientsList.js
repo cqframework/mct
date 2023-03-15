@@ -50,7 +50,9 @@ const PatientsList = ({ patients, handlePatientChange, currentSelection }) => {
         <CardContent>
           <Box sx={{ '& > :not(style)': { m: 1 } }}>
             <FormControl variant="standard">
-              <InputLabel htmlFor="patient-search-list">Search</InputLabel>
+              <InputLabel sx={{ p: '1px' }} htmlFor="patient-search-list">
+                Search
+              </InputLabel>
               <Input
                 id="patient-search-list"
                 onChange={textSearchPatientName}

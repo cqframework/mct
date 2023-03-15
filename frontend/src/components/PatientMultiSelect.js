@@ -50,7 +50,6 @@ const PatientMultiSelect = ({ patients = [] }) => {
   };
   const patientIds = patients?.member?.map(({ entity }) => entity.reference) || [];
 
-
   return (
     <div>
       <FormControl sx={{ width: 300 }}>
@@ -60,7 +59,9 @@ const PatientMultiSelect = ({ patients = [] }) => {
           </LoadingButton>
         ) : (
           <>
-            <InputLabel id="patient-multiple-chip-label">Patients</InputLabel>
+            <InputLabel sx={{ p: '1px' }} id="patient-multiple-chip-label">
+              Patients
+            </InputLabel>
             <Select
               labelId="patient-multiple-chip-label"
               id="patient-multiple-chip"
