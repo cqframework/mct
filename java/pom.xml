@@ -60,6 +60,12 @@
 			<version>${hapi.version}</version>
 		</dependency>
 		<dependency>
+			<!-- force 5.6.76 to get the fix to https://github.com/hapifhir/org.hl7.fhir.core/issues/961 -->
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>org.hl7.fhir.utilities</artifactId>
+			<version>5.6.76</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.version}</version>
@@ -88,7 +94,7 @@
 		<dependency>
 			<groupId>info.cqframework</groupId>
 			<artifactId>engine-jackson</artifactId>
-			<version>2.6.0-SNAPSHOT</version>
+			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
