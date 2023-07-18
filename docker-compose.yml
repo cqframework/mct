@@ -11,10 +11,10 @@ services:
     ports:
       - 8088:8088
   cqf-ruler-a:
-    image: alphora/cqf-ruler:vsm_draft_operation 
+    image: alphora/cqf-ruler
     ports:
       - 8080:8080
   cqf-ruler-b:
-    image: alphora/cqf-ruler:vsm_draft_operation 
+    image: alphora/cqf-ruler
     ports:
       - 8082:8080
