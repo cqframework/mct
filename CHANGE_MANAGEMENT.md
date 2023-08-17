@@ -86,7 +86,6 @@ Only trivial commits (such as documentation changes, typos, and packaging change
 
 Small changes must be reviewed by at least one committer that is not the author of the change. Large, significant, or breaking changes must have committer consensus before being applied.
 
-In general, when a new version of the CQL specification is created, a new branch of the repository is created to implement support for that version. Changes to this branch can be committed directly. Once the new version of the specification is published, the version branch is merged to the master branch.
 
 Note that changes must always align with the CQL specification. Any changes to the CQL specification itself are governed by HL7 and must be done through the HL7 process, either by submitting an STU comment, or balloting a new version of the specification.
 
@@ -94,7 +93,7 @@ Note that changes must always align with the CQL specification. Any changes to t
 Communication should be done in an open and public manner. The project uses many different channels for open communication, including:
 
 * [Chat](https://chat.fhir.org/#narrow/stream/cql)
-* [Github Issues](https://github.com/cqframework/clinical_quality_language/issues)
+* [Github Issues](https://github.com/cqframework/mct/issues)
 
 Sometimes, communication occurs outside of these public channels, and that is okay; however, committers must summarize any private discussions that impact the tooling project in a public channel.
 
