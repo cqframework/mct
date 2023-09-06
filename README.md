@@ -3,7 +3,6 @@ Measure Calculation Tool for reporting and calculating FHIR-based digital qualit
 
 
 ## Status and Limitations
-
 This tool is a prototype which we are releasing in the hope that it serves as a useful starting point for further development by interested parties. It currently lacks important features, such as including authentication, and allows for the client to make arbitrary changes to the report before submission. **It is not suitable or intended for production use in its current state.**
 
 ## Maintainance
