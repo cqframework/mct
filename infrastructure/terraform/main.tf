@@ -53,7 +53,7 @@ module "eks" {
   create_aws_auth_configmap = true
   aws_auth_users = [
     {
-      userarn  = "arn:aws:iam::912275679263:user/travis-ci"
+      userarn  = "arn:aws:iam::ACCOUNT-ID-REMOVED:user/travis-ci"
       username = "travis-ci"
       groups   = ["system:masters"]
     }
