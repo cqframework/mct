@@ -12,13 +12,17 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<hapi.version>6.2.2</hapi.version>
-		<spring.version>5.3.23</spring.version>
-		<spring.boot.version>2.7.5</spring.boot.version>
+		<hapi.version>6.2.5</hapi.version>
+		<spring.version>5.3.29</spring.version>
+		<spring.boot.version>2.7.15</spring.boot.version>
 		<javax.version>3.1.0</javax.version>
 		<cql-evaluator.version>2.4.0</cql-evaluator.version>
 		<cql-translator.version>2.4.0</cql-translator.version>
 		<guava.version>31.1-jre</guava.version>
+		<json-smart.version>2.4.11</json-smart.version>
+		<engine-jackson.version>2.11.0</engine-jackson.version>
+		<org.hl7.fhir.utilities.version>5.6.106</org.hl7.fhir.utilities.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -38,6 +42,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${spring.boot.version}</version>
+		</dependency>
+		<!-- Added snakeyaml dependency to avoid vulnerability within spring-boot-starter-web 2.7.15. Remove when upgrading spring-boot-starter-web to a higher version. -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>${snakeyaml.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -63,7 +73,7 @@
 			<!-- force 5.6.76 to get the fix to https://github.com/hapifhir/org.hl7.fhir.core/issues/961 -->
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>org.hl7.fhir.utilities</artifactId>
-			<version>5.6.76</version>
+			<version>${org.hl7.fhir.utilities.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -94,14 +104,20 @@
 		<dependency>
 			<groupId>info.cqframework</groupId>
 			<artifactId>engine-jackson</artifactId>
-			<version>2.6.0</version>
+			<version>${engine-jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-
+		<!-- Added json-smart dependency to avoid vulnerability within spring-boot-starter-test 2.7.15. Remove when upgrading spring-boot-starter-test to a higher version. -->
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+			<version>${json-smart.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
