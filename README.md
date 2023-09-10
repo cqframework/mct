@@ -21,7 +21,7 @@ Although these processes are adapted from the OSSWatch Meritocratic Model, this 
 #### Steps
 1. Run script `./bin/setup_app_files.sh` to prep data files
 2. Standup services with `docker-compose up --build` and wait 1 minute before proceeding to next step
-3. Load data with `./bin/load-local-data.sh`
+3. Load data with `./bin/load_local_data.sh`
 4. go to `frontend` directory and run `yarn install && yarn start`
 5. Wait until `http://localhost:8088` loads with `Whitelabel Error` message
 6. Navigate to app at `http://localhost:3000`
