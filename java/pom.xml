@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.opencds.cqf</groupId>
 	<artifactId>mct</artifactId>
@@ -12,7 +12,7 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<hapi.version>6.4.1</hapi.version>
+		<hapi.version>6.2.2</hapi.version>
 		<spring.version>5.3.29</spring.version>
 		<spring.boot.version>2.7.15</spring.boot.version>
 		<javax.version>3.1.0</javax.version>
@@ -20,8 +20,8 @@
 		<cql-translator.version>2.4.0</cql-translator.version>
 		<guava.version>31.1-jre</guava.version>
 		<json-smart.version>2.4.11</json-smart.version>
-		<engine-jackson.version>2.11.0</engine-jackson.version>
-		<org.hl7.fhir.utilities.version>5.6.109</org.hl7.fhir.utilities.version>
+		<engine-jackson.version>2.6.0</engine-jackson.version>
+		<org.hl7.fhir.utilities.version>5.6.76</org.hl7.fhir.utilities.version>
 		<snakeyaml.version>2.2</snakeyaml.version>
 	</properties>
 	<repositories>
@@ -70,11 +70,6 @@
 			<version>${hapi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-caching-caffeine</artifactId>
-			<version>${hapi.version}</version>
-		</dependency>
-		<dependency>
 			<!-- force 5.6.76 to get the fix to https://github.com/hapifhir/org.hl7.fhir.core/issues/961 -->
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>org.hl7.fhir.utilities</artifactId>
@@ -116,22 +111,6 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.7.33</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.7.33</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>2.0.5</version>
-			<optional>true</optional>
-		</dependency>
 		<!-- Added json-smart dependency to avoid vulnerability within spring-boot-starter-test 2.7.15. Remove when upgrading spring-boot-starter-test to a higher version. -->
 		<dependency>
 			<groupId>net.minidev</groupId>
@@ -143,12 +122,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring.boot.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-caching-testing</artifactId>
-			<version>${hapi.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
