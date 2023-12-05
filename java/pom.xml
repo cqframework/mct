@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.opencds.cqf</groupId>
 	<artifactId>mct</artifactId>
@@ -12,7 +12,7 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<hapi.version>6.2.5</hapi.version>
+		<hapi.version>6.2.2</hapi.version>
 		<spring.version>5.3.29</spring.version>
 		<spring.boot.version>2.7.15</spring.boot.version>
 		<javax.version>3.1.0</javax.version>
@@ -20,8 +20,8 @@
 		<cql-translator.version>2.4.0</cql-translator.version>
 		<guava.version>31.1-jre</guava.version>
 		<json-smart.version>2.4.11</json-smart.version>
-		<engine-jackson.version>2.11.0</engine-jackson.version>
-		<org.hl7.fhir.utilities.version>5.6.106</org.hl7.fhir.utilities.version>
+		<engine-jackson.version>2.6.0</engine-jackson.version>
+		<org.hl7.fhir.utilities.version>5.6.76</org.hl7.fhir.utilities.version>
 		<snakeyaml.version>2.2</snakeyaml.version>
 	</properties>
 	<repositories>
