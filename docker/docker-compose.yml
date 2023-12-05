@@ -1,0 +1,49 @@
+version: '3.4'
+services:
+
+  ########################
+  # Frontend UI
+  ########################
+  mct-frontend:
+    image: example/frontend
+    build: 
+      context: ../frontend
+    ports:
+      - "3000:3000"
+
+  ########################
+  # Backend MCT
+  ########################
+  mct-backend:
+    image: example/backend
+    build: 
+      context: ../java
+    ports:
+      - "8088:8088"
+
+  ########################
+  # Facility A
+  ########################
+  facility-a:
+    image: "cschuler72/cqf-ruler:latest"
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - HAPI_FHIR_SERVER_ADDRESS=http://localhost:8080/fhir
+      - HAPI_FHIR_FHIR_VERSION=R4
+      - HAPI_FHIR_TESTER_HOME_SERVER_ADDRESS=http://localhost:8080/fhir
+
+  ########################
+  # Facility B
+  ########################
+  facility-b:
+    image: "cschuler72/cqf-ruler:latest"
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - server.port=8082
+      - HAPI_FHIR_SERVER_ADDRESS=http://localhost:8082/fhir
+      - HAPI_FHIR_FHIR_VERSION=R4
+      - HAPI_FHIR_TESTER_HOME_SERVER_ADDRESS=http://localhost:8082/fhir

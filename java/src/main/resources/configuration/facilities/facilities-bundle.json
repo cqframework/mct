@@ -106,7 +106,7 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://localhost:8080/fhir"
+          "address": "http://facility-a:8080/fhir"
         }],
         "identifier": [{
           "use": "usual",
@@ -146,7 +146,7 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://localhost:8080/fhir"
+          "address": "http://facility-a:8080/fhir"
         }],
         "identifier": [{
           "use": "usual",
@@ -186,7 +186,7 @@
             }]
           }],
           "payloadMimeType": [ "application/fhir+json" ],
-          "address": "http://localhost:8082/fhir"
+          "address": "http://facility-b:8082/fhir"
         }],
         "identifier": [{
           "use": "usual",

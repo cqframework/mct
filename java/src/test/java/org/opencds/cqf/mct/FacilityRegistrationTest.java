@@ -63,6 +63,6 @@ class FacilityRegistrationTest {
    void facilityUrl() {
       FacilityRegistrationService service = SpringContext.getBean(FacilityRegistrationService.class);
       String url = service.getFacilityUrl("Location/local-test");
-      assertEquals("http://localhost:8080/fhir", url);
+      assertEquals("http://facility-a:8080/fhir", url);
    }
 }

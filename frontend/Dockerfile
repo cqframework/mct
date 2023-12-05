@@ -1,23 +1,27 @@
 # build phase
-FROM node:18.12.1-alpine as builder
+FROM node:18.12.1-alpine AS builder
 
 RUN mkdir /app
 
 WORKDIR /app
 
-COPY package.json \
-  yarn.lock \
-  ./
+COPY . .
 
-RUN yarn install --frozen-lockfile
-
-COPY . ./
+RUN yarn install \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive \
+  --production=false
 
 RUN yarn build
 
-# production environment
-FROM nginx:1.23.3-alpine
+FROM node:18.12.1-alpine
 
-COPY --from=builder /app/build /usr/share/nginx/html
+WORKDIR /app
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app  .
+
+ENV HOST 0.0.0.0
+EXPOSE 3000
+
+CMD [ "yarn", "start" ]
