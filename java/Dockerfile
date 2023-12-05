@@ -1,10 +1,9 @@
-# syntax=docker/dockerfile:experimental                      
-FROM maven:3.8.6-openjdk-11-slim as build
+FROM maven:3.8.6-openjdk-11-slim AS build
 
 COPY mvnw .
 COPY pom.xml .
 COPY src src
 
-RUN --mount=type=cache,target=/root/.m2,rw mvn clean package spring-boot:repackage -DskipTests
+RUN mvn clean package -DskipTests
 
 ENTRYPOINT ["mvn", "spring-boot:run"]
