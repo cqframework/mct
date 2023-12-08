@@ -9,4 +9,13 @@ export function App({ stack }: StackContext) {
   stack.addOutputs({
     frontendUrl: frontend.url,
   });
+
+  const backend = new Service(stack, "Backend", {
+    path: "../java",
+    port: 80,
+  });
+
+  stack.addOutputs({
+    backendUrl: backend.url,
+  });
 }
