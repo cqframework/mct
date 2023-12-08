@@ -36,4 +36,4 @@ For feedback and questions please submit an issue to this repository or on the [
 7. Select the facility/facilities you'd like to test, which will populate the patient list
 8. Select the patients you would like to include in the report
 9. Select the date range (or measurement period) - NOTE that the current test only works with Q1
-10. Select the Get Report button - the current performance is ~1 sec per patient (so ~100 sec for the single-facility and ~200 sec for the multiple-facility)
+10. Select the Get Report button - the current performance is ~1 sec per patient (so ~100 sec for the single-facility and ~200 sec for the multiple-facility).
