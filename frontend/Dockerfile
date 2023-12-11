@@ -15,13 +15,12 @@ RUN yarn install \
 
 RUN yarn build
 
-FROM node:18.12.1-alpine
+FROM nginx:alpine
 
 WORKDIR /app
 
-COPY --from=builder /app  .
+COPY --from=builder /app/build /usr/share/nginx/html
 
-ENV HOST 0.0.0.0
-EXPOSE 3000
+EXPOSE 80
 
-CMD [ "yarn", "start" ]
+CMD ["nginx", "-g", "daemon off;"]
